@@ -58,7 +58,7 @@ class Home extends CI_Controller {
 		$data['transfer_drop_airport']	=	$this->home_model->transfer_drop_airport();*/
 		$data['transfer_country_lists']	=	$this->home_model->transfer_country_list(); 
 
-		  $query = $this->db->query('select * from PreferredLanguage'); 
+		  $query = $this->db->query('select * from preferredlanguage'); 
             $langauge =  $query->result();
 		$data['PreferredLanguage']	=	$langauge; 
 		// debug($data['PreferredLanguage']); die;

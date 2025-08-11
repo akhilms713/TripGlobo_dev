@@ -55,7 +55,7 @@ public function search(){
         $data['srch_data'] = $srch_data;  
         $get_country_data = $this->Home_Model->get_country_data($srch_data['country']); 
         $data['get_country_data'] = $get_country_data;  
-        $query = $this->db->query('select * from PreferredLanguage'); 
+        $query = $this->db->query('select * from preferredlanguage'); 
         $langauge =  $query->result();
         $data['PreferredLanguage']  =   $langauge;  
         $get_api_resp=$this->get_api_resp($data['search_id']); 

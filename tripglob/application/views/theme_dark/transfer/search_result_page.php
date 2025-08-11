@@ -971,7 +971,7 @@ set_time_limit(0);
                         <span class="content">&nbsp;<?php 
 
 
-                          $query = $this->db->query('select * from PreferredLanguage'); 
+                          $query = $this->db->query('select * from preferredlanguage'); 
                           $langauge =  $query->result_array();
 
                           // debug($langauge); die;

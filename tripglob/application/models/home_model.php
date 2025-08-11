@@ -687,7 +687,7 @@ public function get_token_deta(){
         // debug($langauge); die;
     $this->db->select('*'); 
         $this->db->where("code",$langauge);
-        $this->db->from("PreferredLanguage"); 
+        $this->db->from("preferredlanguage"); 
         $query=$this->db->get();
 
         return $query->result_array();
