@@ -64,10 +64,15 @@ $route['booking/(:any)'] = "booking/index/$1";
 $route['Flights'] = "home/inner_header/Flights";
 // $route['404_override'] ='error/page_missing';
 
-$host="localhost"; 
-$db_user="root";
-$db_password="";
-$db="tripglobo_main";
+// $host="localhost"; 
+// $db_user="root";
+// $db_password="";
+// $db="tripglobo_main";
+
+$host=getenv('DB_HOST');//"localhost"; 
+$db_user=getenv('DB_USER');//"root";
+$db_password=getenv('DB_PASS');
+$db=getenv('DB_NAME');
 
 /*$db_user="root";
 $db_password='';

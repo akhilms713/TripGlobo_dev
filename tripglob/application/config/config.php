@@ -22,7 +22,24 @@
 | a PHP script and you can easily do that on your own.
 |
 */ //http://".$_SERVER['HTTP_HOST']."/t9x
-$config['base_url'] = "http://localhost/tripglob/";
+
+$env_base_url = getenv('BASE_URL');
+
+if ($env_base_url && strlen(trim($env_base_url)) > 0) {
+    $config['base_url'] = rtrim($env_base_url, '/') . '/';  // ensure trailing slash
+} elseif (isset($_SERVER['HTTP_HOST'])) {
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'
+                 || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+
+    $host = $_SERVER['HTTP_HOST'];
+    $script_name = $_SERVER['SCRIPT_NAME'];
+    $path = str_replace(basename($script_name), '', $script_name);
+
+    $config['base_url'] = $protocol . $host . $path;
+} else {
+    $config['base_url'] = "http://localhost/tripglob/";
+}
+
 
 
 /*

@@ -18,6 +18,24 @@ define('FILE_WRITE_MODE', 0666);
 define('DIR_READ_MODE', 0755);
 define('DIR_WRITE_MODE', 0777);
 
+
+$env_base_url = getenv('BASE_URL');
+
+if ($env_base_url && strlen(trim($env_base_url)) > 0) {
+    $base_url = rtrim($env_base_url, '/') . '/';  // ensure trailing slash
+} elseif (isset($_SERVER['HTTP_HOST'])) {
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'
+                 || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+
+    $host = $_SERVER['HTTP_HOST'];
+    $script_name = $_SERVER['SCRIPT_NAME'];
+    $path = str_replace(basename($script_name), '', $script_name);
+
+    $base_url = $protocol . $host . $path;
+} else {
+    $base_url = "http://localhost/tripglob/";
+}
+
 /*
 |--------------------------------------------------------------------------
 | File Stream Modes
@@ -50,14 +68,23 @@ define('BASE_CURRENCY_CODE',		'INR');
 define('BASE_CURRENCY_ICON',		'INR');
 define('BASE_CURRENCY',				'INR');
 
-define('SSL_TLL',					'http://');
-define('ASSETS',					SSL_TLL.$_SERVER['HTTP_HOST'].'/tripglob/assets/'.PROJECT_THEME.'/');
-define('BASE_URL',					SSL_TLL.$_SERVER['HTTP_HOST'].'/tripglob/'); 
-define('ADMIN_ASSETS',				SSL_TLL.$_SERVER['HTTP_HOST'].'/admin-panel/assets/');
-define('WEB_URL',					SSL_TLL.$_SERVER['HTTP_HOST'].'/tripglob/');
-define('UPLOAD_PATH',				SSL_TLL.$_SERVER['HTTP_HOST'].'/tripglob/photo/');
-define('IMG_URL',					SSL_TLL.$_SERVER['HTTP_HOST'].'/tripglob/admin-panel/uploads/');
-define('FRONT_UPLOAD',				SSL_TLL.$_SERVER['HTTP_HOST'].'/tripglob/application/uploads/');
+// define('SSL_TLL',					'http://');
+// define('ASSETS',					SSL_TLL.$_SERVER['HTTP_HOST'].'/tripglob/assets/'.PROJECT_THEME.'/');
+// define('BASE_URL',					SSL_TLL.$_SERVER['HTTP_HOST'].'/tripglob/'); 
+// define('ADMIN_ASSETS',				SSL_TLL.$_SERVER['HTTP_HOST'].'/admin-panel/assets/');
+// define('WEB_URL',					SSL_TLL.$_SERVER['HTTP_HOST'].'/tripglob/');
+// define('UPLOAD_PATH',				SSL_TLL.$_SERVER['HTTP_HOST'].'/tripglob/photo/');
+// define('IMG_URL',					SSL_TLL.$_SERVER['HTTP_HOST'].'/tripglob/admin-panel/uploads/');
+// define('FRONT_UPLOAD',				SSL_TLL.$_SERVER['HTTP_HOST'].'/tripglob/application/uploads/');
+
+define('ASSETS',					$base_url.'/tripglob/assets/'.PROJECT_THEME.'/');
+define('BASE_URL',					$base_url.'/tripglob/'); 
+define('ADMIN_ASSETS',				$base_url.'/admin-panel/assets/');
+define('WEB_URL',					$base_url.'/tripglob/');
+define('UPLOAD_PATH',				$base_url.'/tripglob/photo/');
+define('IMG_URL',					$base_url.'/tripglob/admin-panel/uploads/');
+define('FRONT_UPLOAD',				$base_url.'/tripglob/application/uploads/');
+
 define('B2C',						'ACTIVE');
 define('B2B',						'ACTIVE');
 define('HOTEL',						'ACTIVE');
