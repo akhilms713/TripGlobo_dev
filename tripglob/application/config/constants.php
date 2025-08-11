@@ -57,7 +57,7 @@ define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 /* Customized Constants */
 define('PROJECT_NAME',				''); // IF server make it empty
 define('PROJECT_TITLE',				'TripGlobo');
-define('PROJECT_URL',				'https://www.tripglobo.com/');
+define('PROJECT_URL',				'https://dev-tripglobo.dsocmarket.com/');
 define('PROJECT_THEME',				'theme_dark');
 define('ENCRYPTION_KEY',			'786$&GH&%!@');
 /*define('BASE_CURRENCY_ICON',		'$');
@@ -77,13 +77,13 @@ define('BASE_CURRENCY',				'INR');
 // define('IMG_URL',					SSL_TLL.$_SERVER['HTTP_HOST'].'/tripglob/admin-panel/uploads/');
 // define('FRONT_UPLOAD',				SSL_TLL.$_SERVER['HTTP_HOST'].'/tripglob/application/uploads/');
 
-define('ASSETS',					$base_url.'/tripglob/assets/'.PROJECT_THEME.'/');
-define('BASE_URL',					$base_url.'/tripglob/'); 
+define('ASSETS',					$base_url.'/assets/'.PROJECT_THEME.'/');
+define('BASE_URL',					$base_url.'/'); 
 define('ADMIN_ASSETS',				$base_url.'/admin-panel/assets/');
-define('WEB_URL',					$base_url.'/tripglob/');
-define('UPLOAD_PATH',				$base_url.'/tripglob/photo/');
-define('IMG_URL',					$base_url.'/tripglob/admin-panel/uploads/');
-define('FRONT_UPLOAD',				$base_url.'/tripglob/application/uploads/');
+define('WEB_URL',					$base_url.'/');
+define('UPLOAD_PATH',				$base_url.'/photo/');
+define('IMG_URL',					$base_url.'/admin-panel/uploads/');
+define('FRONT_UPLOAD',				$base_url.'/application/uploads/');
 
 define('B2C',						'ACTIVE');
 define('B2B',						'ACTIVE');
