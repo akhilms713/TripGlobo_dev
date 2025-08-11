@@ -1,0 +1,1 @@
+{"HotelSearchResult":{"ResponseStatus":3,"Error":{"ErrorCode":3,"ErrorMessage":"CheckInDate must be greater than current Date"},"TraceId":"f670a643-8c60-445b-b06c-098432667d2f"}}

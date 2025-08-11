@@ -1,0 +1,1 @@
+{"EndUserIp":"103.78.245.113","TokenId":"990415c0-6531-414e-a948-7a379e57b413","AdultCount":"1","ChildCount":"0","InfantCount":"0","DirectFlight":"false","OneStopFlight":"false","JourneyType":"1","PreferredAirlines":null,"Segments":[{"Origin":"BLR","Destination":"LHR","FlightCabinClass":"1","PreferredDepartureTime":"2024-12-15T00: 00: 00"}],"Sources":null}

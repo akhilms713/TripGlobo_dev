@@ -1,0 +1,1 @@
+{"Response":{"ResponseStatus":3,"Error":{"ErrorCode":3,"ErrorMessage":"Please specify Flight Segment."},"TraceId":"40f60968-de1d-44a5-ae14-a9bba0781a52"}}

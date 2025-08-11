@@ -1,0 +1,128 @@
+.all_load{
+	position: relative;
+}
+.load_city{
+	background-repeat: no-repeat;
+    background: url(../images/bg_loader.jpg) left bottom no-repeat rgba(0,0,0,0);
+    max-width: 100%;
+    background-size: 100%;
+    min-height: 500px;
+    overflow: hidden;
+    position: relative;
+}
+
+.load_bg{
+	background:url("../images/car.png") no-repeat scroll left bottom rgba(0, 0, 0, 0);
+	bottom:0;
+	left:0;
+	position:absolute;
+	top:0;
+	transition:all 400ms cubic-bezier(0, 0, 0.59, 1) 0s;
+	width:302px;
+	transition:all 400ms cubic-bezier(0, 0, .59, 1);
+	-webkit-animation:loadingcity 15s linear infinite;
+	-moz-animation:loadingcity 15s linear infinite;
+	-o-animation:loadingcity 15s linear infinite;
+	animation:loadingcity 15s linear infinite;
+	z-index: 0;
+}
+
+@-webkit-keyframes loadingcity{0%{left:0%;}
+100%{left:100%;}
+}
+@-moz-keyframes loadingcity{0%{left:0%;}
+100%{left:100%;}
+}
+@-o-keyframes loadingcity{0%{left:0%;}
+100%{left:100%;}
+}
+@keyframes loadingcity{0%{left:0%;}
+100%{left:100%;}
+}
+
+
+.loader_width{width: 600px;margin: 90px auto 0;}
+
+.sckintload {
+    background: none repeat scroll 0 0 rgba(255, 255, 255, 0.9);
+    border: 1px solid #eee;
+    border-radius: 5px;
+    display: block;
+    margin: 20px 0 0;
+    position: relative;
+    overflow: hidden;
+}
+.ffty {
+    float: left;
+    width: 50%;
+}
+.borddo.brdrit {
+    border-right: 1px solid #ddd;
+    padding: 0 10px;
+}
+.lblbk {
+    color: #666;
+    display: block;
+    font-size: 14px;
+    overflow: hidden;
+    padding: 10px 10px 0;
+    text-align: center;
+}
+.borddo {
+    padding: 0 10px;
+}
+.tabledates {
+    display: block;
+    overflow: hidden;
+    width: 100%;
+}
+.tablecelfty {
+    float: left;
+    width: 100%;
+}
+.tablecelfty .borddo.brdrit {
+    border: none;
+}
+.sckintload .fuldate {
+    display: table;
+    margin: 0 auto;
+}
+.fuldate {
+    display: block;
+    overflow: hidden;
+    padding: 10px;
+}
+.bigdate {
+    color: #666;
+    float: left;
+    font-size: 40px;
+    font-weight: 700;
+    margin-right: 8px;
+}
+.sckintload .biginre {
+    display: table-cell;
+    vertical-align: middle;
+}
+.biginre {
+    color: #666;
+    display: block;
+    font-size: 14px;
+    margin: 9px 0 0;
+    overflow: hidden;
+}
+.nigthcunt {
+    border-top: 1px solid #eee;
+    color: #666;
+    display: block;
+    font-size: 14px;
+    overflow: hidden;
+    padding: 10px;
+    text-align: center;
+}
+.prefered_section {
+    color: #666;
+    display: block;
+    font-size: 13px;
+    margin: 10px 0 0;
+    overflow: hidden;
+}

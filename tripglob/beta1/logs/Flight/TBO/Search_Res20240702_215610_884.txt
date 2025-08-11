@@ -1,0 +1,1 @@
+{"Response":{"ResponseStatus":3,"Error":{"ErrorCode":3,"ErrorMessage":"Departure Date can not less than today date"},"TraceId":"b9e6a53b-c1d3-4a44-a5f6-cdc0b62fd5b0"}}

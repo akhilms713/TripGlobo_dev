@@ -1,0 +1,1 @@
+{"BookResult":{"ResponseStatus":2,"Error":{"ErrorCode":2,"ErrorMessage":"Invalid Token"},"TraceId":"d307d50a-1f5d-4d96-9411-5ac0d619254f","BookingStatus":0,"VoucherStatus":false,"ConfirmationNo":null,"BookingRefNo":null,"BookingId":0,"TransferId":0,"IsPriceChanged":false,"IsCancellationPolicyChanged":false}}

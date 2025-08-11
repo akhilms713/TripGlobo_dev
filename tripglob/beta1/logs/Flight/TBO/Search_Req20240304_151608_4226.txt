@@ -1,0 +1,1 @@
+{"EndUserIp":"103.78.245.113","TokenId":"9c1014c4-c238-46b1-b575-b7c15c0b8009","AdultCount":"1","ChildCount":"0","InfantCount":"0","DirectFlight":"false","OneStopFlight":"false","JourneyType":"3","PreferredAirlines":null,"Segments":null,"Sources":null}

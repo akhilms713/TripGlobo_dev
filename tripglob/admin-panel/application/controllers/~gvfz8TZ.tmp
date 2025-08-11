@@ -1,0 +1,38 @@
+<?php
+
+
+
+if (!defined('BASEPATH'))
+
+    exit('No direct script access allowed');
+
+
+
+class B2c extends CI_Controller {
+
+    public function __construct() {
+
+        parent::__construct();
+
+        $this->load->database();
+
+        $this->load->model('B2c_model');
+
+    }  
+    public function allusers(){
+        $data=array();
+        $data['allusers'] = $this->B2c_model->alluser_list();
+        $this->load->view('b2c/view.php',$data);
+
+
+    }
+	
+
+
+
+}
+
+
+
+
+

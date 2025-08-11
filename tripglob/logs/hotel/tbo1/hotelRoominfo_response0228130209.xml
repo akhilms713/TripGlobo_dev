@@ -1,0 +1,1 @@
+{"GetHotelRoomResult":{"ResponseStatus":2,"Error":{"ErrorCode":2,"ErrorMessage":"Exception: No Rooms Found "},"TraceId":"77a4dfb0-7762-433e-8a45-f971538f5a19","IsUnderCancellationAllowed":false,"IsPolicyPerStay":false}}

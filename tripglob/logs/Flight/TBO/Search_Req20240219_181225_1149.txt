@@ -1,0 +1,1 @@
+{"EndUserIp":"103.78.245.113","TokenId":"4cc17990-5fc8-4a50-b601-48bd999dddac","AdultCount":"1","ChildCount":"0","InfantCount":"0","DirectFlight":"false","OneStopFlight":"false","JourneyType":"1","PreferredAirlines":null,"Segments":[{"Origin":"BLR","Destination":"MAA","FlightCabinClass":"1","PreferredDepartureTime":"2024-02-28T00: 00: 00"}],"Sources":null}

@@ -1,0 +1,1 @@
+{"BookResult":{"VoucherStatus":false,"ResponseStatus":3,"Error":{"ErrorCode":3,"ErrorMessage":"HotelPassenger count mismatched  in room 1."},"TraceId":"a26d4122-377b-4bba-8c38-ed52a3f06e31","Status":0,"HotelBookingStatus":null,"ConfirmationNo":null,"BookingRefNo":null,"BookingId":0,"IsPriceChanged":false,"IsCancellationPolicyChanged":false}}

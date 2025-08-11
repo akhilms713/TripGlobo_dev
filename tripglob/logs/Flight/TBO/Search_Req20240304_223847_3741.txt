@@ -1,0 +1,1 @@
+{"EndUserIp":"103.78.245.113","TokenId":"9ac00500-e742-49be-b7c5-d8397033745e","AdultCount":"1","ChildCount":"0","InfantCount":"0","DirectFlight":"false","OneStopFlight":"false","JourneyType":"1","PreferredAirlines":null,"Segments":[{"Origin":"DEL","Destination":"BHX","FlightCabinClass":"1","PreferredDepartureTime":"2024-04-12T00: 00: 00"}],"Sources":null}

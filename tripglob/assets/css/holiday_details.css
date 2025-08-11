@@ -1,0 +1,222 @@
+#flex-slider .flex-viewport ul li img {
+    max-height: 300px;
+    min-height: 300px;
+}
+#flex-carousel .flex-viewport ul li img {
+    max-height: 90px;
+    min-height: 90px;
+}
+
+/*  */
+/* flexslider */
+/*  */
+#flex-carousel.flexslider {
+    width: -webkit-calc(100% - 80px);
+    width: -moz-calc(100% - 80px);
+    width: calc(100% - 80px);
+    margin: auto;
+}
+
+#flex-carousel.flexslider .flex-viewport ul li {
+    -webkit-transform: skew(-16deg);
+    -moz-transform: skew(-16deg);
+    -ms-transform: skew(-16deg);
+    -o-transform: skew(-16deg);
+    transform: skew(-16deg);
+    overflow: hidden;
+}
+
+#flex-carousel.flexslider .flex-viewport ul li.flex-active-slide:before {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: #1e4283;
+    opacity: 0.8;
+}
+
+#flex-carousel.flexslider .flex-viewport ul li img {
+    -webkit-transform: skew(16deg) translateX(-10%);
+    -moz-transform: skew(16deg) translateX(-10%);
+    -ms-transform: skew(16deg) translateX(-10%);
+    -o-transform: skew(16deg) translateX(-10%);
+    transform: skew(16deg) translateX(-10%);
+    max-width: none;
+    width: 162px;	
+}
+
+#flex-carousel.flexslider .flex-direction-nav .flex-nav-prev a,
+#flex-carousel.flexslider .flex-direction-nav .flex-nav-next a {
+    width: 40px;
+    opacity: 1;
+    margin: 0;
+    font-size: 0;
+    top: 0;
+    height: 100%;
+    background: #1e4283;
+    overflow: visible;
+}
+
+#flex-carousel.flexslider .flex-direction-nav .flex-nav-prev a:before,
+#flex-carousel.flexslider .flex-direction-nav .flex-nav-next a:before {
+    color: #ffffff;
+    position: absolute;
+    z-index: 1;
+    top: 35%;
+}
+
+#flex-carousel.flexslider .flex-direction-nav .flex-nav-prev a:after,
+#flex-carousel.flexslider .flex-direction-nav .flex-nav-next a:after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    -webkit-transform: skew(-16deg);
+    -moz-transform: skew(-16deg);
+    -ms-transform: skew(-16deg);
+    -o-transform: skew(-16deg);
+    transform: skew(-16deg);
+    background: #1e4283;
+}
+
+#flex-carousel.flexslider .flex-direction-nav .flex-prev {
+    left: -40px;
+}
+
+#flex-carousel.flexslider .flex-direction-nav .flex-prev:before {
+    left: 10px;
+}
+
+#flex-carousel.flexslider .flex-direction-nav .flex-prev:after {
+    right: -16px;
+    border-right: 5px solid #ffffff;
+}
+
+#flex-carousel.flexslider .flex-direction-nav .flex-next {
+    right: -40px;
+}
+
+#flex-carousel.flexslider .flex-direction-nav .flex-next:before {
+    right: 10px;
+}
+
+#flex-carousel.flexslider .flex-direction-nav .flex-next:after {
+    left: -16px;
+    border-left: 5px solid #ffffff;
+}
+
+#flex-carousel.flexslider:hover .flex-direction-nav .flex-prev {
+    left: -40px;
+    opacity: 1;
+}
+
+#flex-carousel.flexslider:hover .flex-direction-nav .flex-next {
+    right: -40px;
+    opacity: 1;
+}
+
+
+.holi_de{padding:10px 0;}
+.h_txt{font-size: 22px;font-weight: 500;}
+.menu-widget .magic-line {
+    margin: 15px auto 0;
+    list-style: none;
+    position: relative;
+    width: 100%;
+    line-height: 1;
+    border-bottom: 2px solid #e6eaed;
+    border-top: 2px solid #e6eaed;
+}
+.menu-widget .magic-line li {
+    display: inline-block;
+    position: initial;
+    margin: 0;
+    padding: 0;
+}
+.menu-widget .magic-line li.current_item a {color: #424d58;}
+.menu-widget .magic-line li a {
+    color: #a9b5c1;
+    font-size: 14px;
+    float: left;
+    padding: 10px 8px;
+    /*padding-bottom: 20px;*/
+    text-decoration: none;
+    text-transform: uppercase;
+    /*font-weight: 700;*/
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+.cus_tab>li{float: none;margin-bottom: 8px;}
+.cus_tab>li a{
+    padding: 30px 0;
+    text-align: center;font-size: 16px;
+    border: solid 1px #e3e3e3;
+    border-radius: 0;
+    margin-right: 10px;
+}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{
+    border: 1px solid #ccc;
+    color: #000;
+    background-color: #fff;
+    border-right: 0;
+    margin-right: -1px;
+    z-index: 1;
+}
+#itinerary p{
+    margin: 20px 0;
+    line-height: 26px;
+}
+.incl_day {
+    border: 1px solid #ccc;
+    overflow: hidden;
+    padding: 20px 15px 20px 20px;
+    min-height: 369px;
+}
+
+.holi_price {
+    border: 1px solid #ccc;
+    padding: 15px;
+    box-shadow: 0px 1px 6px 1px #eaeaea;
+}
+.price_holi{
+    float: left;
+    width: 100%;
+    font-size: 24px;
+    color: #b5c302;
+    margin: 10px 0;
+}
+.h_price_adult {
+    text-align: center;
+}
+.couple_pri {
+    padding: 8px 0;
+    display: block;
+}
+.btn_b_online {
+    background: linear-gradient(to right, #a5b39e,#b5c302,#a5b39e);
+    width: 100%;
+    margin: 0 auto;
+    display: block;
+    padding: 10px;
+    color: #fff;
+    border: 0;
+    font-size: 15px;
+}
+.holi_from{
+    background-color: #ccc;
+    padding: 8px 15px;
+}
+.holi_from {
+    background-color: #adbb4b;
+    padding: 8px 15px;
+    color: #fff;
+}
+.high_tri{padding: 20px 30px;border:1px solid #ccc;margin: 20px 0;line-height: 28px;}

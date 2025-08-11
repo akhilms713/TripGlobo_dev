@@ -1,0 +1,622 @@
+.mn_back {
+    background:#fff;
+    float: left;
+    padding:20px 0px;
+    width: 100%;
+}
+.wizard .tab-pane {
+    position: relative;
+    padding-top: 15px;
+}
+.prebooking {
+    border: 1px solid #e6e6e6;
+    box-shadow: 0 0 5px #e6e6e6;
+    margin: 0 0 15px;
+    overflow: hidden;
+}
+.prebok_hding {
+    border-bottom: 1px dashed #ddd;
+    color: #333;
+    display: block;
+    font-size: 18px;
+    overflow: hidden;
+    padding:4px 15px;
+    background: #eaeef7;
+}
+.airline_name {
+    padding: 20px 0;
+}
+.prebooking .departure {
+    text-align: right;
+    margin: 27px 0 0;
+}
+.prebooking h3 {
+    color: #333;
+    font-weight: 500;
+    margin: 0;
+    padding:10px 0px;  
+    font-size: 17px;
+}
+.prebooking .bold {
+    font-weight: 400;
+}
+
+.prebooking h5 {
+    color: #0a3152;
+    font-size: 13px;
+    margin: 5px 0;
+}
+
+.stop-duration {
+    padding: 15px;
+}
+.flight-direction {
+    border: 1px solid #e6e6e6;
+    margin-top: 15px;
+    position: relative;
+}
+.flight-direction::before {
+    background: #e6e6e6 none repeat scroll 0 0;
+    border-radius: 50%;
+    color: #0a3152;
+    content: "";
+    height: 15px;
+    left: -2px;
+    position: absolute;
+    top: -7px;
+    width: 15px;
+}
+.flight-direction::after {
+    background: #e6e6e6 none repeat scroll 0 0;
+    border-radius: 50%;
+    color: #0a3152;
+    content: "";
+    height: 15px;
+    position: absolute;
+    right: -2px;
+    top: -7px;
+    width: 15px;
+}
+.prebooking .stop {
+    background: #e6e6e6 none repeat scroll 0 0;
+    border-radius: 50%;
+    height: 15px;
+    margin: -8px auto 0;
+    width: 15px;
+}
+.prebooking .stop-box {
+    border: 1px solid #e6e6e6;
+    margin: 6px auto;
+    padding: 8px 10px;
+    position: relative;
+    text-align: center;
+    width: 135px;
+}
+.prebooking .duration {
+    font-size: 13px;
+    margin-top: 5px;
+}
+.prebooking .destination {
+    text-align: left;
+    margin: 27px 0 0;
+}
+/*.flight-list-footer {
+    background: #e6e6e6 none repeat scroll 0 0;
+    color: #0a3152;
+    overflow: hidden;
+}*/
+/* .flight-list-footer .refund_1 {
+    color:#098cda;
+}
+.flight-list-footer span {
+    float: left;
+    font-size: 13px;
+    padding: 7px 5px;
+}
+.flight-list-footer span {
+    float: left;
+    font-size: 13px;
+    padding: 7px 5px;
+}
+.prebooking {
+    border: 1px solid #e6e6e6;
+    box-shadow: 0 0 5px #e6e6e6;
+    margin: 0 0 15px;
+    overflow: hidden;
+} */
+.celcart {
+    display: table-cell;
+    float: none;
+    vertical-align: middle;
+}
+.splcrtpad {padding: 10px 0;}
+.smalbukcrt img {width: 70px;}
+.cartsec_more {
+    border-top: 1px dashed #ddd;
+    margin: 5px 0 0;
+}
+.bj {margin: 31px 46px 0 0;}
+.ourservices {
+    background: rgba(0,0,0,0) url(../images/title-bottom.png) no-repeat scroll center bottom;
+    color: #098cda;
+    font-size: 24px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    padding-bottom: 20px;
+    text-align: center;
+}
+.facilities_name {
+    float: left;
+    margin: 0;
+    padding: 7px 0;
+    width: 100%;
+}
+.flight-list-footer span {
+    float: left;
+    font-size: 13px;
+    padding:5px 5px;
+    line-height:25px 
+}
+.mn_top {
+    cursor: pointer;
+    display: block;
+    height:auto;
+    overflow: hidden;
+    position: relative;
+    margin-top:25px; 
+    transition: all 400ms ease-in-out 0s;
+}
+.rowput {
+    position: relative;
+    float: left;
+    margin-bottom: 10px;
+    width: 100%;
+}
+.check_box {
+    float: left;
+    height: auto;
+    margin: 7px 0;
+    width: 100%;
+}
+.searchbtn1 {
+    background:#0e2c7a;
+    border: medium none;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 400!important;
+    margin: 14px 0;
+    outline: medium none;
+    border-radius: 3px;
+    padding: 10px;
+    width: 100%;
+}
+.searchbtn_login {
+    background: rgba(0, 0, 0, 0) linear-gradient(to bottom, rgba(247, 142, 30, 1) 0%, rgba(242, 103, 34, 1) 100%) repeat scroll 0 0;
+    border: medium none;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 400!important;
+    margin: 14px 0;
+    outline: medium none;
+    padding: 10px;
+    width: 100%;
+}
+.prebooking img {
+    max-width: 100%;
+}
+
+.booking-sidebar .sidebar-item {
+    border: 1px solid #e6e6e6;
+    box-shadow: 0 0 5px #e6e6e6;
+    margin:0px 0 0px 0;
+    float:left;
+    width:100%;  
+}
+
+.booking-sidebar .sidebar-item h4 {
+    background:#eaeef7 none repeat scroll 0 0;
+    font-weight:500;
+    letter-spacing:1px;
+    margin:0;
+    color:#333; 
+    padding:14px 15px;
+    text-transform:uppercase;
+}
+.booking-sidebar .sidebar-body .table {
+    margin-bottom:0;
+}
+.booking-sidebar .sidebar-body table tr {
+    border-bottom:1px solid #e6e6e6;
+}
+.booking-sidebar .sidebar-body {
+    padding:10px 10px 0;
+    font-size:14px;
+}
+.cartprc {
+    margin:0px 0px 10px 0px;
+}
+.payblnhm {
+    display:block;
+    margin:0px;
+}
+.promocode {
+    border:1px solid #ddd;
+    color:#bbb;
+    display:block;
+    height:45px;
+    outline:medium none;
+    overflow:hidden;
+    padding:5px;
+    width:100%;
+}
+.promosubmit {
+    background:#105aa8;
+    border:medium none;
+    color:#fff;
+    display:table;
+    font-size:15px;
+    height:45px;
+    outline:medium none;
+    padding:6px;
+    text-align:center;
+    width:100%;
+}
+
+/*********hotel review css ****/
+
+.htl_bg_img {
+    position:relative;
+}
+.htl_bg_img:before {
+    position:absolute;
+    top:0;
+    left:-75%;
+    z-index:2;
+    display:block;
+    content:'';
+    width:50%;
+    height:100%;
+    background:-webkit-linear-gradient(left,rgba(255,255,255,0) 0,rgba(255,255,255,.2) 100%);
+    background:linear-gradient(to right,rgba(255,255,255,0) 0,rgba(255,255,255,.2) 100%);
+    -webkit-transform:skewX(-25deg);
+    transform:skewX(-25deg);
+}
+
+.htl_bg_img img {
+    width:100%;
+    max-height:147px;
+}
+
+.htl_txt h3 {
+    border-bottom:0;
+    color:#21a8e0;
+    display:inline-block;
+    font-size:18px;
+    font-weight:700;
+    margin:0px 10px 0 0;
+    padding-bottom:0px;
+    width:auto;
+    /* float:left; */
+}
+.stra_hotel {
+    display:block;
+    margin:5px 0px;
+    overflow:hidden;
+}
+.htl_txt p {
+    line-height:18px;
+    width:100%;
+    padding:15px 0px;
+    float:left; 
+}
+.room_type {
+    color: #6c6c6c;
+    border: none;
+    display: block;
+    font-weight: 400;
+    margin-bottom: 8px;
+    margin-top: 8px;
+}
+.bathroom {
+    display: block;
+    margin-bottom: 8px;
+    text-transform: capitalize;
+    line-height: 18px;
+}
+.breakfast {
+    color: #428bca;
+    display: block;
+    text-transform: capitalize;
+}
+.fphInOutDates {
+    text-align: center;
+}
+.fphInOutDates label {
+    color: #21a8e0;
+    display: block;
+    padding: 10px 0;
+}
+.para_sentnce{
+	width:100%;
+	float:left;
+	padding:12px;   
+}
+.trv_htl_detail{
+	width:100%;
+	float:left;
+	padding:12px 0px;   
+}
+
+/******** hotel review css end here *******/
+
+
+/******** booking_traveller css start here *******/
+.mrntvlr10 {
+    margin:15px 0px;
+}
+.rw_rj {
+    width:96%;
+    margin:0px 2%;
+    float:left;
+    border-bottom:solid 1px #f2f2f2;
+    padding:0px 0px 10px 0px;
+}
+.lokter {
+   text-align: center;
+   width: 100%;
+}
+.lokter .fa {
+   background:#5c8aa4 none repeat scroll 0 0;
+   border-radius: 15%;
+   color: #fff;
+   display: block;
+   font-size: 22px;
+   height: 40px;
+   line-height: 40px;
+   margin:0px auto;
+   overflow:hidden;
+   width:40px;
+}
+.whoare {
+    color: #444;
+    font-size: 12px;
+}
+.selectedwrap {
+    position: relative;
+}
+.flpayinput {
+    border: 1px solid #dddddd;
+    border-radius: 3px;
+    color: #333333;
+    display: block;
+    font-size: 14px;
+    height: 40px;
+    overflow: hidden;
+    padding: 10px;
+    margin-top: 5px;
+    width: 100%;
+}
+.selectedwrap::after {
+    bottom: 1px;
+    color: rgb(102, 102, 102);
+    content:"\f0d7";
+    cursor:pointer;
+    font-family:'FontAwesome';
+    font-size:22px;
+    height:38px;
+    line-height:41px;
+    pointer-events:none;
+    position:absolute;
+    right:1px;
+    text-align:center;
+    top: 1px;
+    width: 40px;
+    background: none 0px 0px repeat scroll rgb(255, 255, 255);
+}
+.payinput {
+    border: 1px solid #dddddd;
+    border-radius: 3px;
+    color: #333333;
+    display: block;
+    font-size: 14px;
+    height: 40px;
+    overflow: hidden;
+    padding: 10px;
+    margin-top: 5px;
+    width: 100%;
+}
+.mrtp15{
+	margin-top:15px; 
+}
+
+/******** booking_traveller css end here *******/
+
+/******** payment css start here *******/
+
+.payment{
+width:100%;
+float:left;  	
+}
+
+.payment h5 {
+    font-size:16px;
+    margin:8px 0px 12px 0px;
+    color:#5792C9;
+}
+
+.cardFields{
+	width:100%;
+	float:left;  
+}
+.cardFields .form-group > .control-label {
+    float:left;
+    width:30%;
+    margin-top:14px;
+}
+.cardFields .form-group > .fieldBlock {
+    float: right;
+    width: 68%;
+}
+.cardFields .form-group > .psgExDate {
+    float: left;
+    margin-left: 2%;
+    width: 33%;
+}
+.fieldBlock > span {
+    margin-top:6px;
+    position: absolute;
+    right: 34px;
+}
+img {
+    vertical-align: middle;
+}
+.cardFields .form-group > .control-label {
+    float: left;
+    width: 30%;
+    margin-top: 14px;
+}
+.cardFields .form-group > .fieldBlock {
+    float: right;
+    width: 68%;
+}
+.pd6{
+	padding:6px 30px; 
+}
+.cvvinfo{
+	width:100%;
+	float:left;padding:0px 0px 10px 0px;   
+}
+
+
+/******** payment css end here *******/
+
+
+/******** confirmation css end here *******/
+.crl {
+    border: solid 1px #ccc;
+    text-align: center;
+    background: #16a7e0;
+    border-radius: 50px;
+    color: #fff;
+    padding: 20px;
+    font-size: 30px !important;
+}
+.tll {
+    font-size: 25px;
+    text-align: center;
+    color: #16a7e0;
+    padding:10px 0px; 
+}
+.mrnbt10 {
+    margin-bottom: 10px;
+}
+
+.mrn10 {
+    margin-top: 15px;
+}
+.mtp8{
+    margin-top:8px; 
+}
+label {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom:0px;
+    font-weight: bold;
+}
+.searchbtn1 {
+    background: #194e91;
+    border: medium none;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 400!important;
+    margin: 14px 0;
+    outline: medium none;
+    border-radius: 3px;
+    padding: 10px;
+    width: 100%;
+    clear:both; 
+}
+.mt151{
+    margin:15px 0px; 
+}
+.mtr15{
+    margin-top:15px; 
+}
+/*
+.tram_mn{
+    width:100%;
+    float:left;  
+}
+.tram_mn label{
+text-indent:26px;
+padding:4px 0px 0px 0px;    
+}
+.tram input[type="checkbox"] {
+  margin:0px;
+  visibility:hidden;
+}
+
+.tram {
+    
+    margin-left:-29px;
+    position:relative;
+    width:25px;
+    z-index:1;
+    float:left; 
+}
+
+.tram label {
+    background:#c4c3c2;
+    border:3px solid #fff;
+    border-radius:0px;
+    color:#333;
+    cursor:pointer;
+    height:25px;
+    left:25px;
+    position:absolute;
+    top:0px;
+    width:25px;  
+    text-indent:50px; 
+
+}
+
+.tram label::after {
+    -moz-border-bottom-colors:none;
+    -moz-border-left-colors:none;
+    -moz-border-right-colors:none;
+    -moz-border-top-colors:none;
+    border-color:-moz-use-text-color -moz-use-text-color #fcfff4 #fcfff4;
+    border-image:none;
+    border-style:none none solid solid;
+    border-width:medium medium 3px 3px;
+    content:"";
+    height:7px;
+    left:5px;
+    opacity:0;
+    position:absolute;
+    top:5px;
+    transform:rotate(-45deg);
+    width:11px;
+    
+}
+
+.tram label:hover::after {
+    opacity:0.3;
+}
+
+.tram input[type="checkbox"]:checked + label::after {
+    color:#fff;
+    opacity:1;
+}
+
+.tram input[type="checkbox"]:checked + label {
+    background:#194e91;
+}*/
+.tram_mn label {
+    padding-left: 30px;
+}
+.mt150{
+    padding-bottom:20px;  
+}
+
+/******** confirmation css end here *******/

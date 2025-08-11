@@ -1,0 +1,1 @@
+{"Response":{"Error":{"ErrorCode":2,"ErrorMessage":"No rules found due to some technical reason. For your ref please use '9c3f9ae5-dbb9-4c66-bd0a-002e629c044d' session id."},"FareRules":null,"ResponseStatus":2,"TraceId":"9c3f9ae5-dbb9-4c66-bd0a-002e629c044d"}}

@@ -1,0 +1,1 @@
+{"EndUserIp":"103.78.245.113","TokenId":"1d27d0c6-057f-4795-92fa-32d8df0784cf","AdultCount":"1","ChildCount":"0","InfantCount":"0","DirectFlight":"false","OneStopFlight":"false","JourneyType":"1","PreferredAirlines":null,"Segments":[{"Origin":"DEL","Destination":"SIN","FlightCabinClass":"1","PreferredDepartureTime":"2024-04-18T00: 00: 00"}],"Sources":null}

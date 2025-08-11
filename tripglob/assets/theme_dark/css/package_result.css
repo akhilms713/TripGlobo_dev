@@ -1,0 +1,44 @@
+.bundlesnew {
+   background: #eeeeee none repeat scroll 0 0;
+    border-radius: 5px;
+    display: block;
+    margin: 20px 0;
+    overflow: hidden;
+    padding: 10px 15px;
+}
+
+.bundlesnew .hotel_sideprice{background: #ffffff none repeat scroll 0 0;
+    border: 1px solid #dddddd;
+    height: 100%;
+    margin: 5px 0;
+    padding: 0;}
+.backgray{display: block;
+    font-size: 16px;
+    overflow: hidden;
+    padding: 10px 0;}
+.backgray .fa{background: #fbc800 none repeat scroll 0 0;
+    border-radius: 30px;
+    color: #212020;
+    display: block;
+    font-size: 14px;
+    height: 30px;
+    line-height: 30px;
+    margin: 0 auto 10px;
+    text-align: center;
+    width: 30px;}
+.bundlesnew .sideprice_hotel{margin: 10px 0 0;}
+.addbot.fa{border-radius: 30px;
+    box-shadow: 0 0 5px #dddddd;
+    font-size: 18px;
+    height: 40px;
+    line-height: 40px;
+    margin: 20px 0;
+    width: 40px;}
+.bundlesnew .bookbtn_htl{}
+.bundpads{padding: 0 5px;}
+.bundleaddsind {
+    margin: 0 -5px;
+}
+.bothtabs{display: block;
+    margin-bottom: 25px;}
+.bothtabs .flittwifil{ margin:0px;}

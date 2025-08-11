@@ -1,0 +1,1 @@
+{"EndUserIp":"103.78.245.113","TokenId":"24bed8e8-3ab2-4d32-a143-86bd7a372e7a","AdultCount":"1","ChildCount":"0","InfantCount":"0","DirectFlight":"false","OneStopFlight":"false","JourneyType":"1","PreferredAirlines":null,"Segments":[{"Origin":"KWI","Destination":"CAI","FlightCabinClass":"1","PreferredDepartureTime":"2024-07-17T00: 00: 00"}],"Sources":null}

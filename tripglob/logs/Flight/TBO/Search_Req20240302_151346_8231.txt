@@ -1,0 +1,1 @@
+{"EndUserIp":"103.78.245.113","TokenId":"4cc90765-c4c4-4d28-b1b4-3483582bbd3b","AdultCount":"1","ChildCount":"0","InfantCount":"0","DirectFlight":"false","OneStopFlight":"false","JourneyType":"1","PreferredAirlines":null,"Segments":[{"Origin":"DEL","Destination":"MEL","FlightCabinClass":"1","PreferredDepartureTime":"2024-03-30T00: 00: 00"}],"Sources":null}

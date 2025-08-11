@@ -1,0 +1,1 @@
+{"EndUserIp":"103.78.245.113","TokenId":"f4ba14ae-cfd2-4622-b58f-aab63b0a9950","AdultCount":"1","ChildCount":"0","InfantCount":"0","DirectFlight":"false","OneStopFlight":"false","JourneyType":"1","PreferredAirlines":["AI"],"Segments":[{"Origin":"DEL","Destination":"DXB","FlightCabinClass":"1","PreferredDepartureTime":"2024-03-12T00: 00: 00"}],"Sources":null}

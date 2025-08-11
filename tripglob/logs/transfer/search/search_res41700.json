@@ -1,0 +1,1 @@
+{"TransferSearchResult":{"Error":{"ErrorCode":3,"ErrorMessage":"Invalid CityId: 1-1)) OR 978=(SELECT 978 FROM PG_SLEEP(15))-- in request:"},"ResponseStatus":3,"TraceId":"a0e1fe15-47b0-41ba-94d9-5c240e7bd3e1","TransferSearchResults":null,"ValidationInfo":null}}

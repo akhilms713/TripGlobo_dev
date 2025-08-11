@@ -1,0 +1,1 @@
+{"BookResult":{"VoucherStatus":false,"ResponseStatus":3,"Error":{"ErrorCode":3,"ErrorMessage":"No of Room mismatched with HotelRoomsDetails."},"TraceId":"9ae148a1-a944-40aa-871c-bf7da069ecf2","Status":0,"HotelBookingStatus":null,"ConfirmationNo":null,"BookingRefNo":null,"BookingId":0,"IsPriceChanged":false,"IsCancellationPolicyChanged":false}}

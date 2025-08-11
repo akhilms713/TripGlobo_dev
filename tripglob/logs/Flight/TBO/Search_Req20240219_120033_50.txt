@@ -1,0 +1,1 @@
+{"EndUserIp":"103.78.245.113","TokenId":"a474f0c9-1464-4b7e-8b51-79bd4275c265","AdultCount":"1","ChildCount":"0","InfantCount":"0","DirectFlight":"false","OneStopFlight":"false","JourneyType":"1","PreferredAirlines":null,"Segments":[{"Origin":"MCT","Destination":"DXB","FlightCabinClass":"1","PreferredDepartureTime":"2024-02-29T00: 00: 00"}],"Sources":null}

@@ -1,0 +1,555 @@
+@media(max-width:1200px) {
+
+	
+.tab-content::after {
+display:none;
+}
+.navbar-header.myheder {
+ margin: 0;
+}
+.bookicons .btn {
+padding: 4px 8px;
+}
+}
+@media(max-width:991px) {
+
+.fulltable .trow.tblhd {
+display:none;
+}
+.fulltable .tblpad {
+display: block;
+ width: 100%;
+}
+.fulltable .lavltrs {
+display:block;
+width:100%;
+}
+.myhomemenu.navbar-nav li {
+ display: block;
+ float: left;
+ width: 100%;
+}
+.myhomemenu {
+margin:0px;
+}
+.menunav.navbar-nav > li > a:hover {
+background:#002d4e none repeat scroll 0 0;
+}
+.noswitch {
+display:none;
+}
+.fullnyne {
+ width: 100%;
+}
+.topmenu {
+ float: left;
+ width: 100%;
+}
+.filtericon {
+ display: block;
+}
+#mobilefilter {
+ background-color: #efefef;
+ box-shadow: 10px 5px 15px -5px #000000;
+ height: auto;
+ position: absolute;
+ width: 250px;
+ z-index: 100;
+}
+.collapse.filtert {
+ display: none;
+}
+.col70.htlresf {
+ width: 100%;
+}
+.in70 {
+padding:10px;
+}
+.dethtl .leftslider {
+width: 100%;
+}
+.dethtl .dritside {
+margin-top: 15px;
+ width: 100%;
+}
+.dritside .padritside {
+padding:0px;
+}
+.bigdate {
+font-size:30px;
+}
+.fuldate {
+padding:5px;
+}
+.userprowrp {
+display:table;
+width:300px;
+margin: -80px auto auto;
+}
+}
+ @media(max-width:768px) {
+.paspertedit .margpas {
+width: 100%;
+}
+.trvlwrap .topbokshd {
+clear: both;
+ display: block;
+ float: left;
+ overflow: hidden;
+ width: 100%;
+margin-bottom: 15px;
+}
+.trvlwrap .travemore {
+display: block;
+ float: left;
+ overflow: hidden;
+ width: 100%;
+}
+.profile-tabs li a {
+background: #407db5 none repeat scroll 0 0;
+ font-size: 16px;
+ margin-right: 1px;
+ padding: 10px 20px !important;
+}
+.profile-tabs li.active a {
+border-bottom:none;
+background: #306da5 none repeat scroll 0 0;
+}
+.brdli .fa {
+ margin-right: 0px;
+}
+.dashtops {
+display: none;
+}
+.contactonly, .socials {
+display:none;
+}
+.filtrsrch .leftslider {
+width: 100%;
+border:none;
+}
+.filtrsrch .dritside {
+ width: 100%;
+}
+.baseli.hedli {
+display:none;
+}
+.baseli li {
+ width: 100%;
+}
+.ndist {
+display:block;
+}
+.baseli {
+padding:0px;
+}
+.aftres {
+background: #eeeeee none repeat scroll 0 0;
+ display: block;
+ float: left;
+ padding: 10px;
+ width: 50%;
+}
+.fullseevn {
+width:100%;
+}
+.newcaltab .celcent {
+ display: block;
+ width: 100%;
+}
+.sftr::after {
+display:none;
+}
+.travresl {
+width:100%;
+}
+.fullofdash .dshcol {
+width: 50%;
+}
+.botmfull {
+margin-bottom: 15px;
+ width: 50%;
+}
+#editprofile .rowit {
+padding:20px 0;
+}
+.bookicons .btn {
+ padding: 2px 6px;
+}
+.bookprice {
+ text-align: center;
+}
+.hotelstar{ display:block; margin-top:10px;}
+}
+ @media(max-width:650px) {
+ .bookprice {
+ text-align: center;
+}
+ .bookdetails, .bookprice, .bookimg {
+ display: block;
+ float: none;
+ text-align: center;
+ width: 100% !important;
+}
+.imghtlflt {
+width: 100% !important;
+display: block;
+margin: 0 auto;
+}
+ .hidemob {
+display:none;
+}
+.specheadmar {
+margin-bottom: 80px;
+}
+.intabs {
+padding:15px 0;
+}
+.fullres {
+ width: 100%;
+}
+.pasngrinput {
+padding:15px 0;
+}
+.fullquestions {
+width:100%;
+}
+.notin {
+display:none;
+}
+
+
+}
+
+
+
+
+ @media(max-width:600px) {
+.notactive {
+display:none;
+}
+.customtab .nav-tabs li a {
+padding: 15px 25px;
+}
+.bannerbigcnt {
+font-size:32px;
+}
+.fulldetail {
+display: block;
+ float: left;
+ width: 100%;
+}
+.sevntydetail {
+display: block;
+ float: left;
+ width: 70%;
+}
+.thirydetail {
+border: medium none !important;
+ display: block;
+ float: left;
+ width: 30%;
+}
+.fullprofiles {
+float: left;
+ width: 100%;
+}
+.fullprofiles .prolabel {
+text-align:left
+}
+#settings .padding20 {
+padding:20px 0;
+}
+.fullsetting {
+float:left;
+width:100%;
+text-align: center;
+}
+.imagestep {
+text-align:center;
+}
+.f100 {
+display: block;
+ float: left;
+ width: 100%;
+}
+.f60 {
+display: block;
+ float: left;
+ width: 60%;
+}
+.f40 {
+display: block;
+ float: left;
+ width: 40%;
+}
+.f100 .imghtlflt {
+ height: 200px;
+ max-width: 100%;
+}
+.f40 .sideprice {
+float:none;
+}
+}
+ @media(max-width:550px) {
+.fulltops {
+width:100%;
+}
+.mylogo {
+display:table;
+margin:0 auto;
+}
+.fffull {
+width:100%;
+}
+.tabinhed {
+font-size:18px;
+}
+.numroom {
+background:none;
+}
+.pageheader {
+font-size:20px;
+}
+.centersmalcps {
+font-size:13px;
+}
+.mefotr {
+width:100%;
+}
+.homelinksftr {
+display:none;
+}
+.copurit {
+display:block;
+text-align:center;
+width:100%;
+}
+.insigndiv {
+width:280px;
+}
+.forgetps {
+ max-width: 300px;
+}
+.smldescrptn .fullser {
+ width: 100%;
+}
+.smldescrptn .halfser {
+ width: 50%;
+}
+.nomody {
+ display: none;
+}
+.modifysrch {
+margin:0px;
+}
+.footersooc {
+display:none;
+}
+.responsepop .popone {
+ display: block;
+ text-align: center;
+ width: 100%;
+}
+.responsepop .popone1 {
+ width: 75%;
+}
+.responsepop .popone2 {
+ width: 25%;
+}
+.responsepop .imagesmflt {
+ float: none;
+}
+.halfvoch {
+width:50%;
+}
+.hotelistrowhtl .imagehotel {
+max-height: 100px;
+}
+.hotelistrowhtl .imagehotel img {
+max-height: 100px;
+min-height:100px;
+}
+.fullflimg {
+text-align: center;
+ width: 100%;
+}
+.sevfiv1 {
+width: 80%;
+}
+.sevfiv2 {
+width: 20%;
+}
+.fiveshare {
+width:100%;
+}
+#useinform .infowone {
+padding:10px 0;
+}
+}
+ @media(max-width:500px) {
+.fullofdash .dshcol {
+width: 100%;
+}
+.botmfull {
+width: 100%;
+}
+.sidenamedesc .celhtl {
+ display: block;
+ width: 100%;
+}
+.celhtl.width30 {
+border-left:none;
+}
+.sideprice {
+ float: left;
+}
+.allresult .sidepricewrp {
+ padding: 0 10px 10px;
+}
+.allresult .bookbtn {
+ float: right;
+}
+.booknow {
+display:table;
+padding:10px 20px;
+margin: 0;
+}
+.sevntydetail {
+width:100%;
+}
+.thirydetail {
+width:100%;
+}
+.thirydetail .bookbtn {
+float:right;
+}
+.bighotl img {
+max-height: 260px;
+ min-height: 260px;
+}
+.bighotl {
+max-height: 260px;
+ min-height: 260px;
+}
+.fulldetab .nav-tabs > li > a {
+font-size:13px;
+line-height: 20px;
+}
+.allresult .padflt {
+ padding: 0;
+}
+.allresult .widftysing {
+ float: left;
+ max-width: 40%;
+ width: auto;
+}
+.allresult .nonefitysing {
+ float: left;
+ margin: 0 5px;
+ width: auto;
+}
+.allresult .widfty {
+ width: 50%;
+}
+.allresult .nonefity {
+ display: none;
+}
+.celhtl.midlbord {
+ border-left:none;
+}
+.fullfive {
+width: 100%;
+}
+.trvlwrap .rowit {
+padding:20px 10px;
+}
+}
+ @media(max-width:450px) {
+ .bannerbigcnt {
+font-size:22px;
+}
+.aftres {
+font-size: 13px;
+ line-height: 20px;
+ padding: 10px 2px;
+}
+.halfvoch {
+width:100%;
+}
+.f60 {
+ width: 100%;
+}
+.f40 {
+ width: 100%;
+border-left:none;
+}
+.f100 .imghtlflt {
+ height: 150px;
+ max-width: 100%;
+}
+.detailsrow > div {
+width:33%;
+margin: 10px 0px;
+text-align:left;
+}
+.bookvalue {
+ border-top: 1px solid #ccc;
+ clear: both;
+ font-size: 18px;
+ margin: 10px auto 5px 10px !important;
+ padding-top: 10px;
+ text-align: center !important;
+ width: 95% !important;
+}
+.bookprice {
+font-size:20px;
+}
+.viwedetsb {
+font-size:16px;
+}
+.bookicons .btn {
+ padding: 5px 10px;
+}
+}
+ @media(max-width:400px) {
+.customtab .nav-tabs li a {
+ padding: 15px 20px;
+}
+.bighotl img {
+max-height: 200px;
+ min-height: 200px;
+}
+.bighotl {
+max-height: 200px;
+ min-height: 200px;
+}
+.hotelistrowhtl .imagehotel {
+max-height: 80px;
+}
+.hotelistrowhtl .imagehotel img {
+max-height: 80px;
+min-height:80px;
+}
+.newcaltab .celcent {
+padding: 0 15px;
+}
+.fullflimg .flitsmdets {
+font-size:12px;
+}
+.sevfiv1 .dateone {
+font-size:12px;
+}
+.hedtowr {
+font-size:15px;
+}
+.userprowrp {
+width:250px;
+}
+.profiledash img {
+max-height: 140px;
+ min-height: 140px;
+}
+}
+ @media(max-width:350px) {
+}

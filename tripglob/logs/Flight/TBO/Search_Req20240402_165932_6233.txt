@@ -1,0 +1,1 @@
+{"EndUserIp":"103.78.245.113","TokenId":"93dff082-d420-4508-8d7e-04e0e59e88fb","AdultCount":"1","ChildCount":"0","InfantCount":"0","DirectFlight":"false","OneStopFlight":"false","JourneyType":"1","PreferredAirlines":null,"Segments":[{"Origin":"BLR","Destination":"TRV","FlightCabinClass":"1","PreferredDepartureTime":"2024-04-05T00: 00: 00"}],"Sources":null}

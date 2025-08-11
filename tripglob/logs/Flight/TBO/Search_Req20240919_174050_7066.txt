@@ -1,0 +1,1 @@
+{"EndUserIp":"103.78.245.113","TokenId":"45304d0a-4122-4e03-9dd4-46a8b3d17e25","AdultCount":"1","ChildCount":"0","InfantCount":"0","DirectFlight":"false","OneStopFlight":"false","JourneyType":"1","PreferredAirlines":null,"Segments":[{"Origin":"BLR","Destination":"KWI","FlightCabinClass":"1","PreferredDepartureTime":"2024-09-26T00: 00: 00"}],"Sources":null}

@@ -1,0 +1,5681 @@
+<?php
+
+ob_start();
+
+if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+if (session_status() == PHP_SESSION_NONE) {
+
+    session_start();
+
+}
+
+error_reporting(0);
+
+//ini_set("display_errors",-1);
+
+
+
+class Booking extends CI_Controller {
+
+	public function __construct() {
+
+		parent::__construct();
+
+		$this->load->model('cart_model');
+
+		$this->load->model('booking_model');
+
+		$this->load->model('hotel_model');
+
+		$this->load->model('account_model');
+
+		$this->load->model('payment_model');
+
+		$this->load->model('general_model');
+
+		$this->load->model('Flight_Model');
+
+		$this->load->model('xml_model');
+
+		$this->load->helper(array(	
+
+			'file',
+
+			'flight/amedus_helper'
+
+		));
+
+		$this->load->helper('bus/tbo');
+
+        $this->load->helper('bus/date_helper');
+
+	}
+
+	 public function islogged_in() {
+
+        
+
+        if ($this->session->userdata('user_id')) {
+
+            
+
+        } else {
+
+            redirect(WEB_URL.'booking/signup_login');
+
+        }
+
+    
+
+    }
+
+    public function dashboard_redirect(){
+
+    	redirect(WEB_URL.'dashboard');
+
+    }
+
+    public function signup_login(){
+
+    if($this->session->userdata('user_id') ){
+
+    		$continue = $this->session->userdata('continue');
+
+			//echo $continue;exit;
+
+            redirect($continue);
+
+          
+
+        }else{
+
+          $data['msg'] = 'Please Sign up / Login to book';
+
+        	$this->load->view(PROJECT_THEME.'/common/login_view',$data);
+
+        }
+
+        
+
+    }
+
+	public function index($session_id='',$search_id='',$search_module=''){
+
+		// echo "string";
+
+      parent::pre_url();
+
+      	// debug($session_id); exit();
+
+       //echo $continue = $this->session->userdata('continue');die;
+
+      /*echo "string"; 
+
+		ini_set('display_errors', '1');
+
+        ini_set('display_startup_errors', '1');
+
+        error_reporting(E_ALL);
+
+      	debug($session_id); exit();*/
+
+      	
+
+        if(!empty($session_id)){
+
+            $count = $this->cart_model->getBookingTemp($session_id)->num_rows();
+
+			 $data['session_id_c'] = $session_id;
+
+			 $data['admin_markup'] = $this->booking_model->get_admin_markup($session_id);
+            // debug($data);exit;
+
+		    if($count > 0){
+
+                $data['countries'] = $this->general_model->getCountryList();
+
+                $data['book_temp_data'] = $book_temp_data = $this->cart_model->getBookingTemp($session_id)->result();
+
+               
+
+                foreach ($book_temp_data as $key => $value) {
+
+                    $cart_global_id[] = $value->product_name.','.$value->cart_id;
+
+                }
+
+              	//echo "<pre>"; print_r($cart_global_id); echo "</pre>"; die();
+
+              
+
+                $data['cart_global'] = $cart_global_id;
+
+                $data['cart_global_id'] = base64_encode(json_encode($cart_global_id));
+
+                $b2c_id = $this->session->userdata('user_id');
+
+                // debug($data); exit();
+
+                if($this->session->userdata('user_id')){
+
+
+
+                    $data['user_type'] = $user_type = $this->session->userdata('user_type');
+
+                    $data['user_id'] = $user_id = $this->session->userdata('user_id');
+
+					 $data['userInfo'] =$this->general_model->get_user_details($user_id, $user_type);
+
+					$data['recent_billing'] =$this->booking_model->get_recent_billing_details($user_id, $user_type);
+
+                    
+
+					$data12['s_session_id'] = $session_id;
+
+					$data12['user_id'] = $user_id;
+
+ 					$data12['user_type_id'] = $user_type;
+
+				 	$data['session_id_c_v'] = $secdata =  base64_encode(json_encode($data12));
+
+					$data['user_logs_status'] ='You are logged in. Now you can continue the booking.';
+
+                }
+
+				else
+
+				{
+
+					$data12['s_session_id'] = $session_id;
+
+				 	$data['session_id_c_v'] = $secdata = base64_encode(json_encode($data12));
+
+					$data['user_logs_status'] ='';
+
+				}
+
+				  $data['phone_code'] = $this->custom_db->get_phone_code_list();
+
+				  $data['user_country_code'] = 'US';
+
+               // echo '<pre/>';print_r($_SESSION);exit;
+
+				  // debug($data);
+
+				  // exit;
+
+				  $data['search_id'] = $search_id;
+
+				  $data['search_module'] = $search_module;
+
+				  
+
+				  $data_condition['origin'] = $search_id;
+
+				  $data_condition['search_type'] = $search_module;
+
+				  //getting search data
+
+				  $search_data = $this->custom_db->single_table_records('search_history','*',$data_condition);
+
+                    
+
+                    //echo "<pre>"; print_r($search_data); echo "</pre>"; die();
+
+                  // debug($search_data); exit();
+
+				  if($search_data['status']==true){
+
+				  	if($search_module=='FLIGHT'){
+
+				  		$search_req = json_decode($search_data['data'][0]['search_data']);
+
+				  		 $return_date = '';$isdomstic='';
+
+				  		 $search_req_format['req'] =$search_req;
+
+		                if($search_req->trip_type == 'oneway'){
+
+		                  $type   = 'oneway';   
+
+		                }else if($search_req->trip_type == 'round'){
+
+		                  $type   = 'round'; 
+
+		                  $return_date = $search_req->return;
+
+		                }
+
+		                $search_req_format['req']->type = $type;
+
+		                //$search_req_format['req']->return_date = $search_req->return;
+
+		               
+
+		               
+
+		                $isdomstic=0;               
+
+		                 $search_req_format['req']->origin = substr(chop(substr($search_req->from, -5), ')'), -3);
+
+
+
+		                $search_req_format['req']->destination = substr(chop(substr($search_req->to, -5), ')'), -3);
+
+
+
+	                   $search_req_format['req']->depart_date = $search_req->depature;
+
+	                   $search_req_format['req']->return_date = $return_date;
+
+	                   $search_req_format['req']->ADT = $search_req->adult;
+
+	                   $search_req_format['req']->CHD = $search_req->child;
+
+	                   $search_req_format['req']->INF = $search_req->infant;
+
+	                   $search_req_format['req']->class = $search_req->class;
+
+	                   $search_req_format['req']->is_domestic = $isdomstic;
+
+	                   $search_req_format['req']->search_id = $search_id;
+
+	                  	$search_req_arr = json_decode(json_encode($search_req_format),true);
+
+
+
+				  		$data['search_req']=$search_req_format['req'];
+
+				  		$data['search_request'] = base64_encode(json_encode($search_req_arr));
+
+				  	}elseif ($search_module=='HOTEL') {
+
+				  		$data['search_request'] = $search_req = json_decode($search_data['data'][0]['search_data'],true);
+
+				  	}elseif ($search_module=='BUS') {
+
+				  		$data['search_request'] = $search_req = json_decode($search_data['data'][0]['search_data'],true);
+
+				  	}
+
+				  }
+
+
+
+				  $pcode = base64_encode('fool');
+
+				  $pcode_d = "0.00";
+
+				  $pcode_f = '';
+
+				  $bt = $this->booking_travellers($secdata,$pcode,$pcode_d,$pcode_f,$search_id="",$search_module="");
+
+				  //echo '<pre>';print_r($bt);exit();
+
+				  $data['bt'] = $bt;
+
+				 // debug($data); exit;
+
+                $this->load->view(PROJECT_THEME.'/common/booking', $data);
+
+            }else{
+
+            // 	$this->load->view(PROJECT_THEME.'/booking/bus_voucher_view');
+
+                $this->load->view('errors/expiry');
+
+            }
+
+        }else{
+
+            $this->load->view('errors/expiry');
+
+        }
+
+    }
+
+
+
+    
+
+	public function booking_travellers($secdata,$pcode,$pcode_d,$pcode_f,$search_id="",$search_module="") {
+
+		
+
+		if(isset($secdata) && $secdata!=''){
+
+		
+
+		 $data['session_id_xc'] = $session_id_xc = $secdata;
+
+		 $session_id_xcc =  json_decode(base64_decode($session_id_xc));
+
+				if($session_id_xcc->user_type_id == ''){ $session_id_xcc->user_type_id = 0;}
+
+				if($session_id_xcc!='' && $pcode!='' ) {
+
+					$data['pcode'] = $pcode;
+
+					$data['pcode_d'] = $pcode_d;
+
+					//$data['pcode_f'] = $pcode_f;
+
+					$session_id = $session_id_xcc->s_session_id;
+
+					$count = $this->cart_model->getBookingTemp($session_id)->num_rows();
+
+					if($count > 0){
+
+						$data['countries'] = $this->general_model->getCountryList();
+
+						$data['book_temp_data'] = $book_temp_data = $this->cart_model->getBookingTemp($session_id)->result();
+
+					   
+
+						foreach ($book_temp_data as $key => $value) {
+
+							$cart_global_id[] = $value->product_name.','.$value->cart_id;
+
+						}
+
+					
+
+						$user_id = $session_id_xcc->user_id;
+
+						$user_type = $session_id_xcc->user_type_id;
+
+
+
+						$data['user_type'] = $user_type;
+
+						$data['user_id'] = $user_id;
+
+						$data['userInfo'] =$this->general_model->get_user_details($user_id, $user_type);
+
+						$data['recent_billing'] =$this->booking_model->get_recent_billing_details($user_id, $user_type);
+
+						if($search_module=='FLIGHT'){
+
+						    $data['airline_list'] = $this->Flight_Model->get_airline_list();
+
+						}
+
+							return $data;
+
+					}else{
+
+						//$this->load->view(PROJECT_THEME.'/errors/expiry');
+
+					}
+
+				}
+
+				else{
+
+                //$this->load->view(PROJECT_THEME.'/errors/expiry');
+
+            }
+
+        }else{
+
+            //$this->load->view(PROJECT_THEME.'/errors/expiry');
+
+        }
+
+    }
+
+    public function checkout(){
+
+    	error_reporting(0);
+
+    	/*echo "string";
+
+    	ini_set('display_errors', '1');
+
+        ini_set('display_startup_errors', '1');
+
+        error_reporting(E_ALL);*/
+
+    	$this->load->library('../controllers/account');
+
+    	$account = $this->account->create_with_email_checkout();
+
+    	// debug($account); exit;
+
+		$session_id_xc = $_POST['session_id_xc'];
+
+		$session_id_xcc =  json_decode(base64_decode($session_id_xc));
+
+		$module_final1=$_POST['module_final1'];
+
+		$module_final=json_decode(base64_decode($module_final1));
+
+        $checkout_form = $this->input->post();
+
+        $total_payable = base64_decode($checkout_form['total']);
+
+	 
+
+        $cids = base64_decode($checkout_form['cid']);
+
+        $cids = json_decode($cids);
+
+        /*debug($checkout_form);
+
+        debug($cids);
+
+         exit();*/
+
+        //Promo Code starts here
+
+        $promo_code = base64_decode($checkout_form['code']);
+
+        
+
+        if($promo_code != 'fool'){
+
+			
+
+	    	$count = $this->booking_model->check_promocode($promo_code);
+
+	    	
+
+	    	if(count($count) == 1){
+
+	    		$promo_data = $this->booking_model->check_promocode($promo_code);
+
+	    		$promo_data = $promo_data[0];
+
+	    		
+
+	    		$user_time = time();
+
+	    		$exp_time = strtotime($promo_data->expiry_date);
+
+	    		if ($user_time <= $exp_time) {
+
+					$promo_id = $promo_data->promo_id;
+
+	    			$promo_type = $promo_data->promo_type;
+
+	    			$discount = $mdic = $promo_data->discount;
+
+	    			$isCorrent = 'true';
+
+	    		}
+
+	    	}
+
+	    }else{
+
+	    	$isCorrent = 'false';
+
+	    }
+
+		if($session_id_xcc!='' && isset($account['user_id']) && $account['user_id']!='' && isset($account['user_type_id']) && $account['user_type_id']!='' ) 
+
+			{
+
+            $user_type = $account['user_type_id'];
+
+            $user_id = $account['user_id'];
+
+            $user_id =$this->session->userdata('user_id');
+
+
+
+			$userInfo =$this->general_model->get_user_details($user_id, $user_type);
+
+			if($userInfo->user_type_name=='B2B')
+
+			{
+
+				$status = $this->b2b_check_payment($total_payable, $user_id);
+
+
+
+				if($status == false){
+
+					$data['status'] = -2;
+
+					echo json_encode($data);die;
+
+				}
+
+				$payment_method = 'DEPOSIT';
+
+			}
+
+			else
+
+			{
+
+				$payment_method = 'PAYMENT';
+
+			}
+
+        } else{
+
+        	$data['status'] = -1;
+
+	        $data['signup_login'] = WEB_URL.'booking/signup_login';
+
+	        echo json_encode($data);die;
+
+        }
+
+
+
+        $parent_pnr = $this->generate_parent_pnr();
+
+         $module_count1=count($module_final);
+
+        $ttl = array();
+
+        foreach ($cids as $key => $cid) {
+
+            list($module, $cid) = explode(',', $cid);
+
+		
+
+	
+
+         if($module == 'FLIGHT'){
+
+				$cart_flight_data = $this->cart_model->getBookingTemp_flight($cid);
+
+				if(isset($cart_flight_data) && $cart_flight_data!='')
+
+				{									 
+
+				if($isCorrent == 'true'){
+
+					
+
+					$total = $cart_flight_data->total_cost;
+
+					if($promo_type == 'PERCENTAGE'){
+
+	    				$discount = ($mdic/100) * $total;
+
+	    				$discount = number_format(($discount) ,2,'.','');
+
+							$f_amt =  $total-$discount;
+
+							$BASE_AMOUNT_ = $f_amt;
+
+							$f_amt_v1 = $this->general_model->convert_currecy_with_markup($f_amt,$cart_flight_data->api_id);
+
+ 							$TOTAL = $f_amt_v1['TotalPrice'];
+
+							$MY_MARKUP_ = $f_amt_v1['My_Markup'];
+
+	    				
+
+	    				$DISCOUNT = $discount;
+
+	    			}else if($promo_type == 'AMOUNT'){
+
+	    				$discount = $discount;
+
+	    				if($total >= $promo_data->promo_amount){
+
+	    					$discount = number_format(($discount) ,2,'.','');
+
+							$f_amt =  $total-$discount;
+
+							$BASE_AMOUNT_ = $f_amt;
+
+							$f_amt_v1 = $this->general_model->convert_currecy_with_markup($f_amt,$cart_flight_data->api_id);
+
+ 							$TOTAL = $f_amt_v1['TotalPrice'];
+
+							$MY_MARKUP_ = $f_amt_v1['My_Markup'];
+
+							
+
+							 
+
+		    				$DISCOUNT = $discount;
+
+	    				}else{
+
+	    					$TOTAL =  $cart_flight_data->total_cost;
+
+	    					$DISCOUNT = 0;
+
+							$MY_MARKUP_ = $cart_flight_data->my_markup;
+
+							$BASE_AMOUNT_ = $cart_flight_data->admin_baseprice;
+
+							
+
+	    				}
+
+	    			}
+
+					$promo_id=$promo_data->promo_id;
+
+				}else{					
+
+					$TOTAL = $cart_flight_data->total_cost;
+
+					$DISCOUNT = 0;
+
+					$promo_id='';
+
+				 
+
+					$MY_MARKUP_ = $cart_flight_data->my_markup;
+
+					$BASE_AMOUNT_ = $cart_flight_data->admin_baseprice;
+
+					
+
+				}
+
+				$ttl[] = $TOTAL;
+
+				$TravelerDetails = json_encode($checkout_form); 
+
+				// debug($cart_flight_data);die;
+
+				$booking_flight = array(
+
+					'origin' => $cart_flight_data->origin,
+
+					'destination' => $cart_flight_data->destination,
+
+					'origin_airport' => $cart_flight_data->origin_airport,
+
+					'destination_airport' => $cart_flight_data->destination_airport,
+
+					'outward_departure' => $cart_flight_data->outward_departure,
+
+					'outward_arrival' => $cart_flight_data->outward_arrival,
+
+					'inward_depature' => $cart_flight_data->inward_depature,
+
+					'inward_arrival' => $cart_flight_data->inward_arrival,
+
+					'airline' => $cart_flight_data->airline,
+
+					'airline_image' => $cart_flight_data->airline_image,
+
+					'origin_city' => $cart_flight_data->origin_city,
+
+					'destination_city' => $cart_flight_data->destination_city,
+
+					'outward_stops' => $cart_flight_data->outward_stops,
+
+					'inward_stops' => $cart_flight_data->inward_stops,
+
+					'mode' => $cart_flight_data->mode,
+
+					'segment_data' => $cart_flight_data->segment_data,
+
+					'PricingDetails' => $cart_flight_data->PricingDetails,
+
+					'fareBasis'	=> $cart_flight_data->fareBasis,
+
+					'specific_rec_details' => $cart_flight_data->specific_rec_details,
+
+					'request_scenario'	=> $cart_flight_data->request_scenario,
+
+					'outward_duration' => $cart_flight_data->outward_duration,
+
+					'inward_duration' => $cart_flight_data->inward_duration,
+
+					'card_type' => $checkout_form['card_type'],
+
+					'card_holder_name' => $checkout_form['card_holder_name'],
+
+					'card_number' => $checkout_form['card_number'],
+
+					'exp_month' => $checkout_form['exp_month'],
+
+					'exp_year' => $checkout_form['exp_year'],
+
+					'cvv_num' => $checkout_form['cvv_num']
+
+				);	
+
+				// echo "pankaj<pre/>"; print_r($booking_flight);die;			 
+
+				$booking_flight_id = $this->booking_model->insert_booking_flight($booking_flight);
+
+							
+
+				$booking_transaction = array(
+
+					'api_rate' =>$cart_flight_data->admin_baseprice,
+
+					'api_tax' =>$cart_flight_data->api_tax,
+
+					'api_currency' => $cart_flight_data->api_currency,
+
+					'convertion_value' =>'0',
+
+					'net_rate' => ($cart_flight_data->admin_baseprice + $cart_flight_data->api_tax),
+
+					'admin_markup' => $cart_flight_data->admin_markup,
+
+					'admin_baseprice' =>$cart_flight_data->admin_baseprice,
+
+ 					'agent_markup' => $MY_MARKUP_,
+
+ 					'base_amount' => $BASE_AMOUNT_,
+
+					'promo_id' => $promo_id,
+
+					'discount' =>$DISCOUNT,
+
+					'total_amount' => $TOTAL,
+
+					'card_type' => $checkout_form['card_type'],
+
+					'card_holder_name' => $checkout_form['card_holder_name'],
+
+					'card_number' => $checkout_form['card_number'],
+
+					'exp_month' => $checkout_form['exp_month'],
+
+					'exp_year' => $checkout_form['exp_year'],
+
+					'cvv_num' => $checkout_form['cvv_num']
+
+					
+
+				);
+
+					//echo "<pre>"; print_r($booking_transaction); echo "</pre>"; die();
+
+				
+
+				$booking_transaction_id = $this->booking_model->insert_booking_transaction_data($booking_transaction);	
+
+							
+
+				$booking_payment = array(
+
+				    'parent_pnr_book'=>$parent_pnr,
+
+					'payment_type' =>$payment_method,
+
+					'payment_gateway_id' => 1,
+
+					'payment_gateway_status' => 'INITIATED',
+
+					'amount' => $TOTAL,
+
+					'payment_status' => '',
+
+					'payment_response' => ''
+
+				);
+
+				$booking_payment_id = $this->booking_model->insert_booking_payment_data($booking_payment);	
+
+				$required_param=array();
+
+				foreach($checkout_form as $keya => $vala)
+
+				{
+
+					$keya_v = explode("_____________",$keya);
+
+					if(isset($keya_v[1]) && $keya_v[1]!='')
+
+					{
+
+						$required_param[] = array(
+
+						'name' =>$keya_v[1],
+
+						'value' =>$vala
+
+						);
+
+						 
+
+					}
+
+				}
+
+				$required_param_v1= json_encode($required_param);
+
+				$booking_xml = array(
+
+					'api_id' =>$cart_flight_data->api_id,
+
+					'product_id' =>$cart_flight_data->product_id,
+
+					'search_scenario' =>$cart_flight_data->request_scenario,
+
+					
+
+				);
+
+				$booking_xml_data_id = $this->booking_model->insert_booking_xml_data($booking_xml);
+
+				
+
+				$booking_supplier = array(
+
+					'api_id' =>$payment_method,
+
+					'booking_supplier_number' => 'XXXXXXXXXX',
+
+					'supplier_status' => '',
+
+					'supplier_reference_number' => '',
+
+					'booking_xml_data_id' => $booking_xml_data_id,
+
+					'required_param' => $required_param_v1
+
+				);
+
+				$booking_supplier_id = $this->booking_model->insert_booking_supplier_data($booking_supplier);
+
+				
+
+	
+
+			$billing_address = array(
+
+					'user_id' =>$user_id, 
+
+					'billing_first_name' =>$checkout_form['first_name'],
+
+					'billing_last_name' =>$checkout_form['last_name'],
+
+					'billing_email' =>$checkout_form['email'],
+
+					'billing_contact_number' =>$checkout_form['mobile_code'].'-'.$checkout_form['mobile'],
+
+					'billing_country_code' =>"",
+
+					'booking_billing_address'=>"",
+
+					'billing_address' =>"",
+
+				/*	
+
+					'pay_billing_country'=>$checkout_form['billing_country'],
+
+					'pay_billing_address_1'=>$checkout_form['billing_address_2'],
+
+					'pay_city_name'=>$checkout_form['billing_city_1'],
+
+					'pay_state_name'=>$checkout_form['billing_state_1'],
+
+					'pay_zip_code'=>$checkout_form['billing_zip_code_1'],
+
+                */
+
+					'billing_city' =>"",
+
+					'billing_state' =>"",
+
+					'billing_zip' =>"",
+
+					'gst_reg_no' =>$checkout_form['gst_reg_no'],
+
+					'gst_c_name' =>$checkout_form['gst_cname']
+
+				);
+
+				$billing_address_id = $this->booking_model->insert_booking_billing_address($billing_address);
+
+				
+
+				
+
+				// echo '<pre/>';print_r($cart_flight_data);exit;
+
+                $booking = array(
+
+                     'api_id'=>$cart_flight_data->api_id,
+
+                     'api_name'=>"AMADEUS",
+
+					 'product_id' => $cart_flight_data->product_id,
+
+                     'referal_id' => $booking_flight_id,
+
+					 'booking_transaction_id' => $booking_transaction_id,
+
+					 'payment_id' => $booking_payment_id,
+
+					 'booking_supplier_id' => $booking_supplier_id,
+
+					 'billing_address_id' => $billing_address_id,
+
+                     'parent_pnr_no' => $parent_pnr,
+
+                     'user_id' => $user_id,
+
+					 'user_type_id' => $user_type,
+
+					 'leadpax' => $checkout_form['first_name'].' '.$checkout_form['last_name'],
+
+					 'voucher_date' => date('Y-m-d'),
+
+					 'travel_date' => date('Y-m-d'),
+
+					 'segment_data' => $cart_flight_data->segment_data,
+
+					 'PricingDetails' => $cart_flight_data->PricingDetails,
+
+					 'fareBasis'	=> $cart_flight_data->fareBasis,
+
+                	 'specific_rec_details' => $cart_flight_data->specific_rec_details,
+
+                	'request_scenario'	=> $cart_flight_data->request_scenario,
+
+					 'booking_xml_data_id'=>$booking_xml_data_id,
+
+                     'ip_address' =>  $this->input->ip_address(),
+
+                );
+
+                $bid = $this->booking_model->insert_booking_global_data($booking);
+
+				
+
+				$p_fname = $checkout_form['first_name'.$cid];
+
+				$p_lname = $checkout_form['last_name'.$cid];
+
+				#debug($checkout_form);
+
+				
+
+				/**datepicker**/
+
+					//$day = $checkout_form['adob_D'.$cid];
+
+					//$month = $checkout_form['adob_M'.$cid];
+
+					//$year = $checkout_form['adob_Y'.$cid];
+
+				/**/
+
+				//echo "<pre>"; print_r($checkout_form); exit("485");
+
+				#exit;
+
+				$adob = $checkout_form['aDate_Of_Birth'.$cid];
+
+				$afrequent_flyer = @$checkout_form['afrequent_flyer'.$cid];
+
+				$afrequent_flyer_air = @$checkout_form['afrequent_air'.$cid];
+
+				$a_gender = $checkout_form['a_gender'.$cid];
+
+				$a_pass = $checkout_form['apass'.$cid];
+
+				$a_pass_expiry = $checkout_form['pass_expiry'.$cid];
+
+				$a_issue_country = $checkout_form['issuing_country'.$cid];
+
+				//	echo "<pre>"; print_r($adob); echo "</pre>"; die();
+
+				
+
+				
+
+				if(isset($checkout_form['cfirst_name'.$cid]))
+
+				{
+
+				$c_fname = $checkout_form['cfirst_name'.$cid];
+
+				$c_lname = $checkout_form['clast_name'.$cid];
+
+				$c_mealcode = $checkout_form['cmealcode'.$cid];
+
+				$cdob = $checkout_form['cDate_Of_Birth'.$cid];
+
+				$c_gender = $checkout_form['c_gender'.$cid];
+
+				$c_pass = $checkout_form['cpass'.$cid];
+
+				$c_pass_expiry = $checkout_form['cpass_expiry'.$cid];
+
+				$c_issue_country = $checkout_form['cissuing_country'.$cid];
+
+
+
+					// $c_day = $checkout_form['cdob_D'.$cid];
+
+					// $c_month = $checkout_form['cdob_M'.$cid];
+
+					// $c_year = $checkout_form['cdob_Y'.$cid];
+
+
+
+					// $c_m_expiry = $checkout_form['cpass_expiry_M'.$cid];
+
+					// $c_d_expiry = $checkout_form['cpass_expiry_D'.$cid];
+
+					
+
+					// $c_Y_expiry = $checkout_form['cpass_expiry_Y'.$cid];
+
+					$cfrequent_flyer = @$checkout_form['cfrequent_flyer'.$cid];
+
+					$cfrequent_flyer_air = @$checkout_form['cfrequent_air'.$cid];
+
+
+
+
+
+				}
+
+				if(isset($checkout_form['ifirst_name'.$cid]))
+
+				{
+
+				$i_fname = $checkout_form['ifirst_name'.$cid];
+
+				$i_lname = $checkout_form['ilast_name'.$cid];
+
+				$i_mealcode = $checkout_form['imealcode'.$cid];
+
+				$idob = $checkout_form['iDate_Of_Birth'.$cid];
+
+				$i_gender = $checkout_form['i_gender'.$cid];
+
+				$i_pass = $checkout_form['ipass'.$cid];
+
+				$i_pass_expiry = $checkout_form['ipass_expiry'.$cid];
+
+				$i_issue_country = $checkout_form['iissuing_country'.$cid];
+
+					// $i_day = $checkout_form['idob_D'.$cid];
+
+					// $i_month = $checkout_form['idob_M'.$cid];
+
+					// $i_year = $checkout_form['idob_Y'.$cid];
+
+
+
+					// $i_m_expiry = $checkout_form['ipass_expiry_M'.$cid];
+
+					// $i_d_expiry = $checkout_form['ipass_expiry_D'.$cid];
+
+					
+
+					// $i_Y_expiry = $checkout_form['ipass_expiry_Y'.$cid];
+
+
+
+
+
+				}
+
+				$booking_passenger_v=array();
+
+				for($p=0;$p<count($p_fname);$p++)
+
+				{	
+
+					//$day_string = ($day[$p]+1)."-".$month[$p]."-".$year[$p];
+
+					// $expiry_day_string = ($a_d_expiry[$p]+1)."-".$a_m_expiry[$p]."-".$a_Y_expiry[$p];
+
+	//echo '<pre/>';print_r($p_fname);exit('573');
+
+					$booking_passenger = array(
+
+						'booking_global_id'=>$bid,
+
+						'passenger_type' =>'ADULT',
+
+						'first_name' =>$p_fname[$p],
+
+						'last_name' =>$p_lname[$p],						
+
+						'mealcode' =>'no',						
+
+						'dob' => date("Y-m-d",strtotime(str_replace("/", "-",$adob[$p]))),
+
+						'gender' => strtoupper($a_gender[$p]),
+
+						'passport_no' => $a_pass[$p],
+
+						'pass_expiry' => date("Y-m-d",strtotime(str_replace("/", "-",$a_pass_expiry[$p]))),
+
+						'issue_country' => $a_issue_country[$p],
+
+						'frequent_flyer_no'=>$afrequent_flyer[$p],
+
+						'frequent_airline_code'=>$afrequent_flyer_air[$p]
+
+					);					
+
+					$booking_passenger_v[] = $booking_passenger;
+
+				}
+
+			//	echo '<pre/>';print_r($booking_passenger_v);exit('573');
+
+				if(isset($c_fname) && is_array($c_fname))
+
+				{
+
+				for($p=0;$p<count($c_fname);$p++){	
+
+					// $c_day_string = ($c_day[$p]+1)."-".$c_month[$p]."-".$c_year[$p];
+
+					// $expiry_day_string = ($c_d_expiry[$p]+1)."-".$c_m_expiry[$p]."-".$c_Y_expiry[$p];
+
+					$booking_passenger = array(
+
+					   'booking_global_id'=>$bid,
+
+						'first_name' =>$c_fname[$p],
+
+						'last_name' =>$c_lname[$p],
+
+						'mealcode' =>$c_mealcode[$p],
+
+						'passenger_type' =>'CHILD',
+
+						'dob' => date("Y-m-d",strtotime(str_replace("/", "-",$cdob[$p]))),
+
+						'gender' =>strtoupper($c_gender[$p]),
+
+						'passport_no' => $c_pass[$p],
+
+						'pass_expiry' => date("Y-m-d",strtotime(str_replace("/", "-",$c_pass_expiry[$p]))),
+
+						'issue_country' => $c_issue_country[$p],
+
+						'frequent_flyer_no'=>$cfrequent_flyer[$p],
+
+						'frequent_airline_code'=>$cfrequent_flyer_air[$p]
+
+					);
+
+					$booking_passenger_v[] = $booking_passenger;
+
+				}
+
+				}
+
+				if(isset($i_fname) && is_array($i_fname))
+
+				{
+
+				for($p=0;$p<count($i_fname);$p++)
+
+				{	
+
+					// $i_day_string = ($i_day[$p]+1)."-".$i_month[$p]."-".$i_year[$p];
+
+					// $expiry_day_string = ($i_d_expiry[$p]+1)."-".$i_m_expiry[$p]."-".$i_Y_expiry[$p];
+
+					$booking_passenger = array(
+
+						'booking_global_id'=>$bid,
+
+						'first_name' =>$i_fname[$p],
+
+						'last_name' =>$i_lname[$p],
+
+						'mealcode' =>$i_mealcode[$p],
+
+						'passenger_type' =>'INFANT',
+
+						'dob' => date("Y-m-d",strtotime(str_replace("/", "-",$idob[$p]))),
+
+						'gender' =>strtoupper($i_gender[$p]),
+
+						'passport_no' => $i_pass[$p],
+
+						'pass_expiry' => date("Y-m-d",strtotime(str_replace("/", "-",$i_pass_expiry[$p]))),
+
+						'issue_country' => $i_issue_country[$p],
+
+						'frequent_flyer_no'=>'',
+
+						'frequent_airline_code'=>''
+
+					);
+
+					$booking_passenger_v[] = $booking_passenger;
+
+				}
+
+				}
+
+/*echo "<pre>";
+
+print_r ($booking_passenger_v);
+
+echo "</pre>";exit();
+
+*/
+
+				$this->booking_model->insert_booking_passenger($booking_passenger_v);
+
+				
+
+				$vid_v = strtoupper(substr(PROJECT_NAME,0,3));
+
+                $con_pnr_no = $vid_v.date('m').'F'.date('dHi').$bid;
+
+				if($userInfo->user_type_name=='B2B')
+
+				{
+
+                $update_booking = array(
+
+                    'con_pnr_no' => $con_pnr_no,
+
+					'booking_status' => 'PROCESS' 
+
+                );
+
+				}
+
+				else
+
+				{
+
+					 $update_booking = array(
+
+                    'con_pnr_no' => $con_pnr_no,
+
+					'booking_status' => 'FAILED' 
+
+               	 );
+
+				}
+
+                $this->booking_model->Update_Booking_Global($bid, $update_booking);
+
+                
+
+                //$this->booking_model->clearCart($cid);
+
+			}
+
+				//$pnr_no[] = $this->booking($booking_flight_id, $parent_pnr, $module='FLIGHT');
+
+				
+
+			$Email =  $checkout_form['email'];
+
+            $OrderId = $parent_pnr;
+
+            $TOTAL = array_sum($ttl);
+
+            $TOTAL = base64_encode(json_encode($TOTAL));
+
+            $Email = base64_encode(json_encode($Email));
+
+            $OrderId = base64_encode(json_encode($OrderId));
+
+			if($module_count1==""){
+
+                $GateURL = WEB_URL.'booking/flight_availability/'.$parent_pnr;  //direct booking without payment gateway
+
+                
+
+                
+
+                $encoded_pnr_parent=base64_encode(json_encode($parent_pnr));
+
+                // $GateURL = WEB_URL.'payumoney/index.php?parent='.$encoded_pnr_parent.'&numb='.$TOTAL;
+
+                
+
+                $data['status'] = 555;
+
+                $data['GateURL'] = $GateURL;
+
+          	    //redirect($GateURL);
+
+                echo json_encode($data);
+
+                die;
+
+			}
+
+		   }
+
+		   
+
+		  if($module == 'HOTEL'){
+
+		 	 //echo $cid;exit;
+
+		 	$cart_hotel_data = $this->cart_model->getBookingTemp_hotel($cid);
+
+		 	
+
+		 	$hotel_details = $this->hotel_model->get_hotel_other_details($cart_hotel_data->HotelCode,$cart_hotel_data->session_id);
+
+		 	$hotel_details = $hotel_details[0];
+
+		 	$hotel_request = unserialize($hotel_details['request']);
+
+		 	
+
+		 	$user_id = $cart_hotel_data->user_id;
+
+		 	$user_type = $cart_hotel_data->user_type;
+
+		 	 
+
+		 	 //echo '<pre>';print_r($hotel_request);exit();
+
+		 	 
+
+				if(isset($cart_hotel_data) && $cart_hotel_data!='')
+
+				{
+
+				$api_id = $cart_hotel_data->api;
+
+				if($isCorrent == 'true'){
+
+					$total = $cart_hotel_data->total_cost;
+
+					if($promo_type == 'PERCENTAGE'){
+
+	    				$discount = ($mdic/100) * $total;
+
+	    				$discount = number_format(($discount) ,2,'.','');
+
+							$f_amt =  $total-$discount;
+
+							$BASE_AMOUNT_ = $f_amt;
+
+							$f_amt_v1 = $this->general_model->convert_currecy_with_markup($f_amt,$api_id);
+
+ 							$TOTAL = $f_amt_v1['TotalPrice'];
+
+							$MY_MARKUP_ = $f_amt_v1['My_Markup'];
+
+	    				
+
+	    				$DISCOUNT = $discount;
+
+	    			}else if($promo_type == 'AMOUNT'){
+
+	    				$discount = $discount;
+
+	    				if($total >= $promo_data->promo_amount){
+
+	    					$discount = number_format(($discount) ,2,'.','');
+
+							$f_amt =  $total-$discount;
+
+							$BASE_AMOUNT_ = $f_amt;
+
+							$f_amt_v1 = $this->general_model->convert_currecy_with_markup($f_amt,$api_id);
+
+ 							$TOTAL = $f_amt_v1['TotalPrice'];
+
+							$MY_MARKUP_ = $f_amt_v1['My_Markup'];
+
+							
+
+							 
+
+		    				$DISCOUNT = $discount;
+
+	    				}else{
+
+	    					$TOTAL =  $cart_hotel_data->total_cost;
+
+	    					$DISCOUNT = 0;
+
+							$MY_MARKUP_ = $cart_hotel_data->AdminMarkup;
+
+							$BASE_AMOUNT_ = $cart_hotel_data->total_cost;
+
+	    				}
+
+	    			}
+
+					$promo_id=$promo_data->promo_id;
+
+				}else{
+
+					$TOTAL = $cart_hotel_data->total_cost;
+
+					$DISCOUNT = 0;
+
+					$promo_id='';
+
+				 
+
+					$MY_MARKUP_ = $cart_hotel_data->AdminMarkup;
+
+					$BASE_AMOUNT_ = $cart_hotel_data->total_cost;
+
+					
+
+				}
+
+				
+
+				if($checkout_form['convenience_fee']){
+
+					$con_fee_value=$checkout_form['convenience_fee'];
+
+					$TOTAL=$TOTAL+$con_fee_value;					
+
+				}
+
+                $ttl[] = $TOTAL;
+
+				 
+
+				$TravelerDetails = json_encode($checkout_form); 
+
+				$booking_hotel = array(
+
+												'booking_item_code_value' 			=> $cart_hotel_data->HotelCode,
+
+												'status_value' 						=> 'CONFIRMED',
+
+												'book_no_value' 					=> '',
+
+												'booking_status_val' 				=> '',
+
+												'parent_pnr' 						=> $parent_pnr, 
+
+												'parent_booking_number' 			=> '',
+
+												'ip_address' 						=> $this->input->ip_address(),
+
+												'check_in' 							=> $hotel_request['hotel_checkin'],
+
+												'check_out' 						=> $hotel_request['hotel_checkout'],
+
+												'contact_email' 					=> $checkout_form['email'],
+
+												'contact_fname' 					=> $checkout_form['first_name'],
+
+												'contact_mname' 					=> '',
+
+												'contact_sur_name' 					=> $checkout_form['last_name'],
+
+												'contact_city_name' 				=> null,
+
+												'contact_state_name' 				=> null,
+
+												'contact_zip_code' 					=> $checkout_form['zip'],
+
+												'contact_country_tele_code' 		=> $checkout_form['mobile'],
+
+												'contact_mobile_number' 			=> $checkout_form['mobile'],
+
+												'contact_country' 					=> $checkout_form['country'],
+
+												'passenger_details' 				=> $TravelerDetails,
+
+												'user_details_id' 					=> $cart_hotel_data->user_id,
+
+												'user_type' 						=> $cart_hotel_data->user_type,
+
+												'book_date' 						=> date('Y-m-d H:i:s'),
+
+												'api_temp_hotel_id' 				=> 0,
+
+												'shopping_cart_hotel_id' 			=> $cart_hotel_data->cart_id,
+
+												'session_id' 						=> $cart_hotel_data->session_id,
+
+												'api' 								=> $cart_hotel_data->api_id,
+
+												'hotel_code' 						=> $cart_hotel_data->HotelCode,
+
+												'room_code' 						=> $cart_hotel_data->RoomTypeCode,
+
+												'room_type' 						=> $cart_hotel_data->room_type,
+
+												'BookingCode'						=> $cart_hotel_data->RoomTypeName,
+
+												'inclusion' 						=> '',
+
+												'cost' 								=> $TOTAL,
+
+                        						'net_cost' 							=> $TOTAL,
+
+                        						'total_cost' 						=> $TOTAL,
+
+												'status' 							=> 'PROCESS',
+
+												'adult' 							=> array_sum($hotel_request['adult']),
+
+												'child' 							=> array_sum($hotel_request['child']),
+
+												'board_type' 						=> '',
+
+												'policy_description' 				=> '',
+
+												'room_count' 						=> $hotel_request['rooms'],
+
+												'admin_markup' 						=> '',
+
+												'org_amt' 							=> $TOTAL,
+
+												'xml_currency' 						=> BASE_CURRENCY,
+
+												'currency_val' 						=> BASE_CURRENCY,
+
+												'city' 								=> $hotel_details['city'],
+
+												'cancel_policy' 					=> '',
+
+												'cancel_till_date' 					=> '',
+
+												'cancel_amount' 					=> '',
+
+												'purchase_token' 					=> '',
+
+												'service_val' 						=> '',
+
+												'comment_remarks' 					=> '',
+
+												'information' 						=> '',
+
+												'cart_id'                               => $cid,
+
+												'search_id' 						=> $hotel_details['search_id'],
+
+												'search_date' 						=> date('Y-m-d H:i:s'),
+
+												'card_type' => $checkout_form['card_type'],
+
+												'card_holder_name' => $checkout_form['card_holder_name'],
+
+												'card_number' => $checkout_form['card_number'],
+
+												'exp_month' => $checkout_form['exp_month'],
+
+												'exp_year' => $checkout_form['exp_year'],
+
+												'cvv_num' => $checkout_form['cvv_num'],
+
+												'room_passengers'=> $cart_hotel_data->sec_room_count.'|'.base64_encode(json_encode($cart_hotel_data->sec_adult)).'|'.base64_encode(json_encode($cart_hotel_data->sec_child)).'|'.base64_encode(json_encode($cart_hotel_data->sec_child_age))
+
+											);
+
+											
+
+				$booking_hotel_id = $this->booking_model->insert_booking_hotel($booking_hotel);
+
+				
+
+				$booking_transaction = array(
+
+					'api_rate' =>0,
+
+					'api_currency' => BASE_CURRENCY,
+
+					'convertion_value' =>'0',
+
+					'net_rate' => $cart_hotel_data->total_cost,
+
+					'admin_markup' => '',	
+
+					'admin_baseprice' =>$cart_hotel_data->total_cost,
+
+ 					'agent_markup' => $MY_MARKUP_,
+
+ 					'base_amount' => $BASE_AMOUNT_,
+
+					'promo_id' => $promo_id,
+
+					'discount' =>$DISCOUNT,
+
+					'total_amount' => $TOTAL,
+
+					'card_type' => $checkout_form['card_type'],
+
+					'card_holder_name' => $checkout_form['card_holder_name'],
+
+					'card_number' => $checkout_form['card_number'],
+
+					'exp_month' => $checkout_form['exp_month'],
+
+					'exp_year' => $checkout_form['exp_year'],
+
+					'cvv_num' => $checkout_form['cvv_num']
+
+					
+
+				);
+
+				
+
+				$booking_transaction_id = $this->booking_model->insert_booking_transaction_data($booking_transaction);
+
+				
+
+				$booking_payment = array(
+
+					'payment_type' =>$payment_method,
+
+					'payment_gateway_id' => 1,
+
+					'amount' => $TOTAL,
+
+					'payment_status' => '',
+
+					'payment_response' => '',
+
+					'payment_gateway_status' => 'INITIATED'
+
+				);
+
+				//echo "<pre/>"; print_r($booking_payment); exit;
+
+				$booking_payment_id = $this->booking_model->insert_booking_payment_data($booking_payment);
+
+				
+
+				$xml_log_data= $this->booking_model->get_xml_log_id($cart_hotel_data->xml_logid);	  
+
+				$required_param=array();
+
+				foreach($checkout_form as $keya => $vala)
+
+				{
+
+					$keya_v = explode("_____________",$keya);
+
+					if(isset($keya_v[1]) && $keya_v[1]!='')
+
+					{
+
+						$required_param[] = array(
+
+						'name' =>$keya_v[1],
+
+						'value' =>$vala
+
+						);
+
+						 
+
+					}
+
+				}
+
+				$required_param_v1= json_encode($required_param);
+
+				$booking_xml = array(
+
+					'api_id' =>$cart_hotel_data->api_id,
+
+					'product_id' =>$cart_hotel_data->product_id,
+
+					'search_scenario' => json_encode($cart_hotel_data),
+
+					
+
+					
+
+				);
+
+				
+
+				$booking_xml_data_id = $this->booking_model->insert_booking_xml_data($booking_xml);
+
+				
+
+				$booking_supplier = array(
+
+					'api_id' =>$payment_method,
+
+					'booking_supplier_number' => 'XXXXXXXXXX',
+
+					'supplier_status' => '',
+
+					'supplier_reference_number' => '',
+
+					'booking_xml_data_id' => $booking_xml_data_id,
+
+					'required_param' => $required_param_v1
+
+				);
+
+				$booking_supplier_id = $this->booking_model->insert_booking_supplier_data($booking_supplier);
+
+
+
+				$billing_address = array(
+
+					'user_id' =>$user_id, 
+
+					'billing_salutation' =>trim($checkout_form['saluation']),
+
+					'billing_first_name' =>trim($checkout_form['first_name']),
+
+					'billing_last_name' =>trim($checkout_form['last_name']),
+
+					'billing_email' =>trim($checkout_form['email']),
+
+					'billing_contact_number' =>trim($checkout_form['mobile']),
+
+					'billing_country_code' =>trim($checkout_form['country']),
+
+					'billing_address' =>trim($checkout_form['street_address'].' '.$checkout_form['address2']),
+
+					'billing_city' =>trim($checkout_form['city']),
+
+					'billing_state' =>trim($checkout_form['state']),
+
+					'billing_zip' =>trim($checkout_form['zip'])
+
+				);
+
+				$billing_address_id = $this->booking_model->insert_booking_billing_address($billing_address);
+
+
+
+                $booking = array(
+
+                    'product_id' => $cart_hotel_data->product_id,
+
+					'api_id'=>$cart_hotel_data->api_id,
+
+                    'referal_id' => $booking_hotel_id,
+
+					'booking_transaction_id' => $booking_transaction_id,
+
+					'payment_id' => $booking_payment_id,
+
+					'booking_supplier_id' => $booking_supplier_id,
+
+					'billing_address_id' => $billing_address_id,
+
+                    'parent_pnr_no' => $parent_pnr,
+
+                    'user_id' => $user_id,
+
+					'user_type_id' => $user_type,
+
+					'voucher_date' => date('Y-m-d'),
+
+					'travel_date' => date('Y-m-d'),
+
+                     'leadpax' => $checkout_form['saluation'].' '.$checkout_form['first_name'].' '.$checkout_form['last_name'],
+
+                    'ip_address' =>  $this->input->ip_address(),
+
+                    'cart_id'   => $cart_hotel_data->cart_id,
+
+                );
+
+                
+
+                $bid = $this->booking_model->insert_booking_global_data($booking);
+
+				
+
+				$p_fname = $checkout_form['first_name'.$cid];
+
+				$p_lname = $checkout_form['last_name'.$cid];
+
+			
+
+				$a_gender = $checkout_form['a_gender'.$cid];
+
+				
+
+				if(isset($checkout_form['cfirst_name'.$cid]))
+
+				{
+
+    				$c_fname = $checkout_form['cfirst_name'.$cid];
+
+    				$c_lname = $checkout_form['clast_name'.$cid];
+
+    				$c_gender = $checkout_form['c_gender'.$cid];
+
+				}
+
+			 
+
+				
+
+				$booking_passenger_v=array();
+
+				for($p=0;$p<count($p_fname);$p++)
+
+				{
+
+					$gender = 'FEMALE';
+
+					if($a_gender[$p] == 'Mr')
+
+					{
+
+						$gender = 'MALE';
+
+					}
+
+					$booking_passenger = array(
+
+					'booking_global_id'=>$bid,
+
+						'first_name' =>trim($p_fname[$p]),
+
+						'last_name' =>trim($p_lname[$p]),
+
+						'passenger_type' =>'ADULT',
+
+						 
+
+						'gender' =>$gender
+
+					);
+
+					$booking_passenger_v[] = $booking_passenger;
+
+				}
+
+				if(isset($c_fname) && is_array($c_fname))
+
+				{
+
+				for($p=0;$p<count($c_fname);$p++)
+
+				{
+
+					$gender = 'FEMALE';
+
+					if($c_gender[$p] == 'Mr')
+
+					{
+
+						$gender = 'MALE';
+
+					}
+
+					$booking_passenger = array(
+
+					'booking_global_id'=>$bid,
+
+						'first_name' =>trim($c_fname[$p]),
+
+						//'salutation' =>trim($c_gender[$p]),
+
+						'last_name' =>trim($c_lname[$p]),
+
+						'passenger_type' =>'CHILD', 
+
+						'gender' =>$gender
+
+					);
+
+					$booking_passenger_v[] = $booking_passenger;
+
+				}
+
+				}
+
+				
+
+				  $this->booking_model->insert_booking_passenger($booking_passenger_v);
+
+				
+
+				$vid_v = strtoupper(substr(PROJECT_NAME,0,3));
+
+                $con_pnr_no = $vid_v.date('m').'F'.date('dHi').$bid;
+
+				if($userInfo->user_type_name=='B2B')
+
+				{
+
+                $update_booking = array(
+
+                    'con_pnr_no' => $con_pnr_no,
+
+					'booking_status' => 'PROCESS' 
+
+                );
+
+				}
+
+				else
+
+				{
+
+					 $update_booking = array(
+
+                    'con_pnr_no' => $con_pnr_no,
+
+					'booking_status' => 'FAILED' 
+
+               	 );
+
+				}
+
+                $this->booking_model->Update_Booking_Global($bid, $update_booking);
+
+			}
+
+			
+
+			$Email =  trim($checkout_form['email']);
+
+            $OrderId = $parent_pnr;
+
+            $TOTAL = array_sum($ttl);
+
+            $TOTAL = base64_encode(json_encode($TOTAL));
+
+            $Email = base64_encode(json_encode($Email));
+
+            $OrderId = base64_encode(json_encode($OrderId));
+
+            $payment_keys = base64_encode($OrderId . ',' .$TOTAL. ',' . $module);
+
+            
+
+            $amount11 = array_sum($ttl);
+
+            
+
+            if($module_count1==""){
+
+                $GateURL = WEB_URL.'booking/book/'.$parent_pnr;
+
+                $data['status'] = 555;
+
+                $data['GateURL'] = $GateURL;
+
+                echo json_encode($data);
+
+                die;
+
+            }
+
+          
+
+			}  
+
+			if($module == "BUS"){
+
+				$update_data = array(
+
+					'email' 					=> $checkout_form['email'],
+
+					'phone_number' 				=>  $checkout_form['pn_mobil_no'],												
+
+					'checkout_form' 			=>  json_encode($checkout_form),					
+
+				);
+
+				$update_condition['parent_cart_id'] = $cid;				
+
+				$this->custom_db->update_record('cart_bus', $update_data, $update_condition);
+
+
+
+				$cart_bus_data = $this->cart_model->getBookingTemp_bus($cid);
+
+				$page_data_ = $this->cart_model->get_book_data_bycart($cid);				
+
+                $page_data = base64_decode($page_data_->book_data);
+
+                $cart_book_data = json_decode($page_data, true);
+
+		 	 	/*$hotel_details = $this->hotel_model->get_hotel_other_details($cart_hotel_data->HotelCode,$cart_hotel_data->session_id);
+
+			 	$hotel_details = $hotel_details[0];*/
+
+			 	// $hotel_request = unserialize($hotel_details['request']);
+
+			 	
+
+			 	$user_id = $cart_bus_data->user_id;
+
+			 	$user_type = $cart_bus_data->user_type;
+
+		 	 
+
+		 	 
+
+		 	 	/*debug($cart_book_data);
+
+		 	 	debug($checkout_form);
+
+		 	 	debug($cart_bus_data);
+
+		 	 	exit();*/
+
+				if(isset($cart_bus_data) && $cart_bus_data!='')
+
+				{
+
+					$api_id = $cart_bus_data->api;
+
+					if($isCorrent == 'true'){
+
+						$total = $cart_bus_data->total_cost;
+
+						if($promo_type == 'PERCENTAGE'){
+
+		    				$discount = ($mdic/100) * $total;
+
+		    				$discount = number_format(($discount) ,2,'.','');
+
+								$f_amt =  $total-$discount;
+
+								$BASE_AMOUNT_ = $f_amt;
+
+								$f_amt_v1 = $this->general_model->convert_currecy_with_markup($f_amt,$api_id);
+
+	 							$TOTAL = $f_amt_v1['TotalPrice'];
+
+								$MY_MARKUP_ = $f_amt_v1['My_Markup'];
+
+		    				
+
+		    				$DISCOUNT = $discount;
+
+		    			}else if($promo_type == 'AMOUNT'){
+
+		    				$discount = $discount;
+
+		    				if($total >= $promo_data->promo_amount){
+
+		    					$discount = number_format(($discount) ,2,'.','');
+
+								$f_amt =  $total-$discount;
+
+								$BASE_AMOUNT_ = $f_amt;
+
+								$f_amt_v1 = $this->general_model->convert_currecy_with_markup($f_amt,$api_id);
+
+	 							$TOTAL = $f_amt_v1['TotalPrice'];
+
+								$MY_MARKUP_ = $f_amt_v1['My_Markup'];
+
+								
+
+								 
+
+			    				$DISCOUNT = $discount;
+
+		    				}else{
+
+		    					$TOTAL =  $cart_bus_data->amount;
+
+		    					$DISCOUNT = 0;
+
+								$MY_MARKUP_ = $cart_bus_data->AdminMarkup;
+
+								$BASE_AMOUNT_ = $cart_bus_data->amount;
+
+		    				}
+
+		    			}
+
+						$promo_id=$promo_data->promo_id;
+
+					}else{
+
+						$TOTAL = $cart_bus_data->amount;
+
+						$DISCOUNT = 0;
+
+						$promo_id='';
+
+					 
+
+						$MY_MARKUP_ = $cart_bus_data->AdminMarkup;
+
+						$BASE_AMOUNT_ = $cart_bus_data->amount;
+
+						
+
+					}
+
+					
+
+					if($checkout_form['convenience_fee']){
+
+						$con_fee_value=$checkout_form['convenience_fee'];
+
+						$TOTAL=$TOTAL+$con_fee_value;					
+
+					}
+
+	                $ttl[] = $TOTAL;
+
+					 
+
+					$TravelerDetails = json_encode($checkout_form); 
+
+					$booking_bus = array(
+
+							'global_id' 				=> $cart_bus_data->parent_cart_id,
+
+							'bus_name' 					=> $cart_book_data['details']['TravelName'],
+
+							'origin_city' 				=> $cart_book_data['details']['Origin'],
+
+							'app_reference' 			=> $cart_bus_data->app_reference,
+
+							'pnr' 						=> $parent_pnr,
+
+							'destination_city' 			=> $cart_book_data['details']['Destination'],
+
+							'departure_date' 			=> $cart_book_data['details']['DepartureTime'],
+
+							'arrival_date' 				=> $cart_book_data['details']['ArrivalTime'],
+
+							'boarding_from' 			=> $cart_book_data['details']['BoardingPointsDetails'][0]['CityPointName'],
+
+							'dropping_at' 				=> $cart_book_data['details']['DroppingPointsDetails'][0]['CityPointName'],
+
+							'duration' 					=> $cart_book_data['details']['Destination'],
+
+							'amount' 					=> $cart_book_data['total_fare'],
+
+							'PricingDetails' 			=> json_encode($cart_book_data['details']['BusPrice']),							
+
+							'fareBasis' 				=> json_encode($cart_book_data['details']['BusPrice']),							
+
+							'card_type' 				=> $checkout_form['card_type'],
+
+							'card_holder_name' 			=> $checkout_form['card_holder_name'],
+
+							'card_number' 				=> $checkout_form['card_number'],
+
+							'exp_month' 				=> $checkout_form['exp_month'],
+
+							'exp_year' 					=> $checkout_form['exp_year'],
+
+							'cvv_num' 					=> $checkout_form['cvv_num']
+
+							
+
+						);	
+
+												
+
+					$booking_bus_id = $this->booking_model->insert_booking_bus($booking_bus);
+
+					
+
+					$booking_transaction = array(
+
+						'api_rate' =>0,
+
+						'api_currency' => BASE_CURRENCY,
+
+						'convertion_value' =>'0',
+
+						'net_rate' => $cart_bus_data->amount,
+
+						'admin_markup' => '',	
+
+						'admin_baseprice' =>$cart_bus_data->amount,
+
+	 					'agent_markup' => $MY_MARKUP_,
+
+	 					'base_amount' => $BASE_AMOUNT_,
+
+						'promo_id' => $promo_id,
+
+						'discount' =>$DISCOUNT,
+
+						'total_amount' => $TOTAL,
+
+						'card_type' => $checkout_form['card_type'],
+
+						'card_holder_name' => $checkout_form['card_holder_name'],
+
+						'card_number' => $checkout_form['card_number'],
+
+						'exp_month' => $checkout_form['exp_month'],
+
+						'exp_year' => $checkout_form['exp_year'],
+
+						'cvv_num' => $checkout_form['cvv_num']
+
+						
+
+					);
+
+					
+
+					$booking_transaction_id = $this->booking_model->insert_booking_transaction_data($booking_transaction);
+
+					
+
+					$booking_payment = array(
+
+						'payment_type' =>$payment_method,
+
+						'payment_gateway_id' => 1,
+
+						'amount' => $TOTAL,
+
+						'payment_status' => '',
+
+						'payment_response' => '',
+
+						'payment_gateway_status' => 'INITIATED'
+
+					);
+
+					//echo "<pre/>"; print_r($booking_payment); exit;
+
+					// debug($checkout_form);
+
+					/*debug($booking_transaction);
+
+					debug($booking_payment);*/
+
+					// exit();
+
+					$booking_payment_id = $this->booking_model->insert_booking_payment_data($booking_payment);
+
+					
+
+					// $xml_log_data= $this->booking_model->get_xml_log_id($cart_hotel_data->xml_logid);	  
+
+					$required_param=array();
+
+					foreach($checkout_form as $keya => $vala)
+
+					{
+
+						$keya_v = explode("_____________",$keya);
+
+						if(isset($keya_v[1]) && $keya_v[1]!='')
+
+						{
+
+							$required_param[] = array(
+
+							'name' =>$keya_v[1],
+
+							'value' =>$vala
+
+							);
+
+							 
+
+						}
+
+					}
+
+					$required_param_v1= json_encode($required_param);
+
+					/*
+
+					$booking_xml = array(
+
+						'api_id' =>$cart_hotel_data->api_id,
+
+						'product_id' =>$cart_hotel_data->product_id,
+
+						'search_scenario' => json_encode($cart_hotel_data),
+
+						
+
+						
+
+					);
+
+					
+
+					$booking_xml_data_id = $this->booking_model->insert_booking_xml_data($booking_xml);
+
+					*/
+
+					$booking_supplier = array(
+
+						'api_id' =>$payment_method,
+
+						'booking_supplier_number' => 'XXXXXXXXXX',
+
+						'supplier_status' => '',
+
+						'supplier_reference_number' => '',
+
+						'booking_xml_data_id' => @$booking_xml_data_id,
+
+						'required_param' => $required_param_v1
+
+					);
+
+					$booking_supplier_id = $this->booking_model->insert_booking_supplier_data($booking_supplier);
+
+
+
+					$billing_address = array(
+
+						'user_id' =>$user_id, 
+
+						'billing_salutation' =>trim($checkout_form['saluation']),
+
+						'billing_first_name' =>trim($checkout_form['first_name']),
+
+						'billing_last_name' =>trim($checkout_form['last_name']),
+
+						'billing_email' =>trim($checkout_form['email']),
+
+						'billing_contact_number' =>trim($checkout_form['mobile']),
+
+						'billing_country_code' =>trim($checkout_form['country']),
+
+						'billing_address' =>trim($checkout_form['street_address'].' '.$checkout_form['address2']),
+
+						'billing_city' =>trim($checkout_form['city']),
+
+						'billing_state' =>trim($checkout_form['state']),
+
+						'billing_zip' =>trim($checkout_form['zip'])
+
+					);
+
+					$billing_address_id = $this->booking_model->insert_booking_billing_address($billing_address);
+
+
+
+	                $booking = array(
+
+	                    'product_id' => $cart_bus_data->product_id,
+
+						'api_id'=>$cart_bus_data->referal_id,
+
+	                    'referal_id' => $booking_bus_id,
+
+						'booking_transaction_id' => $booking_transaction_id,
+
+						'payment_id' => $booking_payment_id,
+
+						'booking_supplier_id' => $booking_supplier_id,
+
+						'billing_address_id' => $billing_address_id,
+
+	                    'parent_pnr_no' => $parent_pnr,
+
+	                    'user_id' => $user_id,
+
+						'user_type_id' => $user_type,
+
+						'voucher_date' => date('Y-m-d'),
+
+						'travel_date' => date('Y-m-d'),
+
+	                     'leadpax' => $checkout_form['saluation'].' '.$checkout_form['first_name'].' '.$checkout_form['last_name'],
+
+	                    'ip_address' =>  $this->input->ip_address(),
+
+	                    'cart_id'   => $cart_hotel_data->cart_id,
+
+	                );
+
+	                
+
+	                $bid = $this->booking_model->insert_booking_global_data($booking);
+
+					
+
+					/*$p_fname = $checkout_form['first_name'.$cid];
+
+					$p_lname = $checkout_form['last_name'.$cid];
+
+				
+
+					$a_gender = $checkout_form['a_gender'.$cid];
+
+					if(isset($checkout_form['cfirst_name'.$cid]))
+
+					{
+
+	    				$c_fname = $checkout_form['cfirst_name'.$cid];
+
+	    				$c_lname = $checkout_form['clast_name'.$cid];
+
+	    				$c_gender = $checkout_form['c_gender'.$cid];
+
+					}*/
+
+					/*$p_fname = $checkout_form['bfirst_name'];
+
+					$p_lname = $checkout_form['blast_name'];
+
+				
+
+					$a_gender = $checkout_form['bgender'];
+
+					*/
+
+					
+
+					if(isset($checkout_form['cfirst_name']))
+
+					{
+
+	    				$c_fname = $checkout_form['cfirst_name'];
+
+	    				$c_lname = $checkout_form['clast_name'];
+
+	    				$c_gender = $checkout_form['c_gender'];
+
+					}
+
+				 
+
+					
+
+					$booking_passenger_v=array();
+
+					for($p=0;$p<count($checkout_form['bfirst_name']);$p++)
+
+					{
+
+						$gender = 'FEMALE';
+
+						if($a_gender[$p] == 'Mr')
+
+						{
+
+							$gender = 'MALE';
+
+						}
+
+						$booking_passenger = array(
+
+						'booking_global_id'=>$bid,
+
+							'first_name' =>$checkout_form['bfirst_name'][$p],
+
+							'last_name' =>$checkout_form['blast_name'][$p],
+
+							'passenger_type' =>'ADULT',							 
+
+							'gender' =>$gender
+
+						);
+
+						$booking_passenger_v[] = $booking_passenger;
+
+					}
+
+					if(isset($c_fname) && is_array($c_fname))
+
+					{
+
+					for($p=0;$p<count($c_fname);$p++)
+
+					{
+
+						$gender = 'FEMALE';
+
+						if($c_gender[$p] == 'Mr')
+
+						{
+
+							$gender = 'MALE';
+
+						}
+
+						$booking_passenger = array(
+
+						'booking_global_id'=>$bid,
+
+							'first_name' =>trim($c_fname[$p]),
+
+							//'salutation' =>trim($c_gender[$p]),
+
+							'last_name' =>trim($c_lname[$p]),
+
+							'passenger_type' =>'CHILD', 
+
+							'gender' =>$gender
+
+						);
+
+						$booking_passenger_v[] = $booking_passenger;
+
+					}
+
+					}
+
+					// debug($booking_passenger_v); exit();
+
+					  $this->booking_model->insert_booking_passenger($booking_passenger_v);
+
+					
+
+					$vid_v = strtoupper(substr(PROJECT_NAME,0,3));
+
+	                $con_pnr_no = $vid_v.date('m').'F'.date('dHi').$bid;
+
+					if($userInfo->user_type_name=='B2B')
+
+					{
+
+	                $update_booking = array(
+
+	                    'con_pnr_no' => $con_pnr_no,
+
+						'booking_status' => 'PROCESS' 
+
+	                );
+
+					}
+
+					else
+
+					{
+
+						 $update_booking = array(
+
+	                    'con_pnr_no' => $con_pnr_no,
+
+						'booking_status' => 'FAILED' 
+
+	               	 );
+
+					}
+
+	                $this->booking_model->Update_Booking_Global($bid, $update_booking);
+
+				}
+
+				
+
+				$Email =  trim($checkout_form['email']);
+
+	            $OrderId = $parent_pnr;
+
+	            $TOTAL = array_sum($ttl);
+
+	            $TOTAL = base64_encode(json_encode($TOTAL));
+
+	            $Email = base64_encode(json_encode($Email));
+
+	            $OrderId = base64_encode(json_encode($OrderId));
+
+	            $payment_keys = base64_encode($OrderId . ',' .$TOTAL. ',' . $module);
+
+	            
+
+	            $amount11 = array_sum($ttl);
+
+	            
+
+	            if($module_count1==""){
+
+	                $GateURL = WEB_URL.'booking/book/'.$parent_pnr;
+
+	                $data['status'] = 555;
+
+	                $data['GateURL'] = $GateURL;
+
+	                // redirect($GateURL);
+
+	                echo json_encode($data);
+
+	                die;
+
+	            }
+
+	          
+
+				
+
+			}
+
+        }
+
+         if($module_count1!="" && $module_count1>1 ){			
+
+            $GateURL = WEB_URL.'booking/flight_availability1/'.$parent_pnr;
+
+              $data['status'] = 555;
+
+            $data['GateURL'] = $GateURL;
+
+            echo json_encode($data);
+
+            die;
+
+            
+
+			}
+
+        
+
+			if($userInfo->user_type_name=='B2B')
+
+			{
+
+			$GateURL = WEB_URL.'booking/book/'.$parent_pnr;
+
+            $data['status'] = 555;
+
+            $data['GateURL'] = $GateURL;
+
+            echo json_encode($data);
+
+            die;
+
+		}
+
+		
+
+		//echo '<pre>';print_r($pnr_no);die;
+
+    }
+
+	
+
+	public function promo(){
+
+    	$promo_code = $this->input->get('code');
+
+    	$total = base64_decode($this->input->get('total'));
+
+    	$booking_airline_code = $this->input->get('airline_code');
+
+    	$count =count($this->booking_model->check_promocode($promo_code));   	
+
+    	
+
+    	$multiple_airline = explode(";", $booking_airline_code);
+
+    	$multiple_airline = array_filter($multiple_airline);
+
+    	
+
+    	
+
+    	// echo $booking_airline_code; exit();
+
+    	if($count == 1){
+
+    		$promo_data = $this->booking_model->check_promocode($promo_code)[0];
+
+    		$user_time = date('Y-m-d H:i:00.000000');
+
+    		$exp_time = date('Y-m-d H:i:00.000000',strtotime($promo_data->expiry_date));
+
+    		$total_discount=array();
+
+    		$total_payable = array();
+
+    		$response =array();
+
+    		
+
+    		if ($user_time <= $exp_time) {
+
+
+
+    			$promo_type = $promo_data->promo_type;
+
+    		// echo "<pre>"; print_r($promo_data); die();
+
+    			$discount = $mdic = $promo_data->discount;
+
+    			$module_type = $promo_data->module;
+
+    			$minimum_amount = $promo_data->minimum_amount;
+
+    			$airline_code =''; 
+
+    			if($promo_data->airline_code!='all'){
+
+    				$airline_code = $promo_data->airline_code;
+
+    			}
+
+    			$cids = base64_decode($this->input->get('cid'));
+
+        		$cids = json_decode($cids);
+
+
+
+    			foreach ($cids as $key => $cid) {
+
+		            list($module, $cid) = explode(',', $cid);
+
+					 
+
+		            if(strtolower($module) ==$module_type&&$module =='FLIGHT'){
+
+		            	$cart = $this->cart_model->getBookingTemp_flight($cid);
+
+						  	//echo "<pre>"; print_r($cart); echo "</pre>"; die();
+
+						
+
+		            	$total = $cart->total_cost;
+
+		            	
+
+		            	if($total > $minimum_amount){
+
+
+
+		            		if($airline_code!=''&&in_array($airline_code,$multiple_airline)){
+
+		            			$response['status'] = 1;
+
+		            				if($promo_type == 'PERCENTAGE'){
+
+					    				$discount = ($total/100) * $mdic;
+
+					    				$discount = number_format(($discount) ,2,'.','');
+
+										$f_amt =  $total-$discount;
+
+									
+
+					    				$total_payable[] = $f_amt;
+
+					    				$total_discount[] = $discount;
+
+					    			}else if($promo_type == 'AMOUNT'){
+
+					    				$discount = $discount;
+
+					    				if($total >= $promo_data->promo_amount){
+
+					    					$discount = number_format(($discount) ,2,'.','');
+
+											$f_amt =  $total-$discount;
+
+									
+
+					    				$total_payable[] = $f_amt;
+
+										 
+
+						    				$total_discount[] = $discount;
+
+					    				}else{
+
+										 
+
+										
+
+					    					$total_payable[] = $cart->total_cost;
+
+					    				}
+
+					    			}
+
+		            		}elseif ($airline_code=='') {
+
+		            			$response['status'] = 1;
+
+		            				if($promo_type == 'PERCENTAGE'){
+
+					    				$discount = ($total/100) * $mdic;
+
+					    				$discount = number_format(($discount) ,2,'.','');
+
+										$f_amt =  $total-$discount;
+
+									
+
+					    				$total_payable[] = $f_amt;
+
+					    				$total_discount[] = $discount;
+
+					    			}else if($promo_type == 'AMOUNT'){
+
+					    				$discount = $discount;
+
+					    				if($total >= $promo_data->promo_amount){
+
+					    					$discount = number_format(($discount) ,2,'.','');
+
+											$f_amt =  $total-$discount;
+
+									
+
+					    				$total_payable[] = $f_amt;
+
+										 
+
+						    				$total_discount[] = $discount;
+
+					    				}else{
+
+										 
+
+										
+
+					    					$total_payable[] = $cart->total_cost;
+
+					    				}
+
+					    			}
+
+		            		}else{
+
+		            			$total_payable[] = $total;
+
+			    				$total_discount[] = 0;
+
+
+
+		            			$response['status'] = 0;
+
+    							$response['discMsg'] = 'Sorry, Promo code not applicable for this Airline';
+
+		            		}
+
+		            	
+
+		            	}else{
+
+		            		$total_payable[] = $total;
+
+		    				$total_discount[] = 0;
+
+		            		$response['status'] = 0;
+
+    						$response['discMsg'] = 'Sorry, Minimum Amount Should be '.$minimum_amount;
+
+		            	}
+
+
+
+		            	
+
+		            }
+
+		            else{
+
+		            	$response['status'] =0;
+
+		            	$response['discMsg'] ='Sorry,Promo Code Not Applicable';
+
+		            }
+
+		    
+
+		        }
+
+		       // echo '<pre>';print_r($total_discount);die;
+
+		        $count = count($total_discount);
+
+		        $total_payable = array_sum($total_payable);
+
+		        $total_discount = array_sum($total_discount);
+
+		        if($response['status']==1){
+
+		        	if($promo_type == 'PERCENTAGE'){
+
+    					$response['discMsg'] = 'Coupon succesfully applied, You save <strong>'.$mdic.'%</strong> of total amount';
+
+	    			}else if($promo_type == 'AMOUNT'){
+
+	    				$response['discMsg'] = 'Coupon succesfully applied for '.$count.' products, You save <strong>'.BASE_CURRENCY_ICON.$total_discount.'</strong> of total amount';
+
+	    			}
+
+	    			$response['discount'] = $total_discount;
+
+	    			$response['finalAmt'] = $total_payable;
+
+	    			$response['code'] = base64_encode($promo_code);
+
+	    			$response['status'] = 1;
+
+		        }else{
+
+		        	$response['finalAmt'] = $total_payable;
+
+		        	$response['discount'] = 0;
+
+		        }
+
+    			
+
+    			
+
+    		}else{
+
+    			$response['status'] = 0;
+
+    			$response['discMsg'] = 'Sorry, promo code has expired';
+
+    		}
+
+    	}else{
+
+    		$response['status'] = 0;
+
+    		$response['discMsg'] = 'Not a valid coupon';
+
+    	}
+
+    	
+
+    	echo json_encode($response);
+
+    }
+
+
+
+	/*start*/
+
+	public function flight_availability($parent_pnr){
+
+		error_reporting(0);
+
+	//	echo "<pre>"; print_r($parent_pnr); exit('bp');
+
+		$count = $this->payment_model->validate_order_id_org($parent_pnr)->num_rows();
+
+		// echo($count);die('1');
+
+		if($count >= 1){
+
+			$global_ids = $this->payment_model->validate_order_id_org($parent_pnr)->result();
+
+
+ 			foreach ($global_ids as $key => $global_id) {
+
+				$booking_id = $global_id->referal_id;
+
+				$module = $global_id->product_name;
+
+				$bid = $global_id->booking_global_id;
+
+				$con_pnr_no = $global_id->con_pnr_no;
+
+				$payment_method = $global_id->payment_type;
+
+				$billing_address_id = $global_id->billing_address_id;
+
+				$booking_supplier_id = $global_id->booking_supplier_id;				
+
+				$user_id = $global_id->user_id;
+
+				$user_type_id = $global_id->user_type_id;
+
+				$error_message='';
+				
+
+				$update_booking = array(
+
+									'supplier_reference_number' => 'XXXXXXXXX',
+
+									'supplier_status' => 'Failed',
+
+									'booking_supplier_number' => 'XXXXXXXXX'
+
+									);
+
+				$update_booking_status = array(
+
+
+
+							'booking_status' => 'FAILED'
+
+							);
+
+							
+
+				if($payment_method=='DEPOSIT'){
+
+					$user_type = $global_id->user_type_id;
+
+					$user_id = $global_id->user_id;
+
+					if($this->session->userdata('user_type') == $user_type && $this->session->userdata('user_id') == $user_id){
+
+						$book_check = 'OK';
+
+						$error_message.='|Deposit - OK.';
+
+					}else{
+
+						$book_check = 'NOTOK';
+
+						$error_message.='|Deposit - User ID and User Type Not a valid.';
+
+					}
+
+				}elseif($payment_method=='PAYMENT'){
+					
+
+    				/*$payment_status = $global_id->payment_status;
+
+    				$transaction_status = $global_id->transaction_status;
+
+					if($payment_status == 5 && $transaction_status== 'SUCCESS'){
+
+						$book_check = 'OK';
+
+						$error_message.='|Payment Gateway - OK.';
+
+					}else{
+
+						$book_check = 'NOTOK';
+
+						$error_message.='|Payment Gateway - Status not authorized.';
+
+					}*/
+
+					$book_check = 'OK';
+
+				}
+
+				else{
+
+					$book_check = 'NOTOK';
+
+					$error_message.='|Not a valid user.';
+
+				}
+
+		
+
+				if($book_check=='OK')
+
+				{
+
+					 $this->load->library('xml_to_array');
+
+					if($module == 'FLIGHT')
+
+					{
+
+						$count = $this->booking_model->getBookingFlightTemp($booking_id)->num_rows();
+
+						  // echo $count;
+
+						  // exit("<<");
+	// echo "<pre/>";print_r($global_ids);exit('test');
+
+
+						if($count == 1){
+
+							$book_api_name = $global_id->api_name;
+
+							if ($book_api_name == "") {
+
+								$book_api_name = "AMADEUS";
+
+							}
+
+							if($book_api_name =='TBO')
+
+							{				
+
+							$this->load->helper('flight/amedus_helper');
+
+							$booking_supplier_details = $this->booking_model->get_booking_supplier_details($global_id->booking_supplier_id)->row();
+
+							$passenger_info = $this->booking_model->getBookingpassengerTempFlight($bid);
+
+							$billingaddress = $this->booking_model->getbillingaddressTemp($billing_address_id)->row();
+
+							$payment_details='';
+
+							$card_type = $global_id->card_type;
+
+							$card_holder_name = $global_id->card_holder_name;
+
+							$card_number = $global_id->card_number;
+
+							$exp_month = $global_id->exp_month;
+
+							$exp_year = substr($global_id->exp_year, -2);
+
+							$cvv_num = $global_id->cvv_num;
+
+							$path = '/opt/lampp/htdocs/'.PROJECT_NAME.'/BookingXML/'; 
+
+							$folder_name = $global_id->con_pnr_no;
+
+							$targetfilename = $path.$folder_name;
+
+							if (!file_exists($targetfilename)) {
+
+								 mkdir($targetfilename, 0777);
+
+							}
+
+															
+
+								$PNR_AddMultiElements_End_result = '';
+
+								$outward_segment=json_decode($global_id->outward_segment);
+
+								$inward_segment=json_decode($global_id->inward_segment);
+
+								$search_scenario=json_decode($booking_supplier_details->search_scenario);
+
+								$Air_SellFromRecommendations    = Air_SellFromRecommendation($global_id->segment_data,$global_id->PricingDetails,$passenger_info,$global_id->specific_rec_details);
+
+							     $SellFromRecommendationResponse = $Air_SellFromRecommendations['Air_SellFromRecommendationRes'];
+
+								$segment_status = xml2array($SellFromRecommendationResponse,$get_attributes = 1, $priority = 'tag');
+
+
+
+							if (isset($segment_status['soapenv:Envelope']['soapenv:Body']['soap:Fault']) || isset($segment_status['soapenv:Envelope']['soapenv:Body']['Fare_PricePNRWithBookingClassReply']['applicationError']) || isset($segment_status['soap:Envelope']['soap:Body']['soap:Fault'])) {
+
+								  $xml_log = array(
+
+                                        'api_name' => 'AMEDUS',
+
+                                        'XML_Type' => 'Air_SellFromRecommendations ERROR',
+
+                                        'XML_Request' => $Air_SellFromRecommendations['Air_SellFromRecommendationReq'],
+
+                                        'XML_Response' => $Air_SellFromRecommendations['Air_SellFromRecommendationRes'],
+
+                                        'Ip_address' => $this->input->ip_address(),
+
+                                        'xml_timestamp' => date('Y-m-d H:i:s')
+
+                                    );
+
+                                    $this->xml_model->insert_xml_log($xml_log);
+
+
+
+									$final_de = date('Ymd_His')."_".rand(1,10000);
+
+									$XmlReqFileName = 'Air_SellFromRecommendationReq'.$final_de; $XmlResFileName = 'Air_SellFromRecommendationRes'.$final_de;
+
+									$fp = fopen($targetfilename."/".$XmlReqFileName.'.xml', 'a+');
+
+									fwrite($fp, $Air_SellFromRecommendations['Air_SellFromRecommendationReq']);
+
+									fclose($fp);
+
+									$fp = fopen($targetfilename."/".$XmlResFileName.'.xml', 'a+');
+
+									fwrite($fp, $Air_SellFromRecommendations['Air_SellFromRecommendationRes']);
+
+									fclose($fp);
+
+
+
+
+
+                                     $booking_xml_log = array(                                        
+
+                                        'Air_SellFromRecommendationReq' => $targetfilename."/".$XmlReqFileName.'.xml',
+
+                                        'Air_SellFromRecommendationRes' => $targetfilename."/".$XmlResFileName.'.xml',
+
+                                        'responce_type'					=>"Air_SellFromRecommendations ERROR"
+
+                                    );
+
+                                    $this->booking_model->update_booking_xml($booking_xml_log,$global_id->booking_xml_data_id);
+
+
+
+									}else{                                	 
+
+									$final_de = date('Ymd_His')."_".rand(1,10000);
+
+									$XmlReqFileName = 'Air_SellFromRecommendationReq'.$final_de; $XmlResFileName = 'Air_SellFromRecommendationRes'.$final_de;
+
+									$fp = fopen($targetfilename."/".$XmlReqFileName.'.xml', 'a+');
+
+									fwrite($fp, $Air_SellFromRecommendations['Air_SellFromRecommendationReq']);
+
+									fclose($fp);
+
+									$fp = fopen($targetfilename."/".$XmlResFileName.'.xml', 'a+');
+
+									fwrite($fp, $Air_SellFromRecommendations['Air_SellFromRecommendationRes']);
+
+									fclose($fp);
+
+                                     $booking_xml_log = array(                  
+
+                                        'Air_SellFromRecommendationReq' => $XmlReqFileName.'.xml',
+
+                                        'Air_SellFromRecommendationRes' => $XmlResFileName.'.xml',
+
+                                        'responce_type'					=>"Air_SellFromRecommendations Sucess with error"
+
+                                    );
+
+                                    $this->booking_model->update_booking_xml($booking_xml_log,$global_id->booking_xml_data_id);
+
+                                   
+
+        		$segmentResult1 = array(); $segmentResult = array(); $status_msg = ""; $status_flag="";
+
+				$segmentResult1 = array(); $segmentResult = array(); $status_msg = "";
+
+				if (isset($segment_status['soapenv:Envelope']['soapenv:Body']['Air_SellFromRecommendationReply']['itineraryDetails'])) {
+
+					$segmentResult1 = $segment_status['soapenv:Envelope']['soapenv:Body']['Air_SellFromRecommendationReply']['itineraryDetails'];
+
+				}
+
+		        if(!isset($segmentResult1[0]))
+
+					$segmentResult[0] = $segmentResult1;
+
+				else
+
+					$segmentResult = $segmentResult1;	
+
+		        
+
+		        if(!empty($segmentResult))
+
+		        {
+
+					$flag = "TRUE";
+
+				for ($si = 0; $si < (count($segmentResult)); $si++) {
+
+					$segmentInformation = array();
+
+					if(!isset($segmentResult[$si]['segmentInformation'][0]))
+
+						$segmentInformation[0] = $segmentResult[$si]['segmentInformation'];
+
+					else
+
+						$segmentInformation = $segmentResult[$si]['segmentInformation'];	
+
+							
+
+					for ($s = 0; $s < (count($segmentInformation)); $s++) {
+
+					$statusCode = $segmentInformation[$s]['actionDetails']['statusCode'];
+
+
+
+					if($statusCode == "OK" )
+
+					{
+
+						$status[$si][$s] = "Sold";
+
+						if($flag == "TRUE")
+
+							$status_flag = "true";
+
+						else
+
+							$status_flag = "false";
+
+					}
+
+					else if($statusCode== "UNS")
+
+                    {
+
+                        $status[$si][$s] = "Unable to sell";
+
+                        $status_flag = "false"; $flag = "FALSE";
+
+					}
+
+					else if($statusCode== "WL")
+
+                    {
+
+                        $status[$si][$s] = "Wait listed";
+
+                        $status_flag = "false"; $flag = "FALSE";
+
+					}
+
+					else if($statusCode== "X")
+
+                    {
+
+                        $status[$si][$s] = "Cancelled after a successful sell";
+
+                        $status_flag = "false"; $flag = "FALSE";
+
+					}
+
+					else if($statusCode== "RQ")
+
+                    {
+
+                        $status[$si][$s] = "Sell was not even attempted";
+
+                        $status_flag = "false"; $flag = "FALSE";
+
+                    } 
+
+				}
+
+			}
+
+		}
+
+
+
+						$SecuritySession=$segment_status['soapenv:Envelope']['soapenv:Header']['awsse:Session']['awsse:SessionId'];
+
+						$seq=$SequenceNumber=$segment_status['soapenv:Envelope']['soapenv:Header']['awsse:Session']['awsse:SequenceNumber'];
+
+						$SecurityToken=$segment_status['soapenv:Envelope']['soapenv:Header']['awsse:Session']['awsse:SecurityToken'];
+
+						
+
+					
+
+
+
+if($status_flag=="false")
+
+{
+
+Security_SignOut($SecuritySession,$seq,$SecurityToken);
+
+}
+
+elseif($status_flag=="true"){
+
+					$xml_log = array(
+
+                                        'api_name' => 'AMEDUS',
+
+                                        'XML_Type' => 'Air_SellFromRecommendations SUCESS',
+
+                                        'XML_Request' => $Air_SellFromRecommendations['Air_SellFromRecommendationReq'],
+
+                                        'XML_Response' => $Air_SellFromRecommendations['Air_SellFromRecommendationRes'],
+
+                                        'Ip_address' => $this->input->ip_address(),
+
+                                        'xml_timestamp' => date('Y-m-d H:i:s')
+
+                                    );
+
+                                    $this->xml_model->insert_xml_log($xml_log);
+
+                                
+
+									$final_de = date('Ymd_His')."_".rand(1,10000);
+
+									$XmlReqFileName = 'Air_SellFromRecommendationReq'.$final_de; $XmlResFileName = 'Air_SellFromRecommendationRes'.$final_de;
+
+									$fp = fopen($targetfilename."/".$XmlReqFileName.'.xml', 'a+');
+
+									fwrite($fp, $Air_SellFromRecommendations['Air_SellFromRecommendationReq']);
+
+									fclose($fp);
+
+									$fp = fopen($targetfilename."/".$XmlResFileName.'.xml', 'a+');
+
+									fwrite($fp, $Air_SellFromRecommendations['Air_SellFromRecommendationRes']);
+
+									fclose($fp);
+
+
+
+                                     $booking_xml_log = array(                                        
+
+                                        'Air_SellFromRecommendationReq' => $XmlReqFileName.'.xml',
+
+                                        'Air_SellFromRecommendationRes' => $XmlResFileName.'.xml',
+
+                                        'responce_type'					=>"Air_SellFromRecommendations sucess without Error"
+
+                                    );
+
+                                    $this->booking_model->update_booking_xml($booking_xml_log,$global_id->booking_xml_data_id);
+
+
+
+	
+
+                                    $counter=0;
+
+                                   // debug($parent_pnr);exit;
+
+						$PNR_AddMultiElements= PNR_AddMultiElements($global_id->request_scenario,$global_id->segment_data,$global_id->PricingDetails,$SecuritySession,$seq,$SecurityToken,$passenger_info,$billingaddress,$counter,$payment_details);
+
+						$PNR_AddMultiElementsResponce = $PNR_AddMultiElements['PNR_AddMultiElementsRes'];
+
+						$pnr_status = xml2array($PNR_AddMultiElementsResponce,$get_attributes = 1, $priority = 'tag');
+
+
+
+						$SecuritySession1=$pnr_status['soapenv:Envelope']['soapenv:Header']['awsse:Session']['awsse:SessionId'];
+
+						$seq1=$SequenceNumber1=$pnr_status['soapenv:Envelope']['soapenv:Header']['awsse:Session']['awsse:SequenceNumber'];
+
+						$SecurityToken1=$pnr_status['soapenv:Envelope']['soapenv:Header']['awsse:Session']['awsse:SecurityToken'];
+
+
+
+						if (isset($segment_status['soapenv:Envelope']['soapenv:Body']['soap:Fault']) || isset($segment_status['soapenv:Envelope']['soapenv:Body']['Fare_PricePNRWithBookingClassReply']['applicationError']) || isset($segment_status['soap:Envelope']['soap:Body']['soap:Fault'])) {
+
+								  $xml_log = array(
+
+                                        'api_name' => 'AMEDUS',
+
+                                        'XML_Type' => 'PNR_AddMultiElements ERROR',
+
+                                        'XML_Request' => $PNR_AddMultiElements['PNR_AddMultiElementsReq'],
+
+                                        'XML_Response' => $PNR_AddMultiElements['PNR_AddMultiElementsRes'],
+
+                                        'Ip_address' => $this->input->ip_address(),
+
+                                        'xml_timestamp' => date('Y-m-d H:i:s')
+
+                                    );
+
+                                    $this->xml_model->insert_xml_log($xml_log);  
+
+                                    
+
+
+
+									$final_de = date('Ymd_His')."_".rand(1,10000);
+
+									$XmlReqFileName = 'PNR_AddMultiElements'.$final_de; $XmlResFileName = 'PNR_AddMultiElements'.$final_de;
+
+									$fp = fopen($targetfilename."/".$XmlReqFileName.'.xml', 'a+');
+
+									fwrite($fp, $PNR_AddMultiElements['PNR_AddMultiElementsReq']);
+
+									fclose($fp);
+
+									$fp = fopen($targetfilename."/".$XmlResFileName.'.xml', 'a+');
+
+									fwrite($fp, $PNR_AddMultiElements['PNR_AddMultiElementsRes']);
+
+									fclose($fp);
+
+
+
+                                     $booking_xml_log = array(                                        
+
+                                        'PNR_AddMultiElementsReq' => $XmlReqFileName.'.xml',
+
+                                        'PNR_AddMultiElementsRes' => $XmlResFileName.'.xml',
+
+                                        'responce_type'					=>"PNR_AddMultiElements Error"
+
+                                    );
+
+                                    $this->booking_model->update_booking_xml($booking_xml_log,$global_id->booking_xml_data_id);
+
+                                    Security_SignOut($SecuritySession2,$seq2,$SecurityToken2);
+
+
+
+                                }else{
+
+                                	$xml_log = array(
+
+                                        'api_name' => 'AMEDUS',
+
+                                        'XML_Type' => 'PNR_AddMultiElements SUCESS',
+
+                                        'XML_Request' => $PNR_AddMultiElements['PNR_AddMultiElementsReq'],
+
+                                        'XML_Response' => $PNR_AddMultiElements['PNR_AddMultiElementsRes'],
+
+                                        'Ip_address' => $this->input->ip_address(),
+
+                                        'xml_timestamp' => date('Y-m-d H:i:s')
+
+                                    );
+
+                                	$this->xml_model->insert_xml_log($xml_log);
+
+                                    $final_de = date('Ymd_His')."_".rand(1,10000);
+
+									$XmlReqFileName = 'PNR_AddMultiElements'.$final_de; $XmlResFileName = 'PNR_AddMultiElements'.$final_de;
+
+									$fp = fopen($targetfilename."/".$XmlReqFileName.'.xml', 'a+');
+
+									fwrite($fp, $PNR_AddMultiElements['PNR_AddMultiElementsReq']);
+
+									fclose($fp);
+
+									$fp = fopen($targetfilename."/".$XmlResFileName.'.xml', 'a+');
+
+									fwrite($fp, $PNR_AddMultiElements['PNR_AddMultiElementsRes']);
+
+									fclose($fp);
+
+
+
+                                     $booking_xml_log = array(                                        
+
+                                        'PNR_AddMultiElementsReq' => $XmlReqFileName.'.xml',
+
+                                        'PNR_AddMultiElementsRes' => $XmlResFileName.'.xml',
+
+                                        'responce_type'					=>"PNR_AddMultiElements Sucess"
+
+                                    );
+
+                                    $this->booking_model->update_booking_xml($booking_xml_log,$global_id->booking_xml_data_id);
+
+
+
+	$Fare_Pricewithbooking_class= PNR_AddMultiElements_BookingClass($global_id->request_scenario,$global_id->segment_data,$global_id->PricingDetails,$SecuritySession1,$seq1,$SecurityToken1);
+
+						$Fare_Pricewithbooking_Req = $Fare_Pricewithbooking_class['Fare_PricePNRWithBookingClassReq'];
+
+						$Fare_Pricewithbooking_Responce = $Fare_Pricewithbooking_class['Fare_PricePNRWithBookingClassRes'];
+
+
+
+						$fresult = xml2array($Fare_Pricewithbooking_Responce,$get_attributes = 1, $priority = 'tag');
+
+
+
+                        $SecuritySession3=$fresult['soapenv:Envelope']['soapenv:Header']['awsse:Session']['awsse:SessionId'];
+
+						$seq3=$SequenceNumber3=$fresult['soapenv:Envelope']['soapenv:Header']['awsse:Session']['awsse:SequenceNumber'];
+
+						$SecurityToken3=$fresult['soapenv:Envelope']['soapenv:Header']['awsse:Session']['awsse:SecurityToken'];
+
+							
+
+						if (isset($fresult['soapenv:Envelope']['soapenv:Body']['soap:Fault']) || isset($fresult['soapenv:Envelope']['soapenv:Body']['Fare_PricePNRWithBookingClassReply']['applicationError']) || isset($fresult['soap:Envelope']['soap:Body']['soap:Fault'])) {
+
+                                 	$xml_log = array(
+
+                                        'api_name' => 'AMEDUS',
+
+                                        'XML_Type' => 'PNR_AddMultiElements_BookingClass ERROR',
+
+                                        'XML_Request' => $Fare_Pricewithbooking_Req,
+
+                                        'XML_Response' => $Fare_Pricewithbooking_Responce,
+
+                                        'Ip_address' => $this->input->ip_address(),
+
+                                        'xml_timestamp' => date('Y-m-d H:i:s')
+
+                                    );
+
+                                    $this->xml_model->insert_xml_log($xml_log);
+
+
+
+                             		$final_de = date('Ymd_His')."_".rand(1,10000);
+
+									$XmlReqFileName = 'Fare_Pricewithbooking_class'.$final_de; $XmlResFileName = 'Fare_Pricewithbooking_class'.$final_de;
+
+									$fp = fopen($targetfilename."/".$XmlReqFileName.'.xml', 'a+');
+
+									fwrite($fp, $Fare_Pricewithbooking_Req);
+
+									fclose($fp);
+
+									$fp = fopen($targetfilename."/".$XmlResFileName.'.xml', 'a+');
+
+									fwrite($fp, $Fare_Pricewithbooking_Responce);
+
+									fclose($fp);
+
+
+
+                                     $booking_xml_log = array(                                        
+
+                                        'Fare_PricePNRWithBookingClassReq' => $XmlReqFileName.'.xml',
+
+                                        'Fare_PricePNRWithBookingClassRes' => $XmlResFileName.'.xml',
+
+                                        'responce_type'					=>"Fare_Pricewithbooking_class Error"
+
+                                    );
+
+                                    $this->booking_model->update_booking_xml($booking_xml_log,$global_id->booking_xml_data_id);
+
+
+
+                                     Security_SignOut($SecuritySession3,$seq3,$SecurityToken3);
+
+                                	}else{									
+
+									$xml_log = array(
+
+                                        'api_name' => 'AMEDUS',
+
+                                        'XML_Type' => 'PNR_AddMultiElements_BookingClass SUCESS',
+
+                                        'XML_Request' => $Fare_Pricewithbooking_Req,
+
+                                        'XML_Response' => $Fare_Pricewithbooking_Responce,
+
+                                        'Ip_address' => $this->input->ip_address(),
+
+                                        'xml_timestamp' => date('Y-m-d H:i:s')
+
+                                    );
+
+                                    $this->xml_model->insert_xml_log($xml_log);	
+
+									$final_de = date('Ymd_His')."_".rand(1,10000);
+
+									$XmlReqFileName = 'Fare_Pricewithbooking_class'.$final_de; $XmlResFileName = 'Fare_Pricewithbooking_class'.$final_de;
+
+									$fp = fopen($targetfilename."/".$XmlReqFileName.'.xml', 'a+');
+
+									fwrite($fp, $Fare_Pricewithbooking_Req);
+
+									fclose($fp);
+
+									$fp = fopen($targetfilename."/".$XmlResFileName.'.xml', 'a+');
+
+									fwrite($fp, $Fare_Pricewithbooking_Responce);
+
+									fclose($fp);
+
+
+
+                                     $booking_xml_log = array(                                        
+
+                                        'Fare_PricePNRWithBookingClassReq' => $XmlReqFileName.'.xml',
+
+                                        'Fare_PricePNRWithBookingClassRes' => $XmlResFileName.'.xml',
+
+                                        'responce_type'					=>"PNR_AddMultiElements_BookingClass Sucess"
+
+                                    );
+
+                                    $this->booking_model->update_booking_xml($booking_xml_log,$global_id->booking_xml_data_id);
+
+
+
+									 $Ticket_CreateTSTFromPricingReq_Res_v1 = Ticket_CreateTSTFromPricing($global_id->segment_data,$global_id->PricingDetails,$SecuritySession3,$seq3,$SecurityToken3,$passenger_info);  
+
+                                    $Ticket_CreateTSTFromPricingRes = $Ticket_CreateTSTFromPricingReq_Res_v1['Ticket_CreateTSTFromPricingRes'];
+
+                                   
+
+
+
+                                   $tresult = xml2array($Ticket_CreateTSTFromPricingRes,$get_attributes = 1, $priority = 'tag');
+
+	                                $SecuritySession4=$tresult['soapenv:Envelope']['soapenv:Header']['awsse:Session']['awsse:SessionId'];
+
+									$seq4=$SequenceNumber4=$tresult['soapenv:Envelope']['soapenv:Header']['awsse:Session']['awsse:SequenceNumber'];
+
+									$SecurityToken4=$tresult['soapenv:Envelope']['soapenv:Header']['awsse:Session']['awsse:SecurityToken'];
+
+
+
+
+
+
+
+
+
+                                   if (isset($tresult['soapenv:Envelope']['soapenv:Body']['soap:Fault']) || isset($tresult['soapenv:Envelope']['soapenv:Body']['Ticket_CreateTSTFromPricingReply']['applicationError']) || isset($tresult['soap:Envelope']['soap:Body']['soap:Fault'])) {
+
+
+
+	                                    	 $xml_log = array(
+
+	                                            'api_name' => 'AMEDUS',
+
+	                                            'XML_Type' => 'Ticket_CreateTSTFromPricing ERROR',
+
+	                                            'XML_Request' => $Ticket_CreateTSTFromPricingReq_Res_v1['Ticket_CreateTSTFromPricingReq'],
+
+	                                            'XML_Response' => $Ticket_CreateTSTFromPricingReq_Res_v1['Ticket_CreateTSTFromPricingRes'],
+
+	                                            'Ip_address' => $this->input->ip_address(),
+
+	                                            'xml_timestamp' => date('Y-m-d H:i:s')
+
+	                                        );
+
+					                    	$this->xml_model->insert_xml_log($xml_log);
+
+					        		$final_de = date('Ymd_His')."_".rand(1,10000);
+
+									$XmlReqFileName = 'Ticket_CreateTSTFromPricingReq_Res_v1'.$final_de; $XmlResFileName = 'Ticket_CreateTSTFromPricingReq_Res_v1'.$final_de;
+
+									$fp = fopen($targetfilename."/".$XmlReqFileName.'.xml', 'a+');
+
+									fwrite($fp, $Ticket_CreateTSTFromPricingReq_Res_v1['Ticket_CreateTSTFromPricingReq']);
+
+									fclose($fp);
+
+									$fp = fopen($targetfilename."/".$XmlResFileName.'.xml', 'a+');
+
+									fwrite($fp, $Ticket_CreateTSTFromPricingReq_Res_v1['Ticket_CreateTSTFromPricingRes']);
+
+									fclose($fp);
+
+
+
+                                     $booking_xml_log = array(                                        
+
+                                        'Ticket_CreateTSTFromPricingReq' => $XmlReqFileName.'.xml',
+
+                                        'Ticket_CreateTSTFromPricingRes' => $XmlResFileName.'.xml',
+
+                                        'responce_type'					=>"Ticket_CreateTSTFromPricingReq_Res_v1 Sucess"
+
+                                    );
+
+                                    $this->booking_model->update_booking_xml($booking_xml_log,$global_id->booking_xml_data_id);
+
+
+
+		                        Security_SignOut($SecuritySession4,$seq4,$SecurityToken4);
+
+		                        } else{
+
+                                    	  $xml_log = array(
+
+                                            'api_name' => 'AMEDUS',
+
+                                            'XML_Type' => 'Ticket_CreateTSTFromPricing SUCESS',
+
+                                            'XML_Request' => $Ticket_CreateTSTFromPricingReq_Res_v1['Ticket_CreateTSTFromPricingReq'],
+
+                                            'XML_Response' => $Ticket_CreateTSTFromPricingReq_Res_v1['Ticket_CreateTSTFromPricingRes'],
+
+                                            'Ip_address' => $this->input->ip_address(),
+
+                                            'xml_timestamp' => date('Y-m-d H:i:s')
+
+                                        );
+
+                                    	  $this->xml_model->insert_xml_log($xml_log);
+
+                                    $final_de = date('Ymd_His')."_".rand(1,10000);
+
+									$XmlReqFileName = 'Ticket_CreateTSTFromPricingReq_Res_v1'.$final_de; 
+
+									$XmlResFileName = 'Ticket_CreateTSTFromPricingReq_Res_v1'.$final_de;
+
+									$fp = fopen($targetfilename."/".$XmlReqFileName.'.xml', 'a+');
+
+									fwrite($fp, $Ticket_CreateTSTFromPricingReq_Res_v1['Ticket_CreateTSTFromPricingReq']);
+
+									fclose($fp);
+
+									$fp = fopen($targetfilename."/".$XmlResFileName.'.xml', 'a+');
+
+									fwrite($fp, $Ticket_CreateTSTFromPricingReq_Res_v1['Ticket_CreateTSTFromPricingRes']);
+
+									fclose($fp);
+
+                                     $booking_xml_log = array(                                        
+
+                                        'Ticket_CreateTSTFromPricingReq' => $XmlReqFileName.'.xml',
+
+                                        'Ticket_CreateTSTFromPricingRes' => $XmlResFileName.'.xml',
+
+                                        'responce_type'					=>"Ticket_CreateTSTFromPricingReq_Res_v1 Sucess"
+
+                                    );
+
+                                    $this->booking_model->update_booking_xml($booking_xml_log,$global_id->booking_xml_data_id);
+
+									 $this->booking_model->update_booking_xml($booking_xml_log,$global_id->booking_xml_data_id);
+
+
+
+					
+
+				  $fop_details=fop($card_type, $card_holder_name, $card_number, $exp_month, $exp_year, $cvv_num, $global_id->request_scenario,$global_id->segment_data,$global_id->PricingDetails,$SecuritySession4,$seq4,$SecurityToken4);
+
+
+
+				  $formofpaymentRes = $fop_details['formofpaymentRes'];
+
+
+
+
+
+				  $fop_status = xml2array($formofpaymentRes,$get_attributes = 1, $priority = 'tag');
+
+				$SecuritySession61=$fop_status['soapenv:Envelope']['soapenv:Header']['awsse:Session']['awsse:SessionId'];
+
+				$seq61=$SequenceNumber61=$fop_status['soapenv:Envelope']['soapenv:Header']['awsse:Session']['awsse:SequenceNumber'];
+
+				$SecurityToken61=$fop_status['soapenv:Envelope']['soapenv:Header']['awsse:Session']['awsse:SecurityToken'];
+
+
+
+
+
+				$counter=1;	
+
+/*				$PNR_AddMultiElements= PNR_AddMultiElements($global_id->request_scenario,$global_id->segment_data,$global_id->PricingDetails,$SecuritySession61,$seq61,$SecurityToken61,$passenger_info,$billingaddress,$counter);
+
+*/
+
+				$PNR_AddMultiElements= PNR_AddMultiElements($global_id->request_scenario,$global_id->segment_data,$global_id->PricingDetails,$SecuritySession4,$seq4,$SecurityToken4,$passenger_info,$billingaddress,$counter);
+
+				$PNR_AddMultiElementsResponce = $PNR_AddMultiElements['PNR_AddMultiElementsRes'];
+
+				$pnr_status = xml2array($PNR_AddMultiElementsResponce,$get_attributes = 1, $priority = 'tag');
+
+     		/*	$SecuritySession1=$pnr_status['soapenv:Envelope']['soapenv:Header']['awsse:Session']['awsse:SessionId'];
+
+				$seq1=$SequenceNumber1=$pnr_status['soapenv:Envelope']['soapenv:Header']['awsse:Session']['awsse:SequenceNumber'];
+
+						$SecurityToken1=$pnr_status['soapenv:Envelope']['soapenv:Header']['awsse:Session']['awsse:SecurityToken'];*/
+
+
+
+						if (isset($segment_status['soapenv:Envelope']['soapenv:Body']['soap:Fault']) || isset($segment_status['soapenv:Envelope']['soapenv:Body']['Fare_PricePNRWithBookingClassReply']['applicationError']) || isset($segment_status['soap:Envelope']['soap:Body']['soap:Fault'])) {
+
+								  $xml_log = array(
+
+                                        'api_name' => 'AMEDUS',
+
+                                        'XML_Type' => 'PNR_AddMultiElements ERROR',
+
+                                        'XML_Request' => $PNR_AddMultiElements['PNR_AddMultiElementsReq'],
+
+                                        'XML_Response' => $PNR_AddMultiElements['PNR_AddMultiElementsRes'],
+
+                                        'Ip_address' => $this->input->ip_address(),
+
+                                        'xml_timestamp' => date('Y-m-d H:i:s')
+
+                                    );
+
+                                    $this->xml_model->insert_xml_log($xml_log);  
+
+                                    
+
+
+
+									$final_de = date('Ymd_His')."_".rand(1,10000);
+
+									$XmlReqFileName = 'PNR_AddMultiElements'.$final_de; $XmlResFileName = 'PNR_AddMultiElements'.$final_de;
+
+									$fp = fopen($targetfilename."/".$XmlReqFileName.'.xml', 'a+');
+
+									fwrite($fp, $PNR_AddMultiElements['PNR_AddMultiElementsReq']);
+
+									fclose($fp);
+
+									$fp = fopen($targetfilename."/".$XmlResFileName.'.xml', 'a+');
+
+									fwrite($fp, $PNR_AddMultiElements['PNR_AddMultiElementsRes']);
+
+									fclose($fp);
+
+
+
+                                     $booking_xml_log = array(                                        
+
+                                        'PNR_AddMultiElementsReq' => $XmlReqFileName.'.xml',
+
+                                        'PNR_AddMultiElementsRes' => $XmlResFileName.'.xml',
+
+                                        'responce_type'					=>"PNR_AddMultiElements Error"
+
+                                    );
+
+                                    $this->booking_model->update_booking_xml($booking_xml_log,$global_id->booking_xml_data_id);
+
+                                    Security_SignOut($SecuritySession2,$seq2,$SecurityToken2);
+
+
+
+                                }else{
+
+                                	$xml_log = array(
+
+                                        'api_name' => 'AMEDUS',
+
+                                        'XML_Type' => 'PNR_AddMultiElements SUCESS',
+
+                                        'XML_Request' => $PNR_AddMultiElements['PNR_AddMultiElementsReq'],
+
+                                        'XML_Response' => $PNR_AddMultiElements['PNR_AddMultiElementsRes'],
+
+                                        'Ip_address' => $this->input->ip_address(),
+
+                                        'xml_timestamp' => date('Y-m-d H:i:s')
+
+                                    );
+
+                                	$this->xml_model->insert_xml_log($xml_log);
+
+                                    $final_de = date('Ymd_His')."_".rand(1,10000);
+
+									$XmlReqFileName = 'PNR_AddMultiElements1_'.$final_de; $XmlResFileName = 'PNR_AddMultiElements1_'.$final_de;
+
+									$fp = fopen($targetfilename."/".$XmlReqFileName.'.xml', 'a+');
+
+									fwrite($fp, $PNR_AddMultiElements['PNR_AddMultiElementsReq']);
+
+									fclose($fp);
+
+									$fp = fopen($targetfilename."/".$XmlResFileName.'.xml', 'a+');
+
+									fwrite($fp, $PNR_AddMultiElements['PNR_AddMultiElementsRes']);
+
+									fclose($fp);
+
+
+
+                                     $booking_xml_log = array(                                        
+
+                                        'PNR_AddMultiElementsReq' => $XmlReqFileName.'.xml',
+
+                                        'PNR_AddMultiElementsRes' => $XmlResFileName.'.xml',
+
+                                        'responce_type'					=>"PNR_AddMultiElements Sucess"
+
+                                    );
+
+                                    $this->booking_model->update_booking_xml($booking_xml_log,$global_id->booking_xml_data_id);
+
+		           $PNR_AddMultiElements_End_result=xml2array($PNR_AddMultiElementsResponce,$get_attributes = 1, $priority = 'tag');
+
+		
+
+		            $SecuritySession75=$PNR_AddMultiElements_End_result['soapenv:Envelope']['soapenv:Header']['awsse:Session']['awsse:SessionId'];
+
+					$seq75=$SequenceNumber75=$PNR_AddMultiElements_End_result['soapenv:Envelope']['soapenv:Header']['awsse:Session']['awsse:SequenceNumber'];
+
+					$SecurityToken75=$PNR_AddMultiElements_End_result['soapenv:Envelope']['soapenv:Header']['awsse:Session']['awsse:SecurityToken'];
+
+
+
+
+
+					if (isset($PNR_AddMultiElements_End_result['soapenv:Envelope']['soapenv:Body']['PNR_Reply']['pnrHeader']['reservationInfo']['reservation']['controlNumber'])){
+
+							$UniversalRecord = $pnr_status['soapenv:Envelope']['soapenv:Body']['PNR_Reply']['pnrHeader']['reservationInfo']['reservation']['controlNumber'];
+
+						/* $place_queue=queue_place($SecuritySession75,$seq75,$SecurityToken75,$UniversalRecord);
+
+                         $place_queue_response= $place_queue['queue_placeRes'];
+
+                         $tresult11 = xml2array($place_queue_response,$get_attributes = 1, $priority = 'tag');
+
+
+
+                    $SecuritySession62=$tresult11['soapenv:Envelope']['soapenv:Header']['awsse:Session']['awsse:SessionId'];
+
+					$seq62=$SequenceNumber6=$tresult11['soapenv:Envelope']['soapenv:Header']['awsse:Session']['awsse:SequenceNumber'];
+
+					$SecurityToken62=$tresult11['soapenv:Envelope']['soapenv:Header']['awsse:Session']['awsse:SecurityToken'];*/
+
+
+
+					//sleep(10);
+
+
+
+	                    $pnr_retrieve = pnrRetrieveStateless($UniversalRecord, $SecuritySession75,$seq75,$SecurityToken75);	
+
+						$pnr_retrieveReq = $pnr_retrieve['PNR_RetrieveReq'];
+
+						$pnr_retrievRes = $pnr_retrieve['PNR_RetrieveRes'];
+
+						 
+
+						$pnr_retrieve_result = xml2array($pnr_retrievRes,$get_attributes = 1, $priority = 'tag');
+
+						 
+
+						if (isset($pnr_retrieve_result['soapenv:Envelope']['soapenv:Body']['soap:Fault']) || isset($pnr_retrieve_result['soapenv:Envelope']['soapenv:Body']['PNR_Reply']['applicationError'])) {
+
+							$final_de = date('Ymd_His')."_".rand(1,10000);
+
+							$XmlReqFileName = 'PNR_Retrieve'.$final_de;
+
+							$XmlResFileName = 'PNR_Retrieve'.$final_de;
+
+							$fp = fopen($targetfilename."/".$XmlReqFileName.'.xml', 'a+');
+
+							fwrite($fp, $pnr_retrieveReq);
+
+							fclose($fp);
+
+							$fp = fopen($targetfilename."/".$XmlResFileName.'.xml', 'a+');
+
+							fwrite($fp, $pnr_retrievRes);
+
+							fclose($fp);
+
+						} else {
+
+							
+
+							$final_de = date('Ymd_His')."_".rand(1,10000);
+
+							$XmlReqFileName = 'PNR_Retrieve'.$final_de;
+
+							$XmlResFileName = 'PNR_Retrieve'.$final_de;
+
+							$fp = fopen($targetfilename."/".$XmlReqFileName.'.xml', 'a+');
+
+							fwrite($fp, $pnr_retrieveReq);
+
+							fclose($fp);
+
+							$fp = fopen($targetfilename."/".$XmlResFileName.'.xml', 'a+');
+
+							fwrite($fp, $pnr_retrievRes);
+
+							fclose($fp);
+
+				$SecuritySession63		= $pnr_retrieve_result['soapenv:Envelope']['soapenv:Header']['awsse:Session']['awsse:SessionId'];
+
+				$SequenceNumber63	= $pnr_retrieve_result['soapenv:Envelope']['soapenv:Header']['awsse:Session']['awsse:SequenceNumber'];
+
+				$SecurityToken63		= $pnr_retrieve_result['soapenv:Envelope']['soapenv:Header']['awsse:Session']['awsse:SecurityToken'];
+
+
+
+				
+
+			    	/*$DocIssuance_IssueTicket = DocIssuance_IssueTicket($SecuritySession63, $SequenceNumber63, $SecurityToken63);
+
+					$DocIssuance_IssueTicketEndResult = xml2array($DocIssuance_IssueTicket['DocIssuance_IssueTicketRes']);
+
+					$SecuritySessionfin = $DocIssuance_IssueTicketEndResult ['soapenv:Envelope'] ['soapenv:Header'] ['awsse:Session'] ['awsse:SessionId'];
+
+					$seqfin = $SequenceNumberfin = $DocIssuance_IssueTicketEndResult ['soapenv:Envelope'] ['soapenv:Header'] ['awsse:Session'] ['awsse:SequenceNumber'];
+
+					$SecurityTokenfin = $DocIssuance_IssueTicketEndResult ['soapenv:Envelope'] ['soapenv:Header'] ['awsse:Session'] ['awsse:SecurityToken'];
+
+					$Status_Group = $DocIssuance_IssueTicketEndResult['soapenv:Envelope']['soapenv:Body']['DocIssuance_IssueTicketReply']['errorGroup'];
+
+					$Final_Status = trim($Status_Group['errorWarningDescription']['freeText']['_v']);
+
+					$OkStatus = trim($Status_Group['errorOrWarningCodeDetails']['errorDetails']['errorCode']['_v']);
+
+					$pos = strpos($Final_Status, "SIMULTANEOUS CHANGES TO PNR");
+
+
+
+					if (strpos($Final_Status,'SIMULTANEOUS CHANGES TO PNR') !== false) {
+
+						$DocIssuance_IssueTicket = DocIssuance_IssueTicket($SecuritySessionfin, $seqfin, $SecurityTokenfin);
+
+						$DocIssuance_IssueTicketEndResult = xml2array($DocIssuance_IssueTicket['DocIssuance_IssueTicketRes']);
+
+						
+
+						$SecuritySessionfin =$DocIssuance_IssueTicketEndResult['soapenv:Envelope']['soapenv:Header']['awsse:Session']['awsse:SessionId'];
+
+						$seqfin = $SequenceNumberfin =$DocIssuance_IssueTicketEndResult['soapenv:Envelope']['soapenv:Header']['awsse:Session']['awsse:SequenceNumber'];
+
+						$SecurityTokenfin = $DocIssuance_IssueTicketEndResult['soapenv:Envelope']['soapenv:Header']['awsse:Session']['awsse:SecurityToken'];
+
+					}*/
+
+					Security_SignOut($SecuritySession63, $SequenceNumber63, $SecurityToken63);
+
+				//	Security_SignOut($SecuritySession63,$seq63,$SecurityToken63); 
+
+								}
+
+				            }else{  
+
+				   	//	Security_SignOut($SecuritySession5,$seq5,$SecurityToken5);
+
+
+
+				              	      }
+
+                    				}
+
+
+
+									}
+
+								}
+
+
+
+							}
+
+						}
+
+					}			
+
+					//exit("2240");			
+
+						$BookingStatus = 'FAILED';
+
+                        $Status = 'FAILED';
+
+                        $LocatorCode = '';
+
+                        $ProviderLocatorCode = '';
+
+                        $SupplierLocatorCode = '';
+
+                        $AirReservationLocatorCode = '';
+
+                        $UniversalRecord = '';
+
+                        $ProviderReservationInfoRef = '';
+
+                        $BookingTravelerRef = '';
+
+                        $Remarks = '';
+
+						 //debug($PNR_AddMultiElements_End_result);exit("2248");
+
+						if (!empty($PNR_AddMultiElements_End_result)) {
+
+							$pnr_main='';
+
+							$rr=count($pnr_status['soapenv:Envelope']['soapenv:Body']['PNR_Reply']['pnrHeader'][0]);
+
+							//print_r($rr); exit;
+
+							if($rr!=''){
+
+								 if (isset($pnr_status['soapenv:Envelope']['soapenv:Body']['PNR_Reply']['pnrHeader'][0]['reservationInfo']['reservation']['controlNumber'])){
+
+								  $UniversalRecord = $pnr_status['soapenv:Envelope']['soapenv:Body']['PNR_Reply']['pnrHeader']['reservationInfo']['reservation']['controlNumber'];
+
+                                
+
+                                $Status = 'CONFIRMED';
+
+                                $BookingStatus = 'CONFIRMED';
+
+                                $Remarks = 'No remarks';
+
+                                $error_message.='|' . $booking_id . '-FLIGHT RESPONSE SUCCESS';
+
+                            	}else {
+
+                                $xml_log = array(
+
+                                    'api_name' => 'AMEDUS',
+
+                                    'XML_Type' => 'PNR_AddMultiElements_option11 ',
+
+                                   'XML_Request' => $PNR_AddMultiElementsReq_Res_v11['PNR_AddMultiElements_option11Req'],
+
+                                    'XML_Response' => $PNR_AddMultiElementsReq_Res_v11['PNR_AddMultiElements_option11Res'],
+
+                                    'Ip_address' => $this->input->ip_address(),
+
+                                    'xml_timestamp' => date('Y-m-d H:i:s')
+
+                                );
+
+                                $this->xml_model->insert_xml_log($xml_log);
+
+                                $error_message.='|' . $booking_id . '-FLIGHT ERROR RESPONSE';
+
+                            }	
+
+                            }else{
+
+                            	 if (isset($pnr_status['soapenv:Envelope']['soapenv:Body']['PNR_Reply']['pnrHeader']['reservationInfo']['reservation']['controlNumber'])){
+
+								  $UniversalRecord = $pnr_status['soapenv:Envelope']['soapenv:Body']['PNR_Reply']['pnrHeader']['reservationInfo']['reservation']['controlNumber'];
+
+                                
+
+                                $Status = 'CONFIRMED';
+
+                                $BookingStatus = 'CONFIRMED';
+
+                                $Remarks = 'No remarks';
+
+                                $error_message.='|' . $booking_id . '-FLIGHT RESPONSE SUCCESS';
+
+                            		}else {
+
+                                $xml_log = array(
+
+                                    'api_name' => 'AMEDUS',
+
+                                    'XML_Type' => 'PNR_AddMultiElements_option11 ',
+
+                                   'XML_Request' => $PNR_AddMultiElementsReq_Res_v11['PNR_AddMultiElements_option11Req'],
+
+                                    'XML_Response' => $PNR_AddMultiElementsReq_Res_v11['PNR_AddMultiElements_option11Res'],
+
+                                    'Ip_address' => $this->input->ip_address(),
+
+                                    'xml_timestamp' => date('Y-m-d H:i:s')
+
+                                );
+
+                                $this->xml_model->insert_xml_log($xml_log);
+
+                                $error_message.='|' . $booking_id . '-FLIGHT ERROR RESPONSE';
+
+                            }	
+
+                            	}
+
+                        } else {
+
+                            $error_message.='|' . $booking_id . '-FLIGHT EMPTY RESPONSE';
+
+                        }
+
+                        $booking_res = array(
+
+                            'LocatorCode' => $UniversalRecord,
+
+                            'BookingStatus' => $BookingStatus,
+
+                            'Status' => $Status,
+
+                            'Remarks' => $Remarks
+
+                        );
+
+                        $booking_res = json_encode($booking_res);
+
+                                                
+
+                        $booking_res = json_decode($booking_res);
+
+                        //echo 'booking_res'; print_r($booking_res);
+
+                        $update_booking = array(
+
+                            'pnr_no' => $booking_res->LocatorCode,                           
+
+                            'booking_status' => $BookingStatus
+
+                        );
+
+                       //  echo $bid;
+
+                        $this->Flight_Model->Update_Booking_Global($bid, $update_booking, 'FLIGHT');
+
+                      // echo 'update_booking'; print_r($update_booking); exit();
+
+                        $LocatorCode=$update_booking['pnr_no'];
+
+
+
+						}else{
+
+							$error_message.='|'.$booking_id.'-Booking data not there';
+
+						}		
+
+				
+
+				$update_booking_process = array(
+
+							'pnr_no' => $LocatorCode,                           
+
+                            'booking_status' => $BookingStatus,
+
+							'flow_tracking' => $error_message
+
+						);
+
+
+
+				$this->booking_model->Update_Booking_Global($bid, $update_booking_process);
+
+				unset($update_booking['eticket_number']);
+
+				//store booking_ifo
+
+				$this->booking_model->Update_Booking_Supplier($booking_supplier_id, $update_booking);
+
+				//$this->booking_model->Update_Booking_Global($bid,$update_booking);
+
+				if($update_booking['booking_status'] == 'CONFIRMED'){
+
+					if($global_id->user_type_id == '1') {
+
+						$user_id = $global_id->user_id;
+
+						$this->user_do_payment($global_id->total_amount,$global_id->agent_markup,$user_id);
+
+						$this->user_do_payment_account($global_id->total_amount,$global_id->agent_markup,$user_id,$global_id->booking_global_id,$update_booking['pnr_no']);
+
+						$error_message.='|'.$booking_id.'-booking amount debited from your account';
+
+					}
+
+				}			
+
+			}
+
+			redirect(WEB_URL.'booking/confirm/'.base64_encode($parent_pnr), 'refresh');
+
+		}else{
+
+			$msg = 'Booking Failure, your order doest not exists.';
+
+			$orderid =  '';
+
+			$payid =  '';
+
+			$msg = base64_encode($msg);
+
+			redirect(WEB_URL.'error/payment/'.$msg,'refresh');
+
+          }
+
+
+
+		}
+
+	 }
+
+
+  } else{
+
+  	$msg = 'Booking Failure, your order doest not exists.';
+
+			$orderid =  '';
+
+			$payid =  '';
+
+			$msg = base64_encode($msg);
+
+			redirect(WEB_URL.'error/payment/'.$msg,'refresh');
+
+  }
+
+}
+
+    /*END*/
+
+    public function parseSessionCreateRS($SessionCreateRQ_RS){ //using
+
+			$SessionCreateRS = $SessionCreateRQ_RS['SessionCreateRS'];
+
+			//header("Content-type: text/xml");print_r($SessionCreateRS);die;
+
+			//echo '<pre>';print_r($response);die;
+
+			$response = $this->xml_to_array->XmlToArray($SessionCreateRS);
+
+			$Sr=array();
+
+		  if(isset($response['soap-env:Header']['eb:MessageHeader'])){
+
+			$Sr['ConversationId'] = $response['soap-env:Header']['eb:MessageHeader']['eb:ConversationId'];
+
+			$Sr['BinarySecurityToken'] = $response['soap-env:Header']['wsse:Security']['wsse:BinarySecurityToken']['@content'];
+
+			 //echo '<pre>';print_r($Sr);die;
+
+			
+
+		}
+
+		return $Sr;
+
+	}
+
+
+
+	
+
+	public function cancelBooking(){
+
+		$booking_data = json_decode(base64_decode($this->input->post('rejected_booking_data')));
+
+		$SecuritySession	= $booking_data->SecuritySession;
+
+		$seq				= $booking_data->seq;
+
+		$SecurityToken		= $booking_data->SecurityToken;
+
+		Security_SignOut($SecuritySession, $seq, $SecurityToken);
+
+		redirect(WEB_URL);
+
+	}
+
+	
+
+	public function send_email_voucher($pnr_no='',$con_pnr_no=''){	
+
+		//$this->load->library('provab_mailer');
+
+		$this->load->model('email_model');
+
+		
+
+	 	$count = $this->booking_model->getBookingPnr($pnr_no,$con_pnr_no)->num_rows();
+
+		
+
+        if($count == 1){
+
+            $b_data = $this->booking_model->getBookingPnr($pnr_no,$con_pnr_no)->row();   
+
+          
+
+          	$admin_details = $this->booking_model->get_admin_details();
+
+         	$data['admin_details'] = $admin_details;
+
+            if($b_data->product_name == 'FLIGHT'){
+
+            //  $data['terms_conditions'] = $this->booking_model->get_terms_conditions($product_id);
+
+           $data['b_data'] = $this->booking_model->getBookingPnr($pnr_no,$b_data->con_pnr_no)->row();     
+
+           $booking_global_id=$b_data->booking_global_id;
+
+           $billing_address_id=$b_data->billing_address_id;
+
+             
+
+                 $data['Passenger'] = $passenger = $this->booking_model->getPassengerbyid($booking_global_id)->result();
+
+                 $data['booking_agent'] = $passenger = $this->booking_model->getagentbyid($billing_address_id)->result();
+
+                 $booking_transaction_id = $data['b_data']->booking_transaction_id;
+
+		         $data['booking_transaction'] = $this->booking_model->getbookingTransaction($booking_transaction_id)->result();
+
+
+
+                $data['message'] = $this->load->view(PROJECT_THEME.'/booking/mail_voucher', $data,TRUE);
+
+               
+
+                $data['to'] = $data['booking_agent'][0]->billing_email;               
+
+                $data['booking_status'] = $b_data->booking_status;
+
+                $data['pnr_no'] = $pnr_no;
+
+                $data['email_access'] = $this->email_model->get_email_acess()->row();
+
+                $email_type = 'FLIGHT_BOOKING_VOUCHER';
+
+                 // echo "b_data:<pre/>";print_r($data);exit();
+
+                
+
+                $Response = $this->email_model->sendmail_flightVoucher($data);
+
+              //   echo "b_data:<pre/>";print_r($Response);exit();
+
+                $response = array('status' => 1);
+
+                //echo json_encode($response);
+
+            }
+
+            if($b_data->product_name == 'HOTEL')
+
+            {
+
+            	$data['b_data'] = $b_data;
+
+            	$booking_global_id = $b_data->booking_global_id;
+
+            	$billing_address_id = $b_data->billing_address_id;
+
+            	$payment_id = $b_data->payment_id;
+
+ 			
+
+     			$data['Booking'] = $booking = $this->booking_model->getBookingbyPnr($b_data->pnr_no,$b_data->product_name)->row();
+
+    			$data['Passenger'] = $passenger = $this->booking_model->getPassengerbyPnr($booking->booking_global_id)->result();
+
+    			$data['cart']	= $cart = $this->cart_model->getBookingTemphotel($booking->shopping_cart_hotel_id);
+
+
+
+                $data['message'] = $this->load->view(PROJECT_THEME.'/booking/hotel_voucher_view_mail', $data,TRUE);
+
+                // print_r($data['message']);exit;
+
+
+
+                $data['to'] = $data['booking_agent'][0]->billing_email;               
+
+                $data['booking_status'] = $b_data->booking_status;
+
+                $data['pnr_no'] = $pnr_no;
+
+                $data['email_access'] = $this->email_model->get_email_acess()->row();
+
+                $email_type = 'HOTEL_BOOKING_VOUCHER';
+
+                $Response = $this->email_model->sendmail_hotelVoucher($data);
+
+                $response = array('status' => 1);
+
+
+
+            }
+
+             if($b_data->product_name == 'BUS')
+
+            {
+
+            	$data['b_data'] = $b_data;
+
+            	$booking_global_id = $b_data->booking_global_id;
+
+            	$billing_address_id = $b_data->billing_address_id;
+
+            	$payment_id = $b_data->payment_id;
+
+ 			
+
+     			$data['Booking'] = $booking = $this->booking_model->getBookingbyPnr($b_data->pnr_no,$b_data->product_name)->row();
+
+    			$data['Passenger'] = $passenger = $this->booking_model->getPassengerbyPnr($booking->booking_global_id)->result();
+
+    			$data['cart']	= $cart = $this->cart_model->getBookingTempbus($booking->shopping_cart_hotel_id);
+
+    			debug($data); exit();
+
+                $data['message'] = $this->load->view(PROJECT_THEME.'/booking/hotel_voucher_view_mail', $data,TRUE);
+
+                // print_r($data['message']);exit;
+
+
+
+                $data['to'] = $data['booking_agent'][0]->billing_email;               
+
+                $data['booking_status'] = $b_data->booking_status;
+
+                $data['pnr_no'] = $pnr_no;
+
+                $data['email_access'] = $this->email_model->get_email_acess()->row();
+
+                $email_type = 'HOTEL_BOOKING_VOUCHER';
+
+                $Response = $this->email_model->sendmail_hotelVoucher($data);
+
+                $response = array('status' => 1);
+
+
+
+            }
+
+        }else{
+
+            return $response = array('status' => 0);
+
+        }
+
+        return $response;
+
+    }
+
+    public function book($parent_pnr){	
+
+    	/*ini_set('display_errors', '1');
+
+        ini_set('display_startup_errors', '1');
+
+        error_reporting(E_ALL);*/
+
+        error_reporting(0);
+
+        
+
+        $count = $this->payment_model->validate_order_id_org($parent_pnr)->num_rows();
+
+         //echo $count; exit();
+
+       
+
+		if($count >= 1){
+
+			// echo "car booking";die($count);
+
+			$global_ids = $this->payment_model->validate_order_id_org($parent_pnr)->result();
+
+			
+
+			 /*echo"<pre/>";print_r($global_ids); exit;*/
+
+			/*debug($count);
+
+			debug($global_ids);*/
+
+			// exit();
+
+ 			foreach ($global_ids as $key => $global_id) {
+
+				$booking_id = $global_id->referal_id;
+
+				$module = $global_id->product_name;
+
+				$bid = $global_id->booking_global_id;
+
+				$con_pnr_no = $global_id->con_pnr_no;
+
+				$payment_method = $global_id->payment_type;
+
+				$billing_address_id = $global_id->billing_address_id;
+
+				$booking_supplier_id = $global_id->booking_supplier_id;				
+
+				$user_id = $global_id->user_id;
+
+				$user_type_id = $global_id->user_type_id;
+
+				$error_message='';
+
+
+
+
+
+				/*Card Details start*/
+
+				$card_type = $global_id->card_type;
+
+				$card_holder_name = $global_id->card_holder_name;
+
+				$card_number = $global_id->card_number;
+
+				$exp_month = $global_id->exp_month;
+
+				$exp_year = substr($global_id->exp_year, -2);
+
+				$cvv_num = $global_id->cvv_num;
+
+				/*Card Details End*/
+
+
+
+
+
+				$update_booking = array(
+
+									'supplier_reference_number' => 'XXXXXXXXX',
+
+									'supplier_status' => 'Failed',
+
+									'booking_supplier_number' => 'XXXXXXXXX'
+
+									);
+
+				$update_booking_status = array(
+
+							'booking_status' => 'FAILED'
+
+							);
+
+							
+
+				if($payment_method=='DEPOSIT'){
+
+					$user_type = $global_id->user_type_id;
+
+					$user_id = $global_id->user_id;
+
+					if($this->session->userdata('user_type') == $user_type && $this->session->userdata('user_id') == $user_id){
+
+						$book_check = 'OK';
+
+						$error_message.='|Deposit - OK.';
+
+					}else{
+
+						$book_check = 'NOTOK';
+
+						$error_message.='|Deposit - User ID and User Type Not a valid.';
+
+					}
+
+				}
+
+				elseif($payment_method=='PAYMENT'){
+
+    				/*$payment_status = $global_id->payment_status;
+
+    				$transaction_status = $global_id->transaction_status;
+
+					if($payment_status == 5 && $transaction_status== 'SUCCESS'){
+
+						$book_check = 'OK';
+
+						$error_message.='|Payment Gateway - OK.';
+
+					}else{
+
+						$book_check = 'NOTOK';
+
+						$error_message.='|Payment Gateway - Status not authorized.';
+
+					}*/
+
+					$book_check = 'OK';
+
+				}
+
+				else{
+
+					$book_check = 'NOTOK';
+
+					$error_message.='|Not a valid user.';
+
+				}
+
+		
+
+				if($book_check=='OK'){
+
+					
+
+					$this->load->library('xml_to_array');
+
+					if($module == 'FLIGHT'){
+
+						$count = $this->booking_model->getBookingFlightTemp($booking_id)->num_rows();
+
+						 
+
+							
+
+						if($count == 1){
+
+							if($global_id->api_name =='AMADEUS'){
+
+								
+
+								$this->load->helper('flight/amedus_helper');								
+
+								
+
+								$booking_supplier_details = $this->booking_model->get_booking_supplier_details($global_id->booking_supplier_id)->row();
+
+								$passenger_info = $this->booking_model->getBookingpassengerTemp($bid)->result();
+
+								
+
+								$billingaddress = $this->booking_model->getbillingaddressTemp($billing_address_id)->row();
+
+								
+
+								$prebook_xml_response = read_file($booking_supplier_details->prebook_xml_response);
+
+								
+
+								$prebook_xml_response_v1 = $this->xml_to_array->XmlToArray($prebook_xml_response);
+
+							}
+
+						}
+
+						else
+
+						{
+
+							$error_message.='|'.$booking_id.'-Booking data not there';
+
+						}
+
+					}
+
+					
+
+					if($module == 'HOTEL'){
+
+					    
+
+						$count = $this->booking_model->getBookingHotelTemp($booking_id)->num_rows();
+
+						$hotel_data = $this->booking_model->getBookingHotelTemp($booking_id)->result();
+
+						if($count == 1){
+
+							$this->load->helper('hotel/tbo_helper');
+
+							$search_id = $hotel_data[0]->search_id;
+
+							$getPaxDetails = $hotel_data[0]->passenger_details;
+
+    
+
+                            $getBlockRoomDetails = $this->hotel_model->checkLogsHistory($search_id,'RoomBlock');
+
+                            $getRoomDetails = $this->hotel_model->checkLogsHistory($search_id,'hotelRoom');
+
+                            $getHotelDetails = $this->hotel_model->checkLogsHistory($search_id,'hotelInfo');
+
+                        
+
+                            $getBlockReq = json_decode($getBlockRoomDetails[0]->request);
+
+                            $trace_id = $getBlockReq->TraceId;
+
+        
+
+                            $bookingResponse = TBO_final_booking($booking_id,$search_id,$getPaxDetails,$getBlockReq);
+
+                           
+
+                            //echo $global_id->booking_global_id;
+
+                            //echo "<pre/>";print_r($bookingResponse);exit('hotel booking');
+
+                            
+
+                            if($bookingResponse->BookResult->Status == 1){
+
+                                
+
+                                $BookingStatus = 'CONFIRMED';
+
+                                $update_booking_status = array(
+
+										'pnr_no' => $bookingResponse->BookResult->BookingId,                           
+
+										'booking_status' => $BookingStatus
+
+									);
+
+									
+
+								/*	echo $global_id->booking_global_id.'====';
+
+									echo '<pre>';printr_r($update_booking_status);exit();*/
+
+									
+
+							  $this->booking_model->Update_Booking_Global($global_id->booking_global_id, $update_booking_status);		
+
+							  redirect(WEB_URL.'booking/confirm/'.base64_encode($parent_pnr), 'refresh');
+
+							  
+
+							}else{
+
+							    
+
+							    $update_booking_status = array(						 
+
+											'booking_status' => 'FAILED'
+
+									);
+
+								$this->booking_model->Update_Booking_Global($global_id->booking_global_id, $update_booking_status);	
+
+								$this->Hotel_Model->Security_SignOut();     // security signout
+
+								$text  ='Error while Processing your request..Please try again after some time!!!!';	
+
+								redirect(WEB_URL.'error/hotel'.base64_encode($text)); exit;
+
+							}
+
+							
+
+						}
+
+						else{
+
+							$error_message.='|'.$booking_id.'-Booking data not there';
+
+						}
+
+					}
+
+
+
+					if($module == 'BUS'){
+
+						$count = $this->booking_model->getBookingBusTemp($booking_id)->num_rows();
+
+						$hotel_data = $this->booking_model->getBookingBusTemp($booking_id)->result_array();
+
+						$cart_bus_data = $this->cart_model->getBookingTemp_bus($hotel_data[0]['global_id']);
+
+						$checkout_form = json_decode($cart_bus_data->checkout_form, true);
+
+						$page_data_ = $this->cart_model->get_book_data_bycart($hotel_data[0]['global_id']);				
+
+		                $page_data = base64_decode($page_data_->book_data);
+
+		                $cart_book_data = json_decode($page_data, true);
+
+		                $post_params = $cart_book_data['pre_booking_params'];
+
+		                $search_id = $cart_book_data['search_data']['origin'];
+
+
+
+						/*debug($cart_bus_data);
+
+						debug($checkout_form);*/
+
+		                $post_params['token'] = unserialized_data($checkout_form['token'], $checkout_form['token_key']);
+
+		                $post_params['checkout_form'] = $checkout_form;
+
+		                $post_params['app_reference'] = $cart_bus_data->app_reference;
+
+		                $post_params['global_id'] = $cart_bus_data->parent_cart_id;
+
+		                $post_params['cart_id'] = $cart_bus_data->cart_id;
+
+
+
+		                /*debug($count);
+
+						debug($post_params);*/
+
+						/*debug($cart_bus_data);
+
+						debug($cart_book_data);*/
+
+						
+
+						$block_status = block_seats($search_id, $post_params);	
+
+						// debug($block_status);
+
+						if($block_status['status'] == true){
+
+							$blockresponse =$block_status['data']['result']['Passenger'];
+
+							/*debug($post_params['resultIndex']);
+
+					        debug($post_params['tokenId']);
+
+					        debug($post_params['traceId']);*/
+
+							$booking = process_booking($blockresponse, $post_params);
+
+							// debug($booking);
+
+							if($booking['status'] == true){
+
+								$get_booking_details = get_booking_details($booking, $post_params);
+
+									// debug($get_booking_details);
+
+									
+
+								if($get_booking_details['status'] == true){
+
+                                
+
+	                                $BookingStatus = 'CONFIRMED';
+
+	                                // debug($BookingStatus);
+
+	                                $update_booking_status = array(
+
+										'pnr_no' => $booking['data']['result']['BookResult']['TravelOperatorPNR'],
+
+										'booking_status' => $BookingStatus
+
+									);
+
+
+
+									$update_booking_status_bus_booking = array(
+
+										'pnr' => $booking['data']['result']['BookResult']['TravelOperatorPNR'],
+
+										'status' => "BOOKING_CONFIRMED"
+
+									);
+
+										
+
+									/*	echo $global_id->booking_global_id.'====';
+
+										echo '<pre>';printr_r($update_booking_status);exit();*/
+
+										
+
+								  $this->booking_model->Update_Booking_Global($global_id->booking_global_id, $update_booking_status);	
+
+								  $this->booking_model->Update_Bus_Booking($global_id->booking_global_id, $update_booking_status_bus_booking);	
+
+								  // debug(WEB_URL.'booking/confirm/'.base64_encode($parent_pnr));	
+
+								  // debug($BookingStatus);	
+
+								  $GateURL = WEB_URL.'booking/confirm/'.base64_encode($parent_pnr);
+
+								  redirect($GateURL);
+
+								  // redirect(WEB_URL.'booking/confirm/'.base64_encode($parent_pnr), 'refresh');
+
+								  
+
+								}else{
+
+								    debug($get_booking_details); exit();
+
+								    $update_booking_status = array(						 
+
+												'booking_status' => 'FAILED'
+
+										);
+
+									$this->booking_model->Update_Booking_Global($global_id->booking_global_id, $update_booking_status);	
+
+									$text  ='Error while Processing your request..Please try again after some time!!!!';	
+
+									redirect(WEB_URL.'error/bus'.base64_encode($text)); exit;
+
+								}
+
+								// debug($get_booking_details); exit();
+
+							}else{
+
+								debug($booking);exit();	
+
+							}
+
+						}else{
+
+							debug($block_status);exit();
+
+						}
+
+						/*debug($block_status);
+
+						debug($hotel_data);
+
+						debug($cart_bus_data);
+
+						debug($cart_book_data);*/
+
+						// exit("2470");
+
+						
+
+					}
+
+				}
+
+				else{
+
+					$error_message.='|Booking process failure';
+
+				$update_booking_process = array(
+
+							'flow_tracking' => $error_message
+
+						);
+
+				}
+
+			    $this->booking_model->Update_Booking_Global_booking($bid, $update_booking);
+
+				$this->booking_model->Update_Booking_Supplier($booking_supplier_id, $update_booking);
+
+				$this->booking_model->Update_Booking_Global($global_id->booking_global_id, $update_booking_status);	
+
+				}
+
+			$amount = $global_id->total_amount;
+
+			$payment_keys = base64_encode($parent_pnr . ',' .$amount. ',' . $module);	
+
+		   redirect(WEB_URL.'booking/confirm/'.base64_encode($parent_pnr), 'refresh');
+
+		}
+
+		else{
+
+			$msg = 'Booking Failure, your order doest not exists.';
+
+			$orderid =  '';
+
+			$payid =  '';
+
+			$msg = base64_encode($msg);
+
+			echo WEB_URL.'error/payment/'.$msg,'refresh';die('2636');
+
+			redirect(WEB_URL.'error/payment/'.$msg,'refresh');
+
+		}
+
+   }
+
+    public function user_do_payment($payable_amount, $myMarkup,$user_id){
+
+    	$deposit_amount_det = $this->account_model->get_deposit_amount($user_id)->row();
+
+    	$credit_amount = $deposit_amount_det->balance_credit;
+
+        $payable_amount = $this->account_model->PercentageMinusAmount($payable_amount,$myMarkup);
+
+    	if($credit_amount >= $payable_amount){
+
+			$balance_credit = $credit_amount - $payable_amount;
+
+			$update_credit_amount = array(
+
+				'balance_credit' => $balance_credit,
+
+				'last_debit' => $payable_amount
+
+			);
+
+			
+
+			$this->account_model->update_credit_amount($update_credit_amount,$user_id);
+
+		}
+
+    }
+
+	
+
+	public function user_do_payment_account($payable_amount, $myMarkup,$user_id,$booking_id,$pnr){
+
+    	$deposit_amount_det = $this->account_model->get_deposit_amount($user_id)->row();
+
+    	$credit_amount = $deposit_amount_det->balance_credit;
+
+        //echo $myMarkup;
+
+        $payable_amount = $this->account_model->PercentageMinusAmount($payable_amount,$myMarkup);
+
+        //die;
+
+    	if($credit_amount >= $payable_amount){
+
+					$balance_credit = $credit_amount;
+
+			$description='BOOKING - : <a href="'.WEB_URL.'invoice/'.base64_encode(base64_encode($pnr)).'" target="_blank">'.$pnr.'</a>';
+
+			
+
+				$account_transaction = array(
+
+						'transaction_type' => 'WITHDRAW',
+
+						 'booking_id' => $booking_id,
+
+						'user_id' => $user_id,
+
+						'amount' => $payable_amount,
+
+						'balance_amount' => $balance_credit,
+
+						'description' => $description
+
+					);
+
+					$this->db->insert('user_transaction',$account_transaction); 
+
+					$bid = $this->db->insert_id();
+
+					$timing = date('Ymd');
+
+					$timing1 = date('His');
+
+					$txno = 'TX'.$timing.$bid.$timing1;
+
+								$update_account = array(
+
+									'transaction_number' => $txno
+
+								);
+
+								
+
+					$this->db->where('user_transaction_id',$bid);
+
+					
+
+					$this->db->update('user_transaction', $update_account);
+
+					
+
+				
+
+		}
+
+    }
+
+	public function confirm($parent_pnr=''){
+
+ 	    if(!empty($parent_pnr)){
+
+            $parent_pnr = base64_decode($parent_pnr);
+
+            $count = $this->booking_model->getBookingByParentPnr($parent_pnr)->num_rows();
+
+            /*debug($parent_pnr);
+
+            debug($count);*/
+
+            if($count > 0){
+
+                $data['pnr_nos'] = $this->booking_model->getBookingByParentPnr($parent_pnr)->result();
+
+                //echo '<pre>';print_r($data['pnr_nos']);exit();
+
+                if(!empty($data['pnr_nos'][0]->cart_car_id))
+
+                {
+
+                    $data['voucher_data'] = $this->booking_model->getcarvocherdata($data['pnr_nos'][0]->cart_car_id);
+
+                }
+
+                $this->send_email_voucher($parent_pnr);
+
+                 //echo "<pre>"; print_r($data['pnr_nos']); exit();
+
+                // debug($data);
+
+                $this->load->view(PROJECT_THEME.'/common/confirmation_letter', $data);
+
+            }else{
+
+                 $this->load->view('errors/404');
+
+            }
+
+        }else{
+
+             $this->load->view('errors/404');
+
+        }
+
+    }
+
+    
+
+	public function b2b_check_payment($payable_amount,$user_id){
+
+    	$deposit_amount_det = $this->account_model->get_deposit_amount($user_id)->row();
+
+    	// print_r($deposit_amount_det);exit;
+
+        $credit_amount = $deposit_amount_det->balance_credit;
+
+    	//if($credit_amount >= $payable_amount){
+
+    	if($credit_amount >= $payable_amount){
+
+			return true;
+
+		}else{
+
+			return false;
+
+		}
+
+    }
+
+	
+
+    public function generate_parent_pnr($length = 12) {
+
+        $alphabets = range('A','Z');
+
+        $numbers = range('0','9');
+
+        $final_array = array_merge($alphabets,$numbers);
+
+        //$id = date("ymd").date("His");
+
+        $id = '';
+
+        while($length--) {
+
+          $key = array_rand($final_array);
+
+          $id .= $final_array[$key];
+
+        }
+
+        return $id;
+
+    }
+
+
+
+	public function voucher($pnr_no=''){		
+
+        $pnr_no = base64_decode(base64_decode($pnr_no));        
+
+        // echo $pnr_no;die;
+
+        $count = $this->booking_model->getBookingPnr($pnr_no)->num_rows();       
+
+        if($count == 1) {
+
+         $b_data = $this->booking_model->getBookingPnr($pnr_no)->row();	
+
+
+
+         	// echo "<pre>"; print_r($b_data); echo "</pre>"; die();
+
+         	$admin_details = $this->booking_model->get_admin_details();
+
+         	$data['admin_details'] = $admin_details;
+
+            if($b_data->product_name == 'FLIGHT'){
+
+				  				
+
+		         $data['b_data'] = $this->booking_model->getBookingPnr($pnr_no)->row();
+
+		         $data['flight_iterna'] = $this->booking_model->getBookingFlightTemp($data['b_data']->referal_id)->row();
+
+		         $data['flight_transaction'] = $this->booking_model->getbookingTransaction($data['b_data']->booking_transaction_id)->row();
+
+
+
+		         $booking_global_id=$data['b_data']->booking_global_id;
+
+		          $billing_address_id=$data['b_data']->billing_address_id;
+
+
+
+		         $data['Passenger'] = $passenger = $this->booking_model->getPassengerbyid($booking_global_id)->result();
+
+		         $data['booking_agent'] = $passenger = $this->booking_model->getagentbyid($billing_address_id)->result();
+
+	              $this->load->view(PROJECT_THEME.'/booking/flight_voucher_view', $data);
+
+            }
+
+            
+
+            if($b_data->product_name == 'HOTEL'){
+
+				
+
+					$data['Booking'] = $booking = $this->booking_model->getBookingbyPnr($b_data->pnr_no,$b_data->product_name)->row();
+
+					$data['Passenger'] = $passenger = $this->booking_model->getPassengerbyPnr($booking->booking_global_id)->result();
+
+					$data['cart']	= $cart = $this->cart_model->getBookingTemphotel($booking->cart_id);
+
+					$hotel_data = $this->hotel_model->get_hotel_other_details($cart->HotelCode,$cart->session_id);
+
+                    $data['hotel_data'] = $hotel_data[0];
+
+                    $data['request_data'] = unserialize($hotel_data[0]['request']);
+
+                    //echo '<pre>';print_r( $cart);exit();
+
+					$this->load->view(PROJECT_THEME.'/booking/hotel_voucher_view', $data);
+
+			
+
+            }
+
+        }else{
+
+        	$this->load->view(PROJECT_THEME.'/booking/bus_voucher_view');
+
+             // $this->load->view('errors/404');
+
+        }
+
+    }
+
+	
+
+	public function invoice($pnr_no){
+
+	
+
+			$pnr_no = base64_decode(base64_decode($pnr_no));
+
+	        $count = $this->booking_model->getBookingPnr($pnr_no)->num_rows();
+
+	        if($count == 1) {
+
+	            $b_data = $this->booking_model->getBookingPnr($pnr_no)->row();
+
+	            $admin_details = $this->booking_model->get_admin_details();
+
+         		$data['admin_details'] = $admin_details;
+
+	            if($b_data->product_name == 'FLIGHT'){
+
+					  if ($this->session->userdata('user_id')) {
+
+	               			$c_user_type = $this->session->userdata('user_type');
+
+	              			  $c_user_id = $this->session->userdata('user_id');
+
+						}   else {
+
+							$c_user_type = "";
+
+							$c_user_id = "";
+
+						}
+
+
+
+						if($c_user_id!='' && $c_user_type!='' && $b_data->user_id == $c_user_id && $b_data->user_type_id == $c_user_type)
+
+						{
+
+		                	
+
+							
+
+						  $data['Booking'] = $booking = $this->booking_model->getBookingbyPnr($b_data->pnr_no,$b_data->product_name)->row();
+
+						  $data['tax_json'] = json_decode($data['Booking']->PricingDetails);
+
+						  $data['tax'] = $data['tax_json'][0]->PriceInfo;
+
+						   // echo $data['tax']->totalTaxAmount; exit;
+
+						 
+
+						  $data['Passenger'] = $booking = $this->booking_model->getPassengerbyPnr($booking->booking_global_id)->result();
+
+						  
+
+						 
+
+			                $this->load->view(PROJECT_THEME.'/booking/flight_invoice_view', $data);
+
+						}
+
+						else{
+
+		             $this->load->view('errors/404');
+
+		       			 }
+
+            
+
+				}
+
+	        }else{
+
+	              $this->load->view('errors/404');
+
+	        }
+
+		
+
+    }
+
+    public function pre_cancellationTest($pnr){ //5PRVDQ
+
+
+
+		$this->load->helper ( 'amadeus_helper' );
+
+		$PNRRetrieve = PNR_Retrieve($pnr);
+
+		$PNRRetrieveResponse = $PNRRetrieve ['PNR_RetrieveRes'];
+
+		$RetrieveStatus = xml2array ( $PNRRetrieveResponse, $get_attributes = 1, $priority = 'tag' );
+
+		echo "/*----------------------------/* RetrieveRequest";
+
+		echo $PNRRetrieve['PNR_RetrieveReq'];
+
+		echo "/*----------------------------/* Retrieve response";
+
+		echo $PNRRetrieveResponse;
+
+
+
+
+
+		$SecuritySession = $RetrieveStatus ['soapenv:Envelope'] ['soapenv:Header'] ['awsse:Session'] ['awsse:SessionId'];
+
+		$seq = $SequenceNumber = $RetrieveStatus ['soapenv:Envelope'] ['soapenv:Header'] ['awsse:Session'] ['awsse:SequenceNumber'];
+
+		$SecurityToken = $RetrieveStatus ['soapenv:Envelope'] ['soapenv:Header'] ['awsse:Session'] ['awsse:SecurityToken'];
+
+
+
+		//Fix me
+
+		/*$file = FLIGHT_XML_LOG."PNR_RetrieveReq.xml";
+
+		$this->prettyPrint($PNR_AddMultiElements['PNR_RetrieveReq'], $file);
+
+		$file1 = FLIGHT_XML_LOG."PNR_RetrieveRes.xml";
+
+		$this->prettyPrint($PNR_AddMultiElements['PNR_RetrieveRes'], $file1);*/
+
+		
+
+		$PNRCancel = PNR_Cancel($SecuritySession, $seq, $SecurityToken);
+
+		echo "/*------------------/*Cancle Request";
+
+		echo $PNRCancel['PNR_CancelReq'];
+
+		echo "/*------------------/*Cancle Response";
+
+		echo $PNRCancel['PNR_CancelRes'];
+
+		$PNRCancelResponse = $PNRCancel['PNR_CancelRes'];
+
+
+
+		$CancleStatus = xml2array ( $PNRCancelResponse, $get_attributes = 1, $priority = 'tag' );
+
+		
+
+		debug($CancleStatus);
+
+
+
+		$SecuritySessionCancle = $CancleStatus ['soapenv:Envelope'] ['soapenv:Header'] ['awsse:Session'] ['awsse:SessionId'];
+
+		$seqCancle = $SequenceNumber = $CancleStatus ['soapenv:Envelope'] ['soapenv:Header'] ['awsse:Session'] ['awsse:SequenceNumber'];
+
+		$SecurityTokenCancle = $CancleStatus ['soapenv:Envelope'] ['soapenv:Header'] ['awsse:Session'] ['awsse:SecurityToken'];
+
+
+
+		$status_details = $CancleStatus ['soapenv:Envelope'] ['soapenv:Body'] ['PNR_Reply'] ['technicalData'] ['generalPNRInformation'] ['statusDetails'] ['isPNRModifDuringTrans'] ;
+
+
+
+		$pnrAddMultiElements = PNR_AddMultiElements_option10('','',$SecuritySessionCancle,$seqCancle,$SecurityTokenCancle);
+
+		$pnrAddMultiElementsRes = $pnrAddMultiElements['PNR_AddMultiElements_option10Res'];
+
+		$pnrAddMultiElementsStatus = xml2array ( $pnrAddMultiElementsRes, $get_attributes = 1, $priority = 'tag' );
+
+
+
+		$SecuritySessionpnradd = $pnrAddMultiElementsStatus ['soapenv:Envelope'] ['soapenv:Header'] ['awsse:Session'] ['awsse:SessionId'];
+
+		$seqpnradd = $SequenceNumber = $pnrAddMultiElementsStatus ['soapenv:Envelope'] ['soapenv:Header'] ['awsse:Session'] ['awsse:SequenceNumber'];
+
+		$SecurityTokenpnradd = $pnrAddMultiElementsStatus ['soapenv:Envelope'] ['soapenv:Header'] ['awsse:Session'] ['awsse:SecurityToken'];
+
+
+
+		Security_SignOut($SecuritySessionpnradd,$seqpnradd,$SecurityTokenpnradd);
+
+
+
+		
+
+
+
+		echo "/*------------------/*AddMulti Request";
+
+		echo $pnrAddMultiElements['PNR_AddMultiElements_option10Req'];
+
+		echo "/*------------------/*AddMulti Response";
+
+		echo $pnrAddMultiElements['PNR_AddMultiElements_option10Res'];	
+
+}	
+
+
+
+    public function payumoney_payment_response($response){
+
+        $decoded_response=json_decode(base64_decode($response));
+
+        if(($decoded_response->txnid !='')&&($decoded_response->status == 'success')){
+
+            $update_data=array(
+
+                            'payment_gateway_status'=>'SUCCESS',
+
+                            'payment_response'=>$response,
+
+                        );
+
+            $this->booking_model->update_payment_response_payu($decoded_response->txnid,$update_data);
+
+            redirect(WEB_URL.'booking/flight_availability/'.$decoded_response->txnid);
+
+        }else{
+
+            exit('Transaction failed booking controller 1959');
+
+        }
+
+    }
+
+
+
+}
+
+
+
+?>
+

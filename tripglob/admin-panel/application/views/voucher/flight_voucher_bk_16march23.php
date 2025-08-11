@@ -1,0 +1,853 @@
+<?php
+$Booking=$b_data;
+// $str ="ela,mathi,pri,yash,raj,nan";
+// debug(explode(",",$str,-4));
+// exit;
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="">
+<meta name="author" content="">
+<title><?php echo PROJECT_TITLE; ?></title>
+ <link href="<?php echo ASSETS; ?>css/bootstrap.min.css" rel="stylesheet">
+<link href="<?php echo ASSETS; ?>fonts/css/font-awesome.min.css" rel="stylesheet">
+<link href="<?php echo ASSETS; ?>css/animate.min.css" rel="stylesheet"><!-- Custom styling plus plugins -->
+<link href="<?php echo ASSETS; ?>css/custom.css" rel="stylesheet">
+<link href="<?php echo ASSETS; ?>css/voucher.css" rel="stylesheet">
+<link href="<?php echo ASSETS; ?>css/flight_result.css" rel="stylesheet">
+<script src="<?php echo ASSETS; ?>js/jquery.min.js"></script>
+
+<script type="text/javascript" src="<?php echo ASSETS; ?>js/nicescroll/jquery.nicescroll.min.js"></script>
+<script type="text/javascript" src="<?php echo ASSETS; ?>js/custom.js"></script>
+
+
+
+
+
+</head>
+<body class="nav-md">
+<!-- Navigation --> 
+    <div class="container body">
+        <div class="main_container">
+            <?php echo $this->load->view('common/sidebar_menu'); ?>
+            <?php echo $this->load->view('common/top_menu'); ?>
+            <div class="clearfix"></div>
+
+            <div class="cancel_loader"><div id="mainDiv"><div class="carttoloadr hide"><strong>Please Wait...Cancellation process is going on!!..</strong></div></div>
+
+             <div class="right_col" role="main">
+            <div class="top80">
+              <div class="full marintopcnt contentvcr" id="voucher">
+                <div class="container offset-0">
+                  <div class="centervoucher2">
+
+                    <div class="col-md-12">
+                      <div class="alliconfrmt" style="float: right;font-size: 30px;width: 30px;margin-right: 20px;"> <a class="tooltipv iconsofvcr fa fa-print" title="Print " onclick="PrintDiv();"></a>  </div>
+                    </div>
+                    <table style="margin:0 auto;background-color:#fff;margin-top:2%" width="95%" cellspacing="0" cellpadding="0" border="0">
+                    <tbody>
+                        <tr>
+                            <td width="20%" style="padding-left: 20px;">
+                               
+                 <div class="col-md-12">
+          <?php //echo "<pre/>";print_r($flight_iterna);die; ?>
+                <?php if($Booking->user_type_id ==B2B_USER ){
+                
+              $user_data =   $this->general_model->get_user_details($Booking->user_id,$Booking->user_type_id );
+                ?>
+                <div class="agent_or_logo"> <img src="<?php echo UPLOAD_PATH.$user_data->profile_picture;?>" width="100" alt="" /> </div>
+                <?php 
+                }else  {
+                      ?>
+                <div class="agent_or_logo" style="    border-radius: 1%;
+          display: block;
+          height: 100px;
+          margin: 0 0 20px;
+          overflow: hidden;
+          width: 323px;"><img src="<?php echo ASSETS;?>images/logo.png" width="250" alt="" ></div>
+                <?php }?>
+              </div>
+                            </td>
+                            <td width="80%">
+                                <table width="100%" cellspacing="0" cellpadding="0" border="0">
+                                    <tbody>
+                                        <tr>
+                                            <td style="text-align:right;padding-right: 20px; " width="90%">
+                                                <span>Booking</span> <strong><?php echo $Booking->booking_status;?></strong>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:11px;font-family:Tahoma,Geneva,sans-serif;color:#898c8d;padding-right: 20px;" width="90%" align="right">
+                                                <b>Booking Date:</b>
+                                                <span id="m_-4110333284589491124m_-1052083848044131799m_-6053388023728618413ctl01_BookingDay"><?=date('D', strtotime($Booking->voucher_date))?></span>
+                                                <span id="m_-4110333284589491124m_-1052083848044131799m_-6053388023728618413ctl01_lblBookDate">, <?=date('d M Y', strtotime($Booking->voucher_date))?></span>
+                                                |<!--  <b>Booking Time:</b>
+                                                <span id="m_-4110333284589491124m_-1052083848044131799m_-6053388023728618413ctl01_lblBookTime">21:17</span> -->
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table style="margin:0 auto;background-color:#fff;font-size:14px;font-family:Arial,Helvetica,sans-serif" width="95%" cellspacing="0" cellpadding="0" border="0">
+                    <tbody>
+                        <tr>
+                            <td style="padding:20px;" width="417" align="left">
+                                Hi ,
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding:20px;" width="417" align="left">
+                                <span id="m_8976427284687916203m_-1052083848044131799m_-6053388023728618413ctl01_spnConfirm" style="display:block">Your flight ticket for <span style="color:#1f91cd">
+                                    <span id="m_8976427284687916203m_-1052083848044131799m_-6053388023728618413ctl01_lblJourney"><?=$flight_iterna->origin_airport?>-<?=$flight_iterna->destination_airport?></span>
+                                </span>is confirm. Your ticket is attached along with the email.</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="font-size:14px;font-family:Tahoma,Geneva,sans-serif;padding:20px;" width="417" align="left">
+                                Your Booking ID is<span style="color:#1f91cd">
+                                    <span id="m_8976427284687916203m_-1052083848044131799m_-6053388023728618413ctl01_lblBETID"><?php echo $b_data->con_pnr_no;?></span>
+                                </span>. Please use it for any further communication with us.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            <div class="" style="width: 95%;margin:0 auto;background: #fff;">
+              <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="tables" bgcolor="#ffffff">
+                <tbody>
+             
+                  <tr>
+                    <td colspan="2" style="border:0px; ">
+                      <table width="95%" border="0" align="center" cellpadding="8" cellspacing="0" bgcolor="#ffffff">
+                        <tbody>                            
+                         <tr>
+                            <td class="padding1" style="border-bottom:1px dashed #CCC;">
+                              <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" class="detailtbl" >
+                                <tbody>                             
+                          <?php 
+
+                          // debug($Booking);
+                          // exit;
+                        $segment_data = json_decode($Booking->segment_data);
+                        
+                        $segment_data = array_filter($segment_data);
+                   //     echo "<pre>";print_r($segment_data);
+                        
+                        if ($Booking->api_name == "SABRE") { ?>
+                           <?php for($s=0;$s<count($segment_data);$s++){ 
+                            // debug($segment_data);
+                          // exit;
+                          if($segment_data[$s]->dateOfDeparture){
+                              $arrival_count=count($segment_data[$s]->DestinationLocation);
+                              $no=$arrival_count-1;
+                          ?>
+                          <div class="col-xs-12 ways_one nopad">
+                              <div class="inboundiv" style="padding: 20px 0px;">
+                                 <!--  <div class="hedtowr">
+                                       <?php echo $this->reports_model->get_airport_name($segment_data[$s]->OriginLocation[0]); ?> <span class="fa fa-exchange"></span>  <?php echo $this->reports_model->get_airport_name($segment_data[$s]->DestinationLocation[$no]); ?>
+                                  </div> -->
+                                   <?php for($ss=0;$ss<count($segment_data[$s]->dateOfDeparture);$ss++){ ?>
+                                   <div class="flitone">
+                                      <div class="col-xs-1 nopad5 width_hundred">
+                                          <div class="imagesmflt">
+                                              <img alt="" src="https://c.fareportal.com/n/common/air/ai/<?php echo $segment_data[$s]->MarketingAirline[$ss] ; ?>.gif">
+                                          </div>
+                                        </div>
+                                        <div class="col-xs-2">
+                                          <div class="flitsmdets" style="overflow:visible;">
+                                              <?php echo $segment_data[$s]->Airline_name[$ss]; ?> -  <strong> <?php echo $segment_data[$s]->FlighvgtNumber_no[$ss]; ?><br>
+                                                <?php echo $segment_data[$s]->Equipment[$ss]; ?></strong>
+                                          </div>
+                                      </div>
+                                      <div class="col-xs-9 nopad width_hundred">
+                                        <div class="waymensn">
+                                          <div class="detail_section">
+                                            <div class="detlnavi">
+                                            <div class="col-xs-4 padflt widfty text-center">
+                                              <span class="timlbl">
+                                                  <span class="sprite reflone"></span>
+                                                <span class="flname">
+                                                  <strong style="color: #1f91cd;font-weight: bold;display: block;"><?php echo $segment_data[$s]->Origin[$ss]; ?></strong> <span class="fltime" style="font-weight: bold;"><?php echo date("H:i", strtotime($segment_data[$s]->DepartureDateTime_r[$ss]));  ?></span></span>
+                                              </span>
+                                              <div class="clearfix"></div>
+                                                                          <div class="clearfix"></div>
+                                              <span class="flitrlbl elipsetool"><?php echo date("M d,Y", strtotime($segment_data[$s]->DepartureDateTime_r[$ss]));  ?> </span>
+                                            </div>
+                                            <div class="col-xs-4 nopad padflt widfty text-center">
+                                              <div class="lyovrtime"> 
+                                                <span class="flect"> <span class="sprite retime"></span> <?php echo $segment_data[$s]->segment_duration[$ss]; ?></span>
+                                                <img src="<?php echo ASSETS;?>images/arrow.jpg" style="width:100px;display: block;margin: 0 auto;" >
+                                               <!-- <div class="termnl1 hide">Change Clock : <?php echo $segment_data[$s]->Clock_Changes[$ss]." Hours"; ?></div>-->
+                                              </div>  
+                                            </div>
+                                          <div class="col-xs-4 padflt widfty text-center">
+                                            <span class="timlbl ">
+                                                <span class="sprite refltwo"></span>
+                                              <span class="flname"> <strong style="color: #1f91cd;font-weight: bold;display: block;"><?php echo $segment_data[$s]->Destination[$ss]; ?></strong><span class="fltime" style="font-weight: bold;"><?php echo date("H:i", strtotime($segment_data[$s]->ArrivalDateTime_r[$ss]));  ?></span> </span>
+                                              
+                                            </span>
+                                            <div class="clearfix"></div>
+                                              <div class="clearfix"></div>
+                                            <span class="flitrlbl elipsetool"><?php echo date("M d,Y", strtotime($segment_data[$s]->ArrivalDateTime_r[$ss]));  ?></span>
+                                          </div>
+                                        </div>
+                                          </div>
+                                        </div>
+
+                                    </div>
+                                  </div>
+                                  <div class="clearfix"></div>
+                                <?php } ?>
+                                  <div class="clearfix"></div>
+                                  
+                              </div>
+                          </div>
+                          <?php }} ?>
+                     <?php   } else {
+                            $PricingDetails = json_decode($b_data->PricingDetails,true);
+                         foreach($PricingDetails[0]['PriceInfo']['PassengerFare'] as $key=>$val){
+                              $pax_type = $key;
+                            if($key=='ADT'){
+                              $pax_type='Adult';
+                            }elseif ($key=='CH' || $key == 'CNN') {
+                              $pax_type = 'Child';
+                            }elseif ($key=='INF') {
+                              $pax_type='Infant';
+                            }
+                              $price_summary['base_fare'][$key]['pax_type'] = $pax_type.'(s)';
+
+                              $price_summary['base_fare'][$key]['break_down'] = $val['count'].' '.$pax_type.'(s)'.' ('.$val['count'].'X'.($val['totalFareAmount']-$val['totalTaxAmount']).')';
+
+                              $pax_tax = $val['totalTaxAmount'];
+
+                              $price_summary['base_fare'][$key]['total_tax'] = $val['count']*$pax_tax;
+
+                              $price_summary['base_fare'][$key]['total_pax_amount'] = ($val['count']*($val['totalFareAmount']-$val['totalTaxAmount']));
+                              $price_summary['base_fare'][$key]['total_amount'] = ($val['count']*$val['totalFareAmount']);
+
+                          }
+                   ?>
+                        <?php for($s=0;$s<count($segment_data);$s++){ 
+                         
+                          if($segment_data[$s]->dateOfDeparture){
+                              $arrival_count=count($segment_data[$s]->locationIdArival);
+                              $no=$arrival_count-1;
+                          ?>
+                          <div class="col-xs-12 ways_one nopad">
+                              <div class="inboundiv">
+                                  <div class="hedtowr">
+                                       <?php echo $this->reports_model->get_airport_name($segment_data[$s]->locationIdDeparture[0]); ?> <span class="fa fa-exchange"></span>  <?php echo $this->reports_model->get_airport_name($segment_data[$s]->locationIdArival[$no]); ?>
+                                  </div>
+                                   <?php for($ss=0;$ss<count($segment_data[$s]->dateOfDeparture);$ss++){ ?>
+                                   <div class="flitone">
+                                      <div class="col-xs-3 nopad5 width_hundred">
+                                          <div class="imagesmflt">
+                                              <img alt="" src="https://c.fareportal.com/n/common/air/ai/<?php echo $segment_data[$s]->marketingCarrier[$ss] ; ?>.gif">
+                                          </div>
+                                          <div class="flitsmdets" style="overflow:visible;">
+                                              <?php echo $segment_data[$s]->airlineName[$ss]; ?> -  <strong> <?php echo $segment_data[$s]->flightOrtrainNumber[$ss]; ?><br>
+                                                <?php echo $segment_data[$s]->equipmentType[$ss]; ?></strong>
+                                          </div>
+                                      </div>
+                                      <div class="col-xs-9 nopad width_hundred">
+        
+
+
+                                        <div class="waymensn">
+                                          <div class="detail_section">
+                                            <div class="detlnavi">
+                                            <div class="col-xs-4 padflt widfty">
+                                              <span class="timlbl right">
+                                                                            <span class="sprite reflone"></span>
+                                                <span class="flname"><?php echo $segment_data[$s]->locationIdDeparture[$ss]; ?> <span class="fltime"><?php echo $segment_data[$s]->DepartureTime[$ss]; ?></span></span>
+                                              </span>
+                                              <div class="clearfix"></div>
+                                                                          <div class="clearfix"></div>
+                                              <span class="flitrlbl elipsetool"><?php echo date("M d,Y", strtotime($segment_data[$s]->DepartureDate[$ss]));  ?> </span>
+                                            </div>
+                                            <div class="col-xs-4 nopad padflt widfty">
+                                              <div class="lyovrtime"> 
+                                                <span class="flect"> <span class="sprite retime"></span> <?php echo $segment_data[$s]->duration_time_zone[$ss]; ?></span>
+                                                <!--<div class="termnl1">Change Clock : <?php echo $segment_data[$s]->Clock_Changes[$ss]." Hours"; ?></div>-->
+                                              </div>  
+                                            </div>
+                                          <div class="col-xs-4 padflt widfty">
+                                            <span class="timlbl left">
+                                                                        <span class="sprite refltwo"></span>
+                                              <span class="flname"><?php echo $segment_data[$s]->locationIdArival[$ss]; ?><span class="fltime"><?php echo $segment_data[$s]->ArrivalTime[$ss]; ?></span> </span>
+                                              
+                                            </span>
+                                            <div class="clearfix"></div>
+                                                                      <div class="clearfix"></div>
+                                            <span class="flitrlbl elipsetool"><?php echo date("M d,Y", strtotime($segment_data[$s]->ArrivalDate[$ss]));  ?></span>
+                                          </div>
+                                        </div>
+                                          </div>
+                                        </div>
+
+                                    </div>
+                                  </div>
+                                  <div class="clearfix"></div>
+                                <?php } ?>
+                                  <div class="clearfix"></div>
+                                  
+                              </div>
+                          </div>
+                       <?php } } } ?>
+                        
+                        
+
+                    </tbody>
+                    </table>
+                          <tr>
+                            <td class="padding1" colspan="5">
+                              <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" class="detailtbl">
+                                <tbody>
+                                  <tr>
+                                    <td colspan="5" class="padding1" style="    padding: 10px 0px;"><div class="detailhed_trvels"><strong style="color:#1f91cd;font-size:15px">Passenger Details </strong></div></td>
+                                  </tr>
+                                  <table width="100%" border="1">
+                                    <tbody>
+                                  <tr style="background:#eeeeee">
+                                    <th align="left" valign="top" style="background-color: rgb(190, 223, 241);color: #000;padding: 10px 10px;"><strong>Passenger </strong></th>
+                                    <th align="left" valign="top" style="background-color: rgb(190, 223, 241);color: #000;padding: 10px 10px;"><strong> Traveller Name </strong></th>                                
+                                    <th align="left" valign="top" style="background-color: rgb(190, 223, 241);color: #000;padding: 10px 10px;"><strong>DOB </strong></th>
+                             
+                                  </tr>
+                                  <?php
+      for($l=0;$l<count($Passenger);$l++)
+      {
+        ?>
+                                  <tr style="background:#ffffff">
+                                    <td style="padding: 10px 10px;"><?php echo $Passenger[$l]->passenger_type;?></td>
+                                    <td style="padding: 10px 10px;"><?php echo $Passenger[$l]->first_name.' '.$Passenger[$l]->middle_name.' '.$Passenger[$l]->last_name;?></td>
+                                    
+                                    <td style="padding: 10px 10px;"><?php echo date('M d,Y',strtotime($Passenger[$l]->dob));?></td>
+                                  
+                                  </tr>
+                               
+                                  <?php 
+                                }
+    
+      ?>
+                   </tbody>
+                              </table>              </tbody>
+                              </table></td>
+                          </tr>
+                          <tr>
+                            <td style="height:10px;width:100%;"></td>
+                          </tr>
+                          <tr style="display: none">
+                          
+                            <td class="padding1" colspan="5">
+                              <table width="95%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" class="detailtbl" style="    margin: 0 auto;">
+                                <tbody>
+                                  <tr>
+                                    <td colspan="5" class="padding1" style="padding: 10px 0px;"><div class="detailhed_trvels"><strong style="color:#1f91cd;font-size:15px">Flight Inclusion</strong></div></td>
+                                  </tr>
+                                  </tbody></table>
+                                  <table width="95%" border="1" style="    margin: 0 auto;color: #000;">
+                                    <tbody>
+                                  <tr style="background:#eeeeee">
+                                    <th align="left" valign="top" style="background-color: rgb(190, 223, 241);color: #000;padding: 10px 10px;"><strong>Passenger </strong></th>
+                                    <th align="left" valign="top" style="background-color: rgb(190, 223, 241);color: #000;padding: 10px 10px;"><strong> Sector </strong></th>                                
+                                    <th align="left" valign="top" style="background-color: rgb(190, 223, 241);color: #000;padding: 10px 10px;"><strong>Airline </strong></th>
+                                    <th align="left" valign="top" style="background-color: rgb(190, 223, 241);color: #000;padding: 10px 10px;"><strong>Flight Insurance Status</strong></th>
+                                    <th align="left" valign="top" style="background-color: rgb(190, 223, 241);color: #000;padding: 10px 10px;"><strong>Meal Type </strong></th>
+                             
+                                  </tr>
+                                    <tr style="background:#ffffff">
+                                    <td style="padding: 10px 10px;">ADULT</td>
+                                    <td style="padding: 10px 10px;">MALE Raghu  Nandan</td>
+                                    
+                                    <td style="padding: 10px 10px;">Jan 01,1985</td>
+                                     <td style="padding: 10px 10px;">Jan 01,1985</td>
+                                      <td style="padding: 10px 10px;">Jan 01,1985</td>
+                                  
+                                  </tr>
+                               
+                                                                   
+                               
+                                                     </tbody>
+                              </table>              </td>
+                         
+                          </tr>
+                                                    <tr style="display: none">
+                          
+                            <td class="padding1" colspan="5">
+                              <table width="95%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" class="detailtbl" style="    margin: 0 auto;color: #000">
+                                <tbody>
+                                  <tr>
+                                    <td colspan="5" class="padding1" style="    padding: 10px 0px;"><div class="detailhed_trvels"><strong style="color:#1f91cd;font-size:15px">Baggage Info</strong></div></td>
+                                  </tr>
+                                  </tbody></table>
+                                  <table width="95%" border="1" style="    margin: 0 auto;color: #000">
+                                    <tbody>
+                                  <tr style="background:#b8ddf1 none repeat scroll 0% 0%">
+                                                <td style="font-size:12px" align="center">
+                                                    <b>Airline </b>
+                                                </td>
+                                                <td style="font-size:12px" align="center">
+                                                    <b>Sector </b>
+                                                </td>
+                                                <td>
+                                                    <table width="100%">
+                                                        <tbody><tr>
+                                                            <td colspan="3" style="font-size:12px" align="center">
+                                                                <b>Baggage</b>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="font-size:10px" height="16" align="center">
+                                                                Check in
+                                                            </td>
+                                                            <td style="font-size:10px" align="center">
+                                                                Cabin
+                                                            </td>
+                                                        </tr>
+                                                    </tbody></table>
+                                                </td>
+                                            </tr>
+                                    <tr>
+                                      <td style="font-size:12px" align="center">
+                                              <span id="">6E</span>
+                                          </td>
+                                          <td style="font-size:12px" align="center">
+                                              <span id="">AMD-BLR</span>
+                                          </td>
+                                          <td align="center">
+                                              <table style="font-size:12px" width="100%">
+                                                  <tbody><tr>
+                                                      <td style="border-right:1px solid #000" align="center">
+                                                          <span id="">15KG</span>
+                                                      </td>
+                                                      <td align="center">
+                                                          7KG
+                                                      </td>
+                                                  </tr>
+                                              </tbody></table>
+                                          </td>
+                                        </tr>
+                              </tbody>
+                              </table> 
+                            </td>
+                         
+                          </tr>
+                          <tr>
+                            <td width="100%" valign="top" align="left" style="padding: 25px 0px;">
+                              <table width="95%" cellspacing="0" cellpadding="0" border="1" style="margin: 0 auto;">
+                                <tbody>
+                                <tr>
+                                  <td>
+                                  <table style="font-family:Tahoma,Geneva,sans-serif;font-size:11px;padding:1% 1%;margin:0 auto;" width="95%" border="0">
+                                      <tbody>
+                                          <tr>
+                                          <td valign="middle" align="left">
+                                              <b style="font-size:15px;color:#1f91cd">Fare Details</b>
+                                          </td>
+                                          <td> &nbsp;</td>
+                                          <td valign="middle" align="right">
+                                              <b style="font-size:15px;color:#1f91cd">Amount <?=BASE_CURRENCY_ICON?></b>
+                                          </td>
+                                          </tr>
+                                          <tr>
+                                          <td valign="middle" align="left">&nbsp; </td>
+                                          <td>&nbsp;</td>
+                                          <td valign="middle" align="right">&nbsp;</td>
+                                          </tr>
+
+
+
+                              <?php 
+                                  $booking_transaction = $booking_transaction[0];
+
+                                ?>  
+                                  
+                                    <?php if ($Booking->api_name == "SABRE") { ?>
+                                    <?php 
+                                    $pax_array['ADT'] = 'Adult';
+                                    $pax_array['CNN'] = 'Adult';
+                                    $pax_array['INF'] = 'Adult';
+                                      // debug($segment_data);die;
+                                     ?>
+                                     <?php foreach($segment_data[0]->PCode as $key=>$val){ ?>           
+                                    
+                                       <tr>
+                                          <td valign="middle" align="left" style="font-size:14px;">Pax Type</td>
+                                          <td>&nbsp;&nbsp;&nbsp;</td>
+                                          <td valign="middle" align="right" style="font-size:14px;">
+                                          <?php 
+                                          $total_pax = 0;
+                                          $total_amount = 0;
+                                          if($val=='ADT'){
+                                              $total_pax = (($segment_data[0]->PEquivFare_org[$key] * $segment_data[0]->PQuantity[$key])+$booking_transaction->total_adult_markup);
+                                              $total_amount = (($segment_data[0]->PTotalFare_org[$key] * $segment_data[0]->PQuantity[$key]) + $booking_transaction->total_adult_markup);                                           
+                                          }elseif ($val=='CH' || $val == 'CNN') { 
+                                              $total_pax = (($segment_data[0]->PEquivFare_org[$key] * $segment_data[0]->PQuantity[$key])+$booking_transaction->total_child_markup); 
+                                                $total_amount = (($segment_data[0]->PTotalFare_org[$key] * $segment_data[0]->PQuantity[$key]) + $booking_transaction->total_child_markup);
+
+                                          }elseif ($val=='INF') {
+                                              $total_pax = (($segment_data[0]->PEquivFare_org[$key] * $segment_data[0]->PQuantity[$key])+$booking_transaction->total_infant_markup); 
+                                                $total_amount = (($segment_data[0]->PTotalFare_org[$key] * $segment_data[0]->PQuantity[$key]) + $booking_transaction->total_infant_markup);
+
+                                          }
+                                         ?>
+                                         </td>
+                                          <td valign="middle" align="right" style="font-size:14px;">
+                                            <?=$pax_array[$val]?>
+                                          </td>
+
+                                          </tr>
+
+
+                                          <tr>
+                                              <td valign="middle" align="left" style="font-size:14px;"> No.Of Passengers</td>
+                                              <td> &nbsp;</td>
+                                              <td valign="middle" align="right" style="font-size:14px;"> <?=$segment_data[0]->PQuantity[$key]?></td>
+                                          </tr>
+
+
+                                          
+
+                                          <tr>
+                                              <td valign="middle" align="left" style="font-size:14px;"> Base Fare</td>
+                                              <td> &nbsp;</td>
+                                              <td valign="middle" align="right" style="font-size:14px;"> <?=BASE_CURRENCY_ICON.($total_pax) ?></td>
+                                          </tr>
+                                          <tr>
+                                              <td valign="middle" align="left" style="font-size:14px;">Taxes & Fees</td>
+                                              <td>&nbsp;</td>
+                                              <td valign="middle" align="right" style="font-size:14px;"><?=BASE_CURRENCY_ICON.$segment_data[0]->TotalTax?></td>
+                                          </tr>
+
+                                    <?php }?>
+                                    <?php } else { ?>
+
+
+                                       <?php foreach($price_summary['base_fare'] as $key=>$val){ ?>           
+                                     <tr>
+
+                                       <td valign="middle" align="left" style="font-size:14px;">Pax Type</td>
+                                          <td>&nbsp;</td>
+
+                                       <?php 
+                                          $total_pax = 0;
+                                          $total_amount = 0;
+                                          if($key=='ADT'){
+                                              $total_pax = ($val['total_pax_amount']+$booking_transaction->total_adult_markup);
+                                              $total_amount = ($val['total_amount'] + $booking_transaction->total_adult_markup);                                           
+                                          }elseif ($key=='CH' || $key == 'CNN') { 
+                                              $total_pax = ($val['total_pax_amount']+$booking_transaction->total_child_markup); 
+                                                $total_amount = ($val['total_amount'] + $booking_transaction->total_child_markup);
+
+                                          }elseif ($key=='INF') {
+                                              $total_pax = ($val['total_pax_amount']+$booking_transaction->total_infant_markup); 
+                                                $total_amount = ($val['total_amount'] + $booking_transaction->total_infant_markup);
+
+                                          }
+                                     ?>
+                                      <td><?=$val['break_down']?></td> 
+
+                                      </tr>
+
+                                      <tr>
+                                              <td valign="middle" align="left" style="font-size:14px;"> Base Fare</td>
+                                              <td> &nbsp;</td>
+                                              <td valign="middle" align="right" style="font-size:14px;"> <?=BASE_CURRENCY_ICON.($total_pax) ?></td>
+                                      </tr>
+                                          <tr>
+                                              <td valign="middle" align="left" style="font-size:14px;">Taxes & Fees</td>
+                                              <td>&nbsp;</td>
+                                              <td valign="middle" align="right" style="font-size:14px;"><?=BASE_CURRENCY_ICON.$val['total_tax']?></td>
+                                          </tr>
+
+                                    <?php }?>
+                                    <?php } ?>
+ 
+                                          <tr>
+                                              <td valign="middle" align="left" style="font-size:14px;">Service Tax & Maintenance Charge</td>
+                                              <td>&nbsp;</td>
+                                              <td valign="middle" align="right" style="font-size:14px;"><?=BASE_CURRENCY_ICON.($booking_transaction->admin_markup+$booking_transaction->agent_markup)?></td>
+                                          </tr>
+
+                                          <?php 
+                                        if($Booking->user_type_id ==B2C_USER):
+                                      ?>
+                                          <tr>
+                                              <td valign="middle" align="left" style="font-size:14px;">Discount</td>
+                                              <td>&nbsp;</td>
+                                              <td valign="middle" align="right" style="font-size:14px;"><?=BASE_CURRENCY_ICON.$booking_transaction->discount?></td>
+                                          </tr>
+
+                                           <?php endif;?>
+                                          <tr>
+                                              <td colspan="3" valign="middle" align="left">
+                                                  <hr>
+                                              </td>
+                                          </tr>
+                                          <tr>
+                                              <td valign="middle" align="left">
+                                                  <b style="font-size:14px">Total Payment</b>
+                                              </td>
+                                              <td>
+                                                  &nbsp;
+                                              </td>
+                                              <td valign="middle" align="right">
+                                                  <b style="font-size:14px"><?=BASE_CURRENCY_ICON.($booking_transaction->total_amount)?></b>
+                                              </td>
+                                          </tr>
+                                          <tr>
+                                              <td colspan="3" valign="middle" align="left">
+                                                  <hr>
+                                              </td>
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+
+
+                      
+                          <tr>
+                            <td style="height:10px;width:100%;"></td>
+                          </tr>
+                          <!---->
+
+                          <tr>
+                          
+                            <td class="padding1" colspan="5">
+                              <table width="95%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" class="detailtbl" style="    margin: 0 auto;">
+                                <tbody>
+                                  <tr>
+                                    <td colspan="5" class="padding1" style="    padding: 10px 0px;"><div class="detailhed_trvels"><strong style="color:#1f91cd;font-size:15px">Customer Details</strong></div></td>
+                                  </tr>
+                                  </tbody></table>
+                                  <table width="95%" border="1" style="    margin: 0 auto;color: #000;">
+                                    <tbody>
+                                  <tr style="background:#eeeeee">
+                                     <td width="20%" align="left" style="background:#b8ddf1;padding:10px;"><strong>Email ID</strong></td>
+                                    <td width="80%" align="left" style="background:#ffffff;padding:10px;"><?php echo $booking_agent[0]->billing_email;?></td> 
+                                    </tr>
+                                    <tr>                               
+                                    <td align="left" style="background:#b8ddf1;padding:10px;"><strong>Mobile Number</strong></td>
+                                    <td align="left" style="background:#ffffff;padding:10px;"><?php echo $booking_agent[0]->billing_contact_number;?></td>
+                                  </tr>
+                                  <tr>
+                                     <tr class="set_bordr">
+                                    <td align="left" style="background:#b8ddf1;padding:10px;"><strong>Address</strong></td>
+                                    <td align="left" style="background:#ffffff;padding:10px;"><?php echo $booking_agent[0]->billing_address;?>, <?php echo $booking_agent[0]->billing_city;?>, <?php echo $booking_agent[0]->billing_state;?>, <?php echo $booking_agent[0]->billing_zip;?></td>
+                                  </tr>
+                              </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                         <!--  <tr>
+                          
+                            <td class="padding1" colspan="5">
+                              <table width="95%" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" class="detailtbl" style="    margin: 0 auto;color: #000">
+                                <tbody>
+                                  <tr>
+                                    <td colspan="5" class="padding1" style="    padding: 10px 0px;"><div class="detailhed_trvels"><strong style="color:#1f91cd;font-size:15px">Airline Fee</strong></div></td>
+                                  </tr>
+                                  </tbody></table>
+                                  <table width="95%" border="1" style="    margin: 0 auto;color: #000">
+                                    <tbody>
+                                  <tr style="background:#b8ddf1 none repeat scroll 0% 0%;padding: 10px;">
+                                                <td style="font-size:12px;padding: 7px 0px;" align="center" colspan="2">
+                                                    <b>Airline </b>
+                                                </td>
+                                                <td style="font-size:12px" align="center">
+                                                    <b>Charges </b>
+                                                </td>
+
+                                            </tr>
+                                    <tr>
+                                      <td style="font-size:12px;padding: 5px 0px;" align="center">
+                                              <span id=""><?php echo $segment_data[0]->airlineName[0]; ?></span>
+                                          </td>
+                                          <td style="font-size:12px" align="center">
+                                              <span id="">Before 4 hours of departure</span>
+                                          </td>
+                                            <td style="font-size:12px" align="center">
+                                              <span id="">Rs.3000 (per pax per sector)</span>
+                                          </td>
+                                        </tr>
+                              </tbody>
+                              </table> 
+                            </td>
+                         
+                          </tr> -->
+                          <!--  <tr>
+                            <td style="font-size:12px;padding: 5px 0px;width: 95%;margin: 0 auto;">
+                            <table style="font-size:12px;padding: 5px 0px;width: 95%;margin: 0 auto;">
+                              <tbody>
+                                <tr>
+                            <td style="font-size:16px;padding: 5px 0px;width: 95%;margin: 0 auto;">
+                              <div class="detailhed_trvels"><strong style="color:#1f91cd;font-size:15px">Cancellation Charges</strong></div>
+                                </td>
+                            </tr>
+                            <tr>
+                            <td style="font-size:12px;padding: 5px 0px;width: 95%;margin: 0 auto;">
+                                <span id=""><strong>Tripglobo Fee:</strong> Rs. 250 per pax per sector</span></td>
+                                </tbody>
+                            </table>
+                          </td>
+                            </tr> -->
+                         <!--  <tr>
+                            <td colspan="5" height="27" style="padding-top: 20px;">
+                              <table width="95%" style="margin: 0 auto;">
+                                <tbody>
+                                  <tr>
+                                    <td><strong style="color:#1f91cd;font-size:15px">Terms & Conditions </strong></td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                                
+                            </td>
+                      </tr> -->
+
+                       <!-- <tr style="margin:0 auto">
+                        <table width="95%" style="margin: 0 auto;">
+                                <tbody>
+                                  <tr>
+                         <?php 
+                              $request_flight = json_decode($Booking->request_scenario,true);
+                             
+                              $current_date = date('Y-m-d');
+                              $travel_date = date('Y-m-d',strtotime($request_flight['depart_date']));
+                            ?>
+                            <td align="left" valign="top" style="padding:0 10px;width: 85%;"><div class="paratems"> Not Available </div></td>
+
+                          <!--   <?php if(!$Booking->bundle_search_id):?>
+                            <?php if(($current_date < $travel_date)&&($Booking->booking_status=='CONFIRMED' || $Booking->booking_status =='CANCEL_HOLD')):?>
+                              <td style="width: 15%;"><button data-pnr="<?php echo base64_encode($b_data->pnr_no);?>" data-con-pnr="<?php echo base64_encode($b_data->con_pnr_no);?>"  class="btn btn-danger" id="cancelPnrbooking">Ticket-cancel</button></td>
+                          <?php endif;?>
+                        <?php endif;?>
+                         </tr>
+                                </tbody>
+                              </table>
+                    </tr> --> 
+                   <!-- <!--  <tr>
+                      <table style="margin:0 auto;background-color:#fff;font-size:11px;font-family:Tahoma,Geneva,sans-serif;font-size:14px;margin-bottom:3%" width="95%" cellspacing="0" cellpadding="0" border="0">
+                    <tbody>
+                        <tr>
+                            <td style="font-size:18px;"><strong style="color:#1f91cd;font-size:15px">
+                                Contact Information</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Airline Contact Information :
+                                <?php echo $segment_data[0]->airlineName[0]; ?>
+                                <!--Indigo -->
+                                <!--
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                 Contact Information : +91 5487525685
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Please reference the Airline PNR Number when communicating with the airline regarding
+                                this booking.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                &nbsp;
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                    </tr> --> 
+                        </tbody>
+                      </table></td>
+                  </tr>
+
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+     <?php echo $this->load->view('common/footer'); ?> 
+
+  </div>
+</div>
+</div>
+
+
+<!-- Page Content --> 
+
+
+
+
+   <script src="<?php echo ASSETS; ?>js/bootstrap.min.js"></script> 
+   
+  
+<?php //echo $this->load->view(PROJECT_THEME.'/new_theme/common/load_common_js'); ?>
+
+<!-- Script to Activate the Carousel -->
+
+<style>
+.leftflitmg { max-width:70px !important } 
+</style>
+
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $(".tooltipv").tooltip();
+    $("#cancelPnrbooking").click(function(){
+      var pnr_no = $(this).data('pnr');
+      var con_pnr_no = $(this).data('con-pnr');
+      $('.cancel_loader .carttoloadr').show();
+      $.ajax({
+          type:"post",
+          url:"<?php echo base_url()?>"+"reports/CancelPnr",
+          data:{PNR_NO:pnr_no,CON_PNR_NO:con_pnr_no},
+          success:function(res){
+            $('.cancel_loader .carttoloadr').hide();
+            
+            if(res==0){
+              alert('Cancellation not success');
+            }else{
+              alert('Cancellation success');              
+            }
+            location.reload();
+
+          },
+          error:function(res){
+            
+          }
+      });
+
+    });
+});
+
+function PrintDiv() {    
+   var voucher = document.getElementById('voucher');
+   var popupWin = window.open('', '_blank', 'width=600,height=600');
+   popupWin.document.open();
+   popupWin.document.write('<html><head><link href="<?php echo ASSETS;?>css/bootstrap.min.css" rel="stylesheet" media="print"><link href="<?php echo ASSETS;?>css/temp.css" rel="stylesheet" media="screen"><link href="<?php echo ASSETS;?>css/voucher.css" rel="stylesheet" media="screen"><style>@media print {.col-md-1,.col-md-2,.col-md-3,.col-md-4,.col-md-5,.col-md-6,.col-md-7,.col-md-8,.col-md-9,.col-md-10,.col-md-11 {float: left;}.col-md-1 {width: 8.333333333333332%;}.col-md-2 {width: 16.666666666666664%;}.col-md-3 {width: 25%;}.col-md-4 {width: 33.33333333333333%;}.col-md-5 {width: 41.66666666666667%;}.col-md-6 {width: 50%;}.col-md-7 {width: 58.333333333333336%;}.col-md-8 {width: 66.66666666666666%;}.col-md-9 {width: 75%;}.col-md-10 {width: 83.33333333333334%;}.col-md-11 {width: 91.66666666666666%;}.col-md-12 {width: 100%;}}.tooltip, .tooltipv{display: none !important;}</style></head><body onload="window.print()">' + voucher.innerHTML + '</html>');
+   popupWin.document.close();
+}
+</script>
+</body>
+</html>

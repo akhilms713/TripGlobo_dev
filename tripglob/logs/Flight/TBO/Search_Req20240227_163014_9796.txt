@@ -1,0 +1,1 @@
+{"EndUserIp":"103.78.245.113","TokenId":"3e0be078-eff4-4e9a-843a-55666c7fde57","AdultCount":"1","ChildCount":"0","InfantCount":"0","DirectFlight":"false","OneStopFlight":"false","JourneyType":"1","PreferredAirlines":null,"Segments":[{"Origin":"BLR","Destination":"HYD","FlightCabinClass":"1","PreferredDepartureTime":"2024-03-14T00: 00: 00"}],"Sources":null}

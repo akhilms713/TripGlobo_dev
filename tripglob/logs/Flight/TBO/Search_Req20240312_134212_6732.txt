@@ -1,0 +1,1 @@
+{"EndUserIp":"103.78.245.113","TokenId":"4f602d59-215b-4eb7-ad00-cec2ca659e73","AdultCount":"1","ChildCount":"0","InfantCount":"0","DirectFlight":"false","OneStopFlight":"false","JourneyType":"1","PreferredAirlines":null,"Segments":[{"Origin":"DEL","Destination":"LHR","FlightCabinClass":"1","PreferredDepartureTime":"2024-04-03T00: 00: 00"}],"Sources":null}

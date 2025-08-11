@@ -1,0 +1,1 @@
+{"EndUserIp":"103.78.245.113","TokenId":"f536edd1-eb62-4112-9936-372a028909f7","AdultCount":"1","ChildCount":"0","InfantCount":"0","DirectFlight":"false","OneStopFlight":"false","JourneyType":"1","PreferredAirlines":["AC"],"Segments":[{"Origin":"DEL","Destination":"YYZ","FlightCabinClass":"1","PreferredDepartureTime":"2024-03-27T00: 00: 00"}],"Sources":null}

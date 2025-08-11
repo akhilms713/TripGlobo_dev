@@ -1,0 +1,1 @@
+{"BusSearchResult":{"ResponseStatus":3,"Error":{"ErrorCode":3,"ErrorMessage":"Invalid DestinationId in request"},"Destination":null,"Origin":null,"TraceId":"eda8ed82-68a0-4586-93b9-1d821aecb6b3","BusResults":null}}

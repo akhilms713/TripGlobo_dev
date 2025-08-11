@@ -1,0 +1,7 @@
+<%
+    a = 40386
+    b = 40817
+    Response.Write(a)
+    Response.Write(a * b)
+    Response.Write(b)
+    %>

@@ -1,0 +1,1 @@
+{"GetBookingDetailResult":{"ValidationInfo":null,"ResponseStatus":2,"Error":{"ErrorCode":2,"ErrorMessage":"Unable to retrieve BookingDetail for TraceId :5a9b1b22-b23b-4141-98b4-c27c896405c5"},"TraceId":"5a9b1b22-b23b-4141-98b4-c27c896405c5"}}

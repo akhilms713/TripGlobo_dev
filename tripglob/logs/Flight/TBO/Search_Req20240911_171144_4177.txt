@@ -1,0 +1,1 @@
+{"EndUserIp":"103.78.245.113","TokenId":"326086d4-81d6-490b-9e36-ac321794a1da","AdultCount":"1","ChildCount":"0","InfantCount":"0","DirectFlight":"false","OneStopFlight":"false","JourneyType":"1","PreferredAirlines":null,"Segments":[{"Origin":"DXB","Destination":"SIN","FlightCabinClass":"1","PreferredDepartureTime":"2024-09-17T00: 00: 00"}],"Sources":null}

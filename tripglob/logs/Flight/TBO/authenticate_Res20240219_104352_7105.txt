@@ -1,0 +1,1 @@
+{"Status":1,"TokenId":"e2da1546-f416-479b-b414-4d4e8e0f271f","Error":{"ErrorCode":0,"ErrorMessage":""},"Member":{"FirstName":"PRAVEEN","LastName":"Choudhary","Email":"praveen@alsaffron.com","MemberId":57782,"AgencyId":57623,"LoginName":"SAFFRON","LoginDetails":"Login Success at#@ 25\/01\/2024 04:15:03 #@ IPAddress: 115.114.12.58","isPrimaryAgent":false}}

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?><CommandList>
+    <StartRouting>
+        <XmlLoginId>0P3K53ZFZYNGPIDL</XmlLoginId>
+        <LoginId>0P3K53ZFZYNGPIDL</LoginId>
+        <Mode>plane</Mode>
+        <Origin>
+            <Descriptor>SIN</Descriptor>
+            <Type>airportcode</Type>
+        </Origin>
+        <Destination>
+            <Descriptor>SYD</Descriptor>
+            <Type>airportcode</Type>
+        </Destination>
+        <OutwardDates>
+            <DateOfSearch>13/04/2016-00:00</DateOfSearch>
+        </OutwardDates>
+        <MaxChanges>2</MaxChanges>
+        <MaxHops>4</MaxHops>
+		    <Timeout>100</Timeout> 
+        <!--<TravelClass>All </TravelClass> -->
+        <TravellerList><Traveller>
+                            <Age>30</Age>
+                         </Traveller><Traveller>
+                            <Age>7</Age>
+                         </Traveller><Traveller>
+                              <Age>0</Age>
+                           </Traveller></TravellerList><IncrementalResults>true</IncrementalResults>
+    </StartRouting>
+</CommandList>

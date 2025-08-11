@@ -1,0 +1,1 @@
+{"BusSearchResult":{"ResponseStatus":3,"Error":{"ErrorCode":3,"ErrorMessage":"Date of journey should be greater than Current Date"},"Destination":null,"Origin":null,"TraceId":"c5e05626-c33e-46b6-a52c-bee48d794464","BusResults":null}}

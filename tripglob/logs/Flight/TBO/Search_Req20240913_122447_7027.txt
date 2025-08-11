@@ -1,0 +1,1 @@
+{"EndUserIp":"103.78.245.113","TokenId":"d1032c71-4da4-459b-a76b-2369a47e52a1","AdultCount":"1","ChildCount":"1","InfantCount":"0","DirectFlight":"false","OneStopFlight":"false","JourneyType":"1","PreferredAirlines":null,"Segments":[{"Origin":"DXB","Destination":"SIN","FlightCabinClass":"1","PreferredDepartureTime":"2025-02-07T00: 00: 00"}],"Sources":null}

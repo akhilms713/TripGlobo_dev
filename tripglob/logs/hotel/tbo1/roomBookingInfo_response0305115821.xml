@@ -1,0 +1,1 @@
+{"BookResult":{"VoucherStatus":false,"ResponseStatus":2,"Error":{"ErrorCode":2,"ErrorMessage":"UniversalApi ReadBookingResponse: hotelReservationNode is null"},"TraceId":"0a087e7a-abb9-4467-af0d-67e2c6a33335","Status":0,"HotelBookingStatus":null,"ConfirmationNo":null,"BookingRefNo":null,"BookingId":0,"IsPriceChanged":false,"IsCancellationPolicyChanged":false}}

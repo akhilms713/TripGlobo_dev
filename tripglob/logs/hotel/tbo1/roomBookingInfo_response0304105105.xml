@@ -1,0 +1,1 @@
+{"BookResult":{"VoucherStatus":false,"ResponseStatus":2,"Error":{"ErrorCode":2,"ErrorMessage":"We are unable to process Book request. Please try again or contact our helpdesk."},"TraceId":"c62f7b27-31f9-494d-b157-5bf697d2cea2","Status":0,"HotelBookingStatus":null,"ConfirmationNo":null,"BookingRefNo":null,"BookingId":0,"IsPriceChanged":false,"IsCancellationPolicyChanged":false}}

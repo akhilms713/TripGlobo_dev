@@ -1,0 +1,1 @@
+{"GetHotelRoomResult":{"ResponseStatus":4,"Error":{"ErrorCode":5,"ErrorMessage":"Your session (TraceId) is expired."},"TraceId":"7b9f59ba-a334-40a0-b722-2f288339f9a7","IsUnderCancellationAllowed":false,"IsPolicyPerStay":false}}

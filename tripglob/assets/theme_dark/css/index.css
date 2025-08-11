@@ -1,0 +1,121 @@
+/*top_destination*/
+.top_destination{background: #ffffff none repeat scroll 0 0;float: left;padding: 0px 0;width: 100%;
+}
+.pagehed { color: #2f2f2f;display: block;font-size: 30px;overflow: hidden;position: relative;text-align: left; padding: 15px 0px
+}
+.centersep {display: block;margin: 0 0 15px;overflow: hidden;position: relative;text-align: center;
+}
+.comn_icons {display: table;margin: 0 auto;padding: 0 10px;position: relative;z-index: 1;
+}
+.comn_icons::before, .comn_icons::after {background: #dd2a1b none repeat scroll 0 0;content: "";height: 1px;position: absolute;top: 50%;width: 125px;
+}
+.comn_icons::after {right: -125px;
+}
+.comn_icons::before {left: -125px;
+}
+.comn_icons .fa{color: #f7c500;font-size: 20px;}
+.dest_out{display: block;margin: 0 0px;overflow: hidden;}
+.deat_image{display: block;height: 420px;margin: 0px 0;overflow: hidden;position: relative;width: 100%;}
+.deat_image img{ height:100%; width: 100%;}
+.blackovhotel{background: rgba(255, 255, 255, 1) none repeat scroll 0 0;bottom: 0;color: #fff;font-size: 20px;left: 0;padding: 23px; border-radius: 5px;
+	               position: absolute;right: 0;text-align: center; top: 50px; bottom: 50px; width: 450px; left: 105px;}
+/*top_deals*/
+.top_deals {background: #fff none repeat scroll 0 0;float: left;padding: 25px 0;width: 100%;margin-top: 80px;}
+h3.inpagehed {margin-top: 10px;}
+.deal_out{display: block;margin: 0 -15px;overflow: hidden;}
+.totaldeals{display: block;float: left;margin: 10px 0;width: 100%;}
+.deal_images{display: block;height: 144px;overflow: hidden;position: relative;width: 100%;}
+.deal_images img{min-height: 144px;width: 100%;}
+.delas1{left: 10px;position: absolute;top: 10px;z-index: 1;}
+.delas2{left: 10px;position: absolute;bottom: 20px;z-index: 1;}
+.rmedium{ color: #fff;display: block;font-size: 32px;font-weight: 500;line-height: 35px;overflow: hidden;}
+.rsmall{ color: #fff;display: block;font-size: 12px;font-weight: 500;overflow: hidden;}
+.rsmall strong{font-size: 18px;font-weight: 500;}
+.deal_conetnt{background: #fff none repeat scroll 0 0;border-top: 3px solid #ed5565;box-shadow: 0 4px 0 #e3e4e8;display: block;float: left;padding:10px;width: 100%;}
+.reddeal{color: #dd2a1b;display: block;font-family: Open Sans;font-size: 16px;overflow: hidden;}
+.longdeal{color: #323231;display: block;font-size: 14px;margin: 5px 0;overflow: hidden;}
+.everydealrow{display: block;float: left;margin: 2px 0 0;overflow: hidden;width: 100%;}
+.inside_pading{float: left;padding: 0 0 0 0px;width: 100%;}
+.flight_dealimg{ display: block;height: 118px;overflow: hidden;position: relative;}
+.flight_dealimg img{min-height: 118px;width: 100%;}
+.flightover{background: rgba(0, 0, 0, 0.6) none repeat scroll 0 0;bottom: 0;left: 0;padding: 10px;position: absolute;right: 0;}
+.flplace{color: #fff;font-size: 16px;font-weight: 500;}
+.flplace strong{font-size: 14px;font-weight: normal;}
+.flprice{color: #fff;display: block;font-size: 18px;text-align: right;}
+.flprice .fa{font-size: 14px;margin-left: 5px;}
+/*advertisement*/
+.advertisement{background: #fff none repeat scroll 0 0;float: left;padding: 30px 0;width: 100%;}
+.out_advertise{display: none;margin: 0 -15px;overflow: hidden;}
+.lmorebox{ border: 1px solid #b2b2b2;display: block;overflow: hidden;padding: 15px 0;}
+.sprite.pricetag{ background-position: -184px -138px;display: block;float: left;height: 65px;margin: 0 10px;width: 65px;}
+.boxcont{display: block;overflow: hidden;}
+.firstline{color: #666666;display: block;font-size: 14px;overflow: hidden;}
+.firstline strong{color: #0071bc;font-size: 18px;font-weight: normal;}
+.smallline{color: #666;display: block;font-size: 12px;overflow: hidden;}
+.lclass{background: #fbc601 none repeat scroll 0 0;color: #302c2c;display: block;font-size: 16px;margin: 10px;overflow: hidden;padding: 10px 0;text-align: center;}
+.advimage{display: block;height: 98px;overflow: hidden;width: 100%;}
+.advimage img{ min-height:98px; width:100%;}
+/*tour style*/
+.intersting_facts{float:left;width:100%;background:#fff;padding-top:35px;padding-bottom:50px;}
+.tour_style{padding-top:10px;}
+.i_facts{width:150px;height:150px;display:inline-block;background:#f7f7f7;border-radius:50%;line-height:2.6;margin:0 auto;transition:all ease-in-out 0.3s;}
+.i_facts span{display:block;text-align:center;font-size:15px;padding-top:10px;text-transform:uppercase;}
+.i_facts:hover{background:#f7f7f7;opacity:1;}
+.i_facts:hover img{opacity:1;}
+.i_facts img{    padding: 34px 0px;
+    text-align: center;
+    opacity: 0.75;
+    margin: 0px auto;
+    display: block;
+    max-width: 83px;}
+#owl-demo3 .item {
+    cursor: pointer;
+    filter: gray;
+    -webkit-filter: grayscale(100%);
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-timing-function: ease-out;
+    transition-timing-function: ease-out;
+    text-align: center;
+}
+#owl-demo3 .item:hover {
+    filter: none;
+    -webkit-filter: none;
+}
+
+@media screen and (max-width: 991px){
+.deat_image{height:250px;}
+.deat_image img {min-height: 250px;}
+.inside_pading{padding:0;}
+}
+@media screen and (max-width: 768px){
+.advimage{margin:15px 0 0;}
+}
+@media screen and (max-width: 550px){
+.pagehed{font-size:22px;}
+.dest_out .col-xs-4{width:50%;padding: 0 10px;}
+.deal_out .col-xs-6{padding: 0 10px;}
+.rmedium{ font-size:20px;}
+}
+
+.last_footer {
+    background: #000 url(../images/footer_map.png);  
+    padding: 65px 0px 0px 0px;
+    display: block;
+    z-index: 9;
+    color: red;
+    clear: both;
+   /*  position: relative; */
+} 
+span.new_footer_aligmnt {
+    font-size: 15px;
+    color: #000;
+    padding-left: 7px;
+} 
+.foot_foot_dootre{
+        margin: auto;
+    float: none;
+    display: flex;
+    padding-bottom: 15px;
+} 
+  

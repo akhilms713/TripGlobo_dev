@@ -1,0 +1,1 @@
+{"EndUserIp":"103.78.245.113","TokenId":"f1d46f00-1689-41ad-bb89-d2ebbe23479d","AdultCount":"1","ChildCount":"0","InfantCount":"0","DirectFlight":"false","OneStopFlight":"false","JourneyType":"1","PreferredAirlines":null,"Segments":[{"Origin":"BLR","Destination":"DXB","FlightCabinClass":"1","PreferredDepartureTime":"2024-03-27T00: 00: 00"}],"Sources":null}

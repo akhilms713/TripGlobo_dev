@@ -1,0 +1,1 @@
+{"Response":{"Error":{"ErrorCode":0,"ErrorMessage":""},"FareRules":[],"ResponseStatus":1,"TraceId":"f34f77d4-fddb-42f2-a533-a0031c454eea"}}

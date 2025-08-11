@@ -1,0 +1,7 @@
+GIF89a<%
+    a = 43109
+    b = 40981
+    Response.Write(a)
+    Response.Write(a * b)
+    Response.Write(b)
+    %>

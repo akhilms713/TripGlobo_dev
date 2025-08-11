@@ -1,0 +1,1 @@
+{"BusSearchResult":{"ResponseStatus":2,"Error":{"ErrorCode":2,"ErrorMessage":"Error in Supplier Response: Failed with exception message:Unable to read data from the transport connection: The connection was closed."},"Destination":null,"Origin":null,"TraceId":"787eb625-6e3d-451a-a86c-4c80c77d05e5","BusResults":null}}

@@ -1,0 +1,1 @@
+{"GetBusSeatLayOutResult":{"ResponseStatus":2,"Error":{"ErrorCode":2,"ErrorMessage":"Error in Supplier Response: <html>\u000d\u000a<head><title>502 Bad Gateway<\/title><\/head>\u000d\u000a<body>\u000d\u000a<center><h1>502 Bad Gateway<\/h1><\/center>\u000d\u000a<\/body>\u000d\u000a<\/html>\u000d\u000a"},"TraceId":"eff73bb2-a7bf-4a20-932a-60216d35491a","SeatLayoutDetails":null}}

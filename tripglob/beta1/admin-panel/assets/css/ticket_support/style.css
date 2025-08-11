@@ -1,0 +1,25 @@
+.tickettime{
+    float:right;
+}
+.user_deatails{
+    float:left;
+    color:Grey;
+    font-weight: bold;
+}
+.reply_message{
+    width: 85%;
+}
+.mail_header{
+    height:20px;
+        border-bottom: 2px solid #ccc;
+}
+.ticket_content{
+    /*box-shadow: 0.5px 0.5px 0.5px 0.5px;*/
+        border: 1px solid #ccc;
+    padding: 5px;
+        margin: 0px 0px 7px 3px;
+}
+.ticket_time{
+    float:right;
+    margin-top:3%;
+}

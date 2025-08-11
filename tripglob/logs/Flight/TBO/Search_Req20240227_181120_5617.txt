@@ -1,0 +1,1 @@
+{"EndUserIp":"103.78.245.113","TokenId":"799a04dc-96e3-4dce-94c7-43deed64b068","AdultCount":"1","ChildCount":"0","InfantCount":"0","DirectFlight":"false","OneStopFlight":"false","JourneyType":"1","PreferredAirlines":null,"Segments":[{"Origin":"KUW","Destination":"DEL","FlightCabinClass":"1","PreferredDepartureTime":"2024-02-28T00: 00: 00"}],"Sources":null}

@@ -1,0 +1,1 @@
+{"BusSearchResult":{"ResponseStatus":4,"Error":{"ErrorCode":5,"ErrorMessage":"TokenID can not be Null or Empty"},"Destination":null,"Origin":null,"TraceId":"70682ef4-3999-44d9-904c-c3957cee5962","BusResults":null}}

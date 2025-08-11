@@ -1,0 +1,1861 @@
+/*modify_search*/
+.allpagewrp{ float:left; width:100%;    margin-top: 77px;}
+.newmodify {
+    float: left;
+    width: 100%;
+	background:#ededed;    padding: 8px 0 4px;
+}
+.contentsdw {
+     background: #ededed none repeat scroll 0 0;
+    float: left;
+    padding: 6px 0;
+    width: 100%;
+}
+.pad_ten {
+    float: left;
+    padding: 0px;
+    width: 100%;
+}
+.padflt{
+ width:52%;   
+}
+.sprite.marker_icon {
+    background-position: -97px -260px;
+}
+.sprite.calendar_icon {
+    background-position: -181px -261px;
+}
+.sprite.pasnger_icon {
+    background-position: -269px -261px;
+}
+.disabled {
+    opacity: 0.2;
+}
+.left_icon {
+    float: left;
+    height: 40px;
+    width: 40px; 
+    opacity: 1.4;
+}
+.from_to_place {
+    display: block;
+    overflow: hidden;
+    padding-left: 10px;
+}
+.placename {
+    color: #000;
+    display: block;
+    font-size: 13px;
+    margin: 0 0 8px;
+    overflow: hidden; font-weight:normal;
+}
+.contryname {
+    display: block;
+    font-size: 13px;
+    margin: 0;
+    overflow: hidden;
+	color:#000000; font-weight:normal;
+}
+.boxlabl {
+    color: #000;
+    display: block;
+    font-size: 13px;
+    margin: 0 0 5px;
+    overflow: hidden;
+}
+.faldate.fa {
+    margin-right: 6px;
+}
+.datein {
+    color: #000;
+    display: block;
+    font-size: 13px;
+    overflow: hidden;
+	margin-top: -3px;
+}
+.countlbl {
+    color: #000;
+    display: block;
+    font-size: 16px;
+    overflow: hidden;margin-top: -3px;
+}
+.modifysrch { 
+    background: #fdb813  none repeat scroll 0 0;
+   border: 1px solid #fdb813 ;
+    border-radius: 3px;
+    /* float: left; */
+    color: #fff;
+    font-size: 16px;
+    height: 50px;
+    padding: 0 30px 0 7px;    text-transform: uppercase;
+    position: relative;
+    /* width: 93%; */
+    
+    padding: 5px 45px;
+}
+.modifysrch .down_caret {
+    display: none;
+}
+.modifysrch strong{font-weight:normal;}
+.down_caret::after {
+    color: #fff;
+    content: "";
+    font-family: "FontAwesome";
+    font-size: 30px;
+    position: absolute;
+    right: 10px;
+    top: 15px;
+}
+.inmodify {
+    background: #f2f2f2 none repeat scroll 0 0;
+    display: block;
+    overflow: hidden;
+}
+.modify_search_wrap{ float:left; width:100%;    background: url(https://www.qickwt.com/wp-content/uploads/2015/12/Travel-insurance.jpg)no-repeat 100% 0%;background-size: cover;
+}
+.modify_search_wrap .modifycontrols{ width:100%;}
+.modify_search_wrap .modifycontrolsno{ display:none;}
+.modify_search_wrap .whenfixmar{ margin:0px;}
+.modify_search_wrap .onlynum .btn.btnpot{ float:right;display: table-cell;}
+.modify_search_wrap .onlynum .btn.btnpot:first-child{ float:left;}
+.modify_search_wrap .onlynum .form-control{ display:table-cell; float:none;}
+.modify_search_wrap #modify{ padding: 13px 0px; }
+.modify_search_wrap .tab-content{ background:none;}
+
+/*flight_results*/
+.contentsec {
+   background: #f1f5f8 none repeat scroll 0 0;
+    float: left;
+    width: 100%;
+	position:relative;
+}
+
+.filtrsrch {
+   float: left;
+    margin: 0 0 20px;
+    position: relative;
+    width: 100%;
+}
+/*left_side*/
+.col30 {
+    float: left;
+    width: 25%;
+}
+.celsrch {
+    background: none repeat scroll 0 0;
+    /* border: 1px solid #e5e4e4; */
+    /* box-shadow: 0 0 8px #e5e4e4; */
+    float: left;
+    position: relative;
+    width: 100%;
+    margin-top: 18px;
+}
+
+.boxtop {
+    background: #fff none repeat scroll 0 0;
+    /* border-bottom: 1px solid #0079c2; */
+    color: #ffffff;
+    float: left;
+      padding: 13.5px 10px;
+    position: relative;
+    width: 100%;
+    margin-bottom: 5px;
+}
+/*.boxtop::after {
+    background: #0079c2 url("../images/sprite.png") no-repeat scroll -152px -339px;
+    border: 5px solid #ffffff;
+    border-radius: 30px;
+    bottom: -30px;
+    content: "";
+    height: 50px;
+    left: 40%;
+    position: absolute;
+    width: 50px;
+}*/
+.filtersho {
+    color: #0079c2;
+    display: block;
+    font-size: 14px;
+    margin: 0px 0;
+    overflow: hidden;
+}
+.avlhtls {
+    color: #203f7c;
+    font-size: 16px;
+}
+.avlhtls strong {
+      color: #000;
+   font-weight: normal;
+}
+.placenamefil {
+         color: #fdb813;
+    display: block;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0px 0;
+    overflow: hidden;
+    text-align: center;
+    float: right;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 10px;
+} 
+button.flight_filter_reset {
+    padding: 5px 22px;
+    color: #fff;
+    background: #203f7c;
+    border: none;
+}
+ul.sortul.flight_sort i {
+    color: #fdb813;
+        margin-right: 17px!important;
+        font-weight: 500;
+}
+.nrow {
+    color: #eee;
+    display: block;
+    font-size: 13px;
+    overflow: hidden;
+    text-align: center;
+}
+.norfilterr {
+     float: left;
+    width: 100%;
+}
+.outbnd{
+    display: block;
+    overflow: hidden;
+}
+
+.rangebox {
+   
+    display: block;
+    margin: 0 0 7px;
+    overflow: hidden;
+    padding: 0px 0px;
+    background: #ffffff;
+    border-radius: 3px;
+        border-bottom: 2px solid #dbe3e8;
+}
+
+.ranghead {
+    color: #000000;
+    display: block;
+    font-weight: 600;
+    font-size: 14px;
+   overflow: hidden;
+    padding:11px 10px;
+    background: none repeat scroll 0 0 rgb(249, 249, 249);
+        cursor: pointer;
+}
+
+.price_slider1 {
+    margin: 0 0 15px;
+    padding: 10px 35px; z-index: 0; position: relative;
+}
+.multiple_booking{
+    margin: 0px -10% 10% 16%;
+}
+.stoprow {
+    display: block;
+    overflow: hidden;
+    padding: 0px 0px 0px 15px;
+}
+.level {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border: 0 none;
+    color: #203f7c;
+    font-weight: 600;
+    display: block;
+    font-size: 16px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    text-align: center;
+    width: 100%;
+}
+.price_slider1 .ui-widget-content {
+  background: #203f7c none repeat scroll 0 0;
+    border-radius: 30px !important;
+    box-shadow: none; 
+    height: 10px;
+}
+.price_slider1 .ui-widget-header {
+    background:#92c83e none repeat scroll 0 0;
+    box-shadow:none;
+}
+.price_slider1 .u
+i-state-default, .price_slider1 .ui-widget-content .ui-state-default, .price_slider1 .ui-widget-header .ui-state-default {
+  background: #fff none repeat scroll 0 0;
+    border-radius: 50%;
+    cursor: pointer;
+    height: 20px;
+    margin-left: -14px;
+    top: -7px;
+    width: 20px;
+    border: 5px solid #92c83e;
+    height:fit-content;
+}
+.septor {
+    background: #e2e2e2 none repeat scroll 0 0;
+    border-bottom: 1px solid #fafafa;
+    display: block;
+    height: 2px;
+    margin: 12px 0;
+    overflow: hidden;
+}
+
+.boxins {
+    
+}
+.stopone {
+    float: left;
+    position: relative;
+    text-align: center;
+    width: 33.333%;
+    margin-top: -3px;
+}
+.relatboxs{display: block;
+    height: 25px;
+    line-height: 25px;
+    position: relative;
+    width: 100%;}
+.relatboxs::after {
+   /* background: #ececec none repeat scroll 0 0;
+    border-radius: 5px;
+    content: "";
+    height: 3px;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 45%;
+    z-index: 0;*/
+}
+.rounds {
+    background: #ffffff none repeat scroll 0 0;
+    border:1.5px solid #fdb813;
+    border-radius: 30px;
+    cursor: pointer;
+    height: 22px;
+    position: relative;
+    width: 22px;
+    z-index: 1;
+    margin: 0px;
+}
+.rangebox .rounds {
+    background: #fdb813  none repeat scroll 0 0;
+    border: 2px solid #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    height: 22px;
+    position: relative;
+    width: 22px;
+    z-index: 0;
+    margin: 0px;
+}
+.rounds1 { 
+    font-weight: 500;
+    font-size: 10px;
+    padding-top: 2px;
+    padding-left: 3px;
+ }
+.toglefil.active .rounds {
+    background: #fdb813 none repeat scroll 0 0;
+}
+.toglefil.active .rounds::after {
+    color: #fff;
+    content: "";
+    display: block;
+    font-family: fontawesome;
+    font-size: 12px;
+    font-weight: 100;
+    left: 0;
+	right:0; top:0;
+    line-height: 18px;
+    position: absolute;
+    text-align: center;
+}
+.relatboxsone{display: block;
+    position: relative;
+    width: 100%; float:left;}
+
+.starin {
+    background: #fff none repeat scroll 0 0;
+    display: block;
+    font-size: 14px;
+    overflow: hidden;
+    text-align: center;
+}
+.stopbig {
+    color: #353535;
+    display: block;
+    font-size: 14px;
+    overflow: hidden;
+}
+.stopsml {
+    color: #999;
+    font-size: 12px;
+}
+.htlcount {
+    color: #000000;
+    display: block;
+    font-size: 13px;
+    margin: 3px 0 0;
+    overflow: hidden;
+    padding: 2px 0;
+    font-weight: 500;
+    font-family: poppins;
+    text-decoration: none !important;
+    outline: none;
+    cursor: pointer;
+} 
+.locationul{display: block;
+    overflow: hidden;
+    position: relative; padding: 10px 0;
+    overflow-y: scroll;
+    height: fit-content;}
+.locationul::after {
+ /*   background: #ececec none repeat scroll 0 0;
+    border-radius: 5px;
+    bottom: 0;
+    content: "";
+    left: 10px;
+    position: absolute;
+    top:0;
+    width: 3px;
+    z-index: 0;*/
+}
+
+.padlow{ padding:10px 0;}
+.timone {
+   float: left;
+    position: relative;
+    text-align: center;
+    width: 25%;
+}
+
+
+.rangebox .sprte {
+    background: url(../images/flitsprite.png) no-repeat 0 0;
+        height: 40px;
+    margin: 0 auto;
+    width: 50px;
+}
+.rangebox  .sprte.png1 {
+    background-position: -47px 2px;
+}
+.rangebox  .sprte.png2 {
+
+    background-position: 10px 2px;
+}
+.rangebox  .sprte.png3{
+    background-position: -181px 2px;
+}
+.rangebox  .sprte.png4 {
+    background-position: -117px 2px;
+}
+
+
+.sprte.png1 {
+    background-position: -95px -459px;
+    height: 40px;
+    margin: 0 auto;
+    width: 50px;
+}
+.sprte.png2 {
+    background-position: -183px -459px;
+    height: 40px;
+    margin: 0 auto;
+    width: 50px;
+}
+.sprte.png3 {
+    background-position: -273px -459px;
+    height: 40px;
+    margin: 0 auto;
+    width: 50px;
+}
+.sprte.png4 {
+    background-position: -363px -459px;
+    height: 40px;
+    margin: 0 auto;
+    width: 50px;
+}
+.locationul li {
+    float: left;
+    margin: 0 0 15px;
+    width: 100%;
+}
+.squaredThree input[type="checkbox"] {
+	visibility:hidden;
+	margin:0
+}
+.squaredThree {
+	float: left;
+	margin-right: 8px;
+	position: relative;
+	width: 20px;z-index: 1;
+}
+.squaredThree label {
+    left: 0;
+    position: absolute;
+    top: 0;
+     background: #fdb813  none repeat scroll 0 0;
+    border: 2px solid #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    height: 22px;width: 22px;
+}
+.squaredThree label::after {
+ /*-moz-border-bottom-colors: none;
+ -moz-border-left-colors: none;
+ -moz-border-right-colors: none;
+ -moz-border-top-colors: none;
+ border-color: -moz-use-text-color -moz-use-text-color #fcfff4 #fcfff4;
+ border-image: none;
+ border-style: none none solid solid;
+ border-width: medium medium 3px 3px;
+ content: "";
+ height: 6px;
+    left: 3px;
+    opacity: 0;
+    position: absolute;
+    top: 4px;
+    transform: rotate(-45deg);
+    width: 10px;*/
+
+}
+.squaredThree label:hover::after {
+ opacity: 0.3;
+}
+.squaredThree input[type="checkbox"]:checked + label::after {
+ opacity: 1;    content: "\f00c";
+    display: block;
+    font-family: fontawesome;
+    font-size: 12px;
+    font-weight: 100;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    line-height: 18px;
+    position: absolute;
+    text-align: center;
+}
+.squaredThree input[type="checkbox"]:checked + label {
+	background:#fdb813;color: #fff;
+}
+.lbllbl {
+    color: #666;
+    display: block;
+    font-size: 14px;
+    font-weight: normal;
+    margin: 0;
+    overflow: hidden;
+}
+/*right_side*/
+.col70 {
+    float: left;
+    width: 75%;
+}
+.in70 {
+    display: block;
+    float: left;
+    padding: 20px 0 0 20px;
+    width: 100%;
+}
+.topmisty {
+   background: #ffffff none repeat scroll 0 0;
+    display: block;
+    float: left;
+    margin: 0 0 5px;
+    width: 100%;
+}
+.sorta.active {
+    border-bottom: 3px solid #fdb813;
+}
+.insidemyt {
+     box-shadow: 0 1px 2px 0 #ccc;
+    display: block;
+    overflow: hidden;
+}
+.sortul {
+    display: block;
+    overflow: hidden;
+}
+.sortli {
+    float: left;
+    width: 20%;
+    list-style: none;
+}
+.sortli  .i{
+     margin:0 4px 0 0;
+}
+ .sorta {
+    border-right: 1px solid #eae8e8;
+       color: #203f7c;
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    background: #ffffff;
+    height: 35px;
+    cursor: pointer;
+    line-height: 35px;
+    overflow: hidden;
+    padding: 0 10px 0 8px;
+    position: relative;
+}
+.sorta:hover {
+        color: #203f7c;
+    text-decoration: none;
+}
+.sirticon {float: left;
+    height: 25px;
+    margin: 5px 10px;
+    width: 25px;}
+.sirticon.sort1{background-position: -100px -345px;}
+.sirticon.sort2{background-position: -227px -345px;}
+.sirticon.sort3{background-position: -298px -345px;}
+.sirticon.sort4{background-position: -366px -347px;}
+.sirticon.sort5{background-position: -422px -347px;}
+.sorta.des::after {
+    color: #999999;
+    content: "";
+    font-family: "FontAwesome";
+    margin-left: 10px;
+    position: absolute;
+    right: 15px;
+}
+.sorta.ase::after {
+    color: #999999;
+    content:"\f0d7";
+    font-family: "FontAwesome";
+    margin-left: 10px;
+    position: absolute;
+    right: 15px;
+}
+.allresult {
+    display: block;
+    margin: 5px 0 0;
+    min-height: 0px;
+    position: relative;
+	float:left; width:100%;
+}
+.rowresult {
+    display: block;
+    position: relative;
+    transition: all 400ms ease-in-out 0s;
+}
+.carttoloadr{background: rgba(255, 255, 255, 0.9) url("../images/preloader.gif") no-repeat scroll center center;
+    border-radius: 10px;
+    bottom: 0;
+    box-shadow: 0 0 10px -5px #909090;
+    display: none;
+    left: 0;
+    min-width: auto;
+    position: fixed;
+    right: 0;
+    text-align: center;
+    top: 0;
+    z-index: 1000000;}
+.carttoloadr strong {
+    bottom: 40%;
+    color: #333;
+    display: block;
+    font-size: 18px;
+    font-weight: normal;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    text-align: center;
+}
+.madgrid {
+    background: #ffffff none repeat scroll 0 0;
+    
+    display: block;
+    float: left;
+    margin: 5px 0;
+    overflow: hidden;
+    width: 100%;border-bottom: 2px solid #dbe3e8;
+}
+.madgrid .listfull {
+    border-right: 1px solid #dddddd; 
+}
+.nobord{ border-right:none;}
+.rndplace {
+    color: #203f7c;
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+    overflow: hidden;
+}
+.pagination{ font-size: 16px; }
+span.farrow {
+    display: inline-block;
+    font-size: 14px;
+    height: 12px;
+    position: relative;
+    text-align: center;
+    width: 30px;
+}
+.sidenamedesc {
+    display: block;
+    width: 100%;
+    padding-top: 18px;
+}
+.celhtl {
+    float:left;
+}
+.bookbtn{
+    padding:6px 0px 18px 0px;
+}
+span.hidesprite.retime {
+    margin-left: 5px;
+}
+.width20 {
+    width: 20%;
+}
+.fligthsmll {
+    display: block;
+    overflow: hidden;
+    text-align: center;
+    margin: 10px auto; 
+    width: 50px;
+    float:none;
+
+}
+.fligthsmll img { width: 100%; }
+.airlinename {
+        font-weight: 600; 
+    color: #000;
+    padding: 3px 10px;
+    float: left;font-size: 12px;
+margin: 0 0 0px; 
+    overflow: hidden;
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+    width: 100%;
+    text-align: center;
+}
+.width80 {
+    width: 80%;
+}
+
+.width25 { width: 25%; }
+.width75 { width: 75%; }
+.width60 {
+    width: 60%;
+}
+.sprite.reflone{background-position: -100px -404px;
+    float: left;
+    height: 30px;
+    width: 40px; margin-right: 5px;}
+.sprite.refltwo{background-position: -194px -404px;
+    float: left;
+    height: 30px;
+    width: 40px; margin-right: 5px;}
+.col-xs-12.nopad5.width_hundred {
+    display: flex;
+    /* flex-wrap: wrap; */
+    height: 102px;
+    align-items: center;
+}
+/*.sprite.retime{background-position: -291px -404px;*/
+/*    float: left;*/
+/*    height: 20px;*/
+/*    width: 20px;margin-right: 5px;}*/
+.sprite.faredetail{background-position:-412px -403px;
+    float: left;
+    height: 25px;
+    margin-right: 5px;
+    width: 25px;}
+.sprite.fldetail{background-position: -351px -404px;
+    float: left;
+    height: 25px;
+    margin-right: 5px;
+    width: 25px;}
+.flname{font-size: 18px;}
+.fltime{
+    font-weight: 500;
+    margin-left: 0px;}
+.right {
+    text-align: right;
+}
+.new-div .flect{
+        padding: 0;
+    margin: 2px 0 4px;   
+     border-right: 1px solid #999;
+    padding-right: 3px;
+}
+.new-div i.fal.fa-clock {
+    color: #fdb813;
+}
+.left{ float:left;}
+.waymensn {
+    display: block;
+    overflow: hidden;
+}
+.flitruo {
+    display: block;
+    margin: 0px 0;
+    overflow: hidden;
+    padding: 10px 0;
+}
+.ifroundway .flitruo {
+    border-bottom: 1px dashed #ddd;
+}
+.ifroundway .flitruo:last-child{ border-bottom:none;}
+.oneplus{ background: #e0e0e0 none repeat scroll 0 0;}
+.oneonly{opacity:0;}
+.plusone .oneplus{ display: inline-block;}
+.morestop .oneonly{ opacity:1;}
+.ifroundway .fligthsmll{}
+.detlnavi {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+.detlnavi.flight_itrn_section {
+    display: flex;
+    align-items: center;
+    height: 96px;
+}
+.modal-backdrop{z-index: 10000000;}
+.modal{z-index: 100000000;}
+.detlnavi .widfty:first-child {
+    text-align: right;
+        display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+}
+.detlnavi .widfty:last-child {
+    text-align: right;
+        display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 68px!important;
+    margin-top: -3px;
+}
+
+.timlbl {
+    color: #203f7c;
+    display: block;
+    font-size: 20px;
+    line-height: 22px;
+    overflow: hidden;
+    /*text-align: center;*/
+    font-family: poppins;
+}
+.flitsmdets{font-family: poppins; } 
+
+.flitrlbl {
+    color: #2d2b29;
+    display: block;
+    font-size: 14px;
+    font-weight: 300;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; 
+}
+.flicent.fa {
+    background: #b0cdee none repeat scroll 0 0;
+    border-radius: 30px;
+    color: #555555;
+    display: table;
+    font-size: 16px;
+    height: 30px;
+    line-height: 30px;
+    margin: 8px auto;
+    text-align: center;
+    width: 30px;
+}
+.lyovrtime {
+    display: block;
+    text-align: center;
+    width: 100%;
+}
+.col-xs-3.new-div {
+    padding: 0;
+    display: flex;
+    width:65%;
+}
+.timlbl{
+    HEIGHT: 60%;
+}
+.flect {
+	color: #fdb813;
+    display: table;
+    font-size: 10px;
+    margin: 0 auto auto;
+    padding: 5px 10px; 
+}
+.flects {
+   border: 1px solid #dddddd;
+    color: #666666;
+    display: table;
+    font-size: 14px;
+    margin: 8px auto auto;
+    padding: 5px 10px; position:relative;
+}
+.instops{
+    display: block;
+    min-height: 25px;
+    position: relative;
+    width: 100%;
+    margin-top: 15px;
+}
+.instops::after {
+    background: #fdb813  none repeat scroll 0 0;
+    border-radius: 5px;
+    content: "";
+    height: 1px;
+    left: 30px;
+    position: absolute;
+    right: 30px;
+    top: 18%;
+    z-index: 0;
+}
+.instops .rounds{ width:10px; height:10px;}
+.detailsflt:hover{color: #07253f;text-decoration: none;}
+.pricedates:hover{
+    text-decoration: none !important;
+    cursor: pointer;
+}
+.mrinfrmtn {  
+    background: #f6f6f6  none repeat scroll 0 0;
+    display: block;
+    float: left;
+    overflow: hidden;
+    width: 100%;
+}
+.detailsflt {
+    color: #005aab;
+    display: block;
+    float: left;
+    font-size: 13px;
+    cursor: pointer;
+    line-height: 25px;
+    overflow: hidden;
+    padding: 6px 10px;
+}
+.flects::before {
+    background: rgba(0, 0, 0, 0) url("../images/sprite.png") no-repeat scroll -239px -51px;
+    content: "";
+    height: 15px;
+    left: 50%;
+    margin-left: -14px;
+    position: absolute;
+    top: -11px;
+    width: 28px;
+}
+.flightimage {
+    display: block;
+    max-height: 130px;
+    overflow: hidden;
+}
+.sidepricewrp {
+    display: block;
+    float: right;
+    overflow: hidden;
+    width: 100%;
+    /*padding: 10px 20px 0px;*/
+}
+.sector_loop {
+    float: left;
+    width: 100%;
+  
+    background: #fff;
+}
+
+.sector_loop:last-child { border-bottom: none !important; }
+.sideprice {
+      font-size: 20px;
+    display: block;
+    font-weight: 600;
+    color: #203f7c;
+   line-height: 43px;
+    margin-top: 30px;
+    text-align: center;
+} 
+
+.bookbtn {
+   display: block;
+    /* float: left; */
+    /* width: 100%; */
+    /* text-align: left; */
+    overflow: hidden;
+    margin-top: 1px;
+    /* float: right; */
+    text-align: center;
+}
+.booknow {
+ background: linear-gradient(to bottom, #fdb813  1%,#fdb813  100%);
+  background: -webkit-linear-gradient(to bottom, #4772c5 1%,#203f7c 100%);
+  background: -moz-linear-gradient(to bottom, #4772c5 1%,#203f7c 100%);
+text-decoration: none !important;
+    color: #fff;
+    display: block;
+    font-size: 13px;
+    overflow: hidden;
+    padding: 9px 0px;   width: 115px;
+    text-align: center;
+    border-radius: 3px;
+    margin: 0px auto;text-transform: uppercase;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    position: relative;
+    -webkit-transition-property: color;
+    transition-property: color;
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+    cursor: pointer;
+}
+.booknow:before{
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #264787;
+    -webkit-transform: scaleX(0);
+    transform: scaleX(0);
+    -webkit-transform-origin: 0 50%;
+    transform-origin: 0 50%;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+    -webkit-transition-timing-function: ease-out;
+    transition-timing-function: ease-out;
+}
+.booknow:hover{ color:#fff;
+ background: linear-gradient(to bottom, #fdb813 0%,#fdb813 29%,#fdb813 50%,#fdb813 100%);
+ background: -moz-linear-gradient(top, #fdb813 0%, #fdb813 29%, #fdb813 50%, #fdb813 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, #fdb813 0%,#fdb813 29%,#fdb813 50%,#fdb813 100%);
+}
+.booknow:hover:before, .booknow:focus:before, .booknow:active:before {
+    -webkit-transform: scaleX(1);
+    transform: scaleX(1);
+    -webkit-transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
+    transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
+}
+
+/*fare_calender*/
+.farecaled {
+    float: left;
+    padding: 0 0 15px;
+    width: 100%;
+}
+.farenewcal {
+    background: #ffffff none repeat scroll 0 0;
+    float: left;
+    width: 100%;
+}
+.matrx {
+    float: left;
+    padding: 0 30px;
+    width: 100%;
+}
+.pricedates {
+ 
+    display: block;
+    height: 60px;
+    margin: 0 3px;
+    overflow: hidden;
+    padding: 10px 0;
+    text-align: center;
+}
+.load_details { width: 100%; background: #fff; display: block; text-align: center; }
+.imgemtrx_plusmin {
+    float: left;
+    height: 40px;
+    line-height: 40px;
+    margin: -3px 0 0;
+    overflow: hidden;
+    padding: 0 5px;
+    text-align: center;
+    width: 60px;
+}
+.imgemtrx_plusmin img {
+    width: 100%;
+}
+.alsmtrx strong {
+    color: #6b6b6b;
+    display: block;
+    font-weight: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;text-align: left;
+}
+.mtrxprice {
+     color: #313131;
+    display: block;
+    font-size: 14px;
+    overflow: hidden;text-align: left; 
+}
+.matrixcarsl.owl-theme .owl-controls .owl-buttons .owl-prev, .matrixcarsl.owl-theme .owl-controls .owl-buttons .owl-next {
+     border-radius: 0;
+    bottom: 0;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    text-indent: -99px;
+    top: 0;
+    width: 35px;
+    z-index: 10;
+}
+.matrixcarsl.owl-theme .owl-controls .owl-buttons .owl-prev {    transform: rotate(180deg);
+    background:#203f7c url("../images/sprite.png") no-repeat scroll -336px -26px; left: -31px;opacity: 1;    z-index: 1;
+}
+.matrixcarsl.owl-theme .owl-controls .owl-buttons .owl-next {
+    background: #203f7c url("../images/sprite.png") no-repeat scroll -336px -24px;right: -31px;    opacity: 1;z-index: 1;}
+.matrixcarsl .owl-controls.clickable{ margin-top:0px;}
+
+/*flight_details*/
+/*.flight_res.collapse.in .propopum{
+    display: block;
+}*/
+.modal .propopum{ display:block;}
+.propopum {
+    background: #fff none repeat scroll 0 0;
+    border-radius: 5px;
+    /*display: none;*/
+    margin: 30px auto auto;
+    max-width: 1200px;
+    overflow: hidden;
+    position: relative;
+    width: 100%; padding: 0px 15px;
+}
+.popuphed, .popconyent, .popfooter {
+    float: left;
+    width: 100%; background: #fff;
+}
+.popuphed .close{background: #000 none repeat scroll 0 0;
+    border-radius: 30px;
+    color: #fff;
+    font-size: 20px;
+    font-weight: normal;
+    height: 30px;
+    position: absolute;
+    right: 10px;
+    text-align: center;
+    top: 10px;
+    width: 30px;}
+.hdngpops {
+    background: #0079c2 none repeat scroll 0 0;
+    color: #fff;
+    display: none;
+    font-size: 18px;
+    font-weight: 300;
+    overflow: hidden;
+    padding: 10px 20px;
+}
+.hdngpops .fa {
+    color: #daf1ff;
+    font-weight: normal;
+    margin: 0 10px;
+}
+.contfare {
+    display: block;
+    margin: 12px;
+    overflow: hidden;
+}
+.nav-tabs.flittwifil {
+    border: 0 none;
+    margin: 0 -2px;
+}
+.contfare .nav-tabs.flittwifil {
+    margin: 0;
+}
+.popconyent .nav-tabs > li {
+    border-right: medium none;
+}
+.nav-tabs.flittwifil li {
+    margin: 0 5px 0 0;
+    width: auto;
+}
+.nav-tabs.flittwifil li.active::after {
+    bottom: -3px;
+    color: #dd2a1b;
+    content: "";
+    font-family: "FontAwesome";
+    font-size: 30px;
+    left: 0;
+    line-height: 0;
+    position: absolute;
+    right: 0;
+    text-align: center;
+}
+.nav-tabs.flittwifil li a {
+       background: #e6e5e5 none repeat scroll 0 0;
+    border-radius: 3px;
+    color: #666;
+    font-size: 14px;
+    height: 39px;
+    line-height: 37px;
+    margin: 0;
+    padding: 0 10px;
+    text-align: center;
+}
+
+.nav-tabs.flittwifil li.active a, .nav-tabs.flittwifil li.active a:hover {
+   background: #fdb813 none repeat scroll 0 0;
+    border: 0 none;
+    color: #fff;
+}
+
+.layortie {
+    background: #fdb813 !important;
+    border: 1px solid #fdb813 !important;
+    border-radius: 30px;
+    display: block;
+    margin-bottom: 5px;
+    overflow: hidden;
+    padding: 5px;
+    color: #fff;
+    text-align: center;
+    font-size: 12px;
+}
+
+.layortie strong { font-weight: normal; margin-left: 5px;}
+
+.nav-tabs.flittwifil li.active::after {
+    bottom: -3px;
+    color: #fdb813 !important;
+   
+    font-family: FontAwesome;
+    font-size: 30px;
+    left: 0px;
+    line-height: 0;
+    position: absolute;
+    right: 0px;
+    text-align: center;
+}
+
+.tab-content {
+    box-shadow: none;
+    margin-bottom: 30px;
+}
+.tabmarg {
+    display: block;
+    margin: 15px 0 0;
+    overflow: auto;
+    height: 201px;
+    font-size: 13px;
+}
+.alltwobnd {
+    display: table;
+    width: 100%;
+}
+.popconyent .cloroutbnd {
+    background: #f0f2fe none repeat scroll 0 0;
+}
+.celion {
+    display: table-cell;
+    float: none;
+    vertical-align: top;
+}
+.inboundiv {
+    border-radius: 3px;
+    display: block;
+   border-bottom: none;
+    /*overflow: hidden;*/
+    overflow-x: scroll;
+    height:100%;
+    width:100%;
+    padding: 10px;
+}
+.hedtowr {
+    border-bottom: none;
+    color: #000;
+    font-weight: 600 !important;
+    display: block;
+    background: #f1f1f1  !important;
+    font-size: 13px;
+    font-weight: normal;
+    overflow: hidden;
+    background: #f8f8f8;
+    padding: 5px 0px 10px 15px;
+    margin-bottom: 10px;
+    box-shadow: none;
+}
+.hedtowr strong {
+    color: #666;
+    font-weight: 300;
+}
+.flitone {
+    display: block;
+    margin: 5px 0px;
+    overflow: hidden;
+    padding: 10px ;
+   border: 1px solid #d7dee5;
+    background: #fff;
+    padding: 0px;
+}
+.imagesmflt {
+    float: left;
+    margin-right: 5px;
+}
+.flitsmdets {
+     display: flex;
+    line-height: 15px;
+    overflow: hidden;
+    font-size: 13px;
+    justify-content: space-evenly;
+    height: 40px;
+    align-items: center;
+}
+
+.flitsmdets strong {
+    color: #666;
+    display: block;
+    font-weight: 300;
+    margin: 0px 0 0;
+    overflow: hidden;
+}
+.dateone {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    overflow: hidden;
+}
+.termnl {
+    color: #333;
+    display: block;
+    overflow: hidden;
+}
+.temnldr {
+    color: #888;
+    display: block;
+    overflow: hidden;
+}
+.arocl.fa {
+    color: #666;
+    display: block;
+    font-size: 14px;
+    margin: 10px 0;
+    overflow: hidden;
+    text-align: center;
+}
+.ritstop {
+    display: block;
+    overflow: hidden;
+    text-align: right;
+}
+.termnl1 {
+    display: block;
+    margin: 6px 0 3px;
+    overflow: hidden; 
+      font-family: poppins;
+    font-size: 11px ;  
+}
+.farehdng {
+    color: #666;
+    display: block;
+    font-size: 18px;
+    margin: 0 0 15px;
+    overflow: hidden;
+}
+.rowfare {
+    border-bottom: 1px solid #eee;
+    color: #666;
+    display: block;
+    font-size: 14px;
+    overflow: hidden;
+    padding: 10px 0;
+}
+.norpopbtn {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	cursor: pointer;
+	float: right;
+	margin-left: 10px;
+	padding: 6px 10px;
+}
+.futrcnt {
+	background: none repeat scroll 0 0 #f9f9f9;
+	display: block;
+	overflow: hidden;
+	padding: 10px;
+}
+.detail_section{}
+
+
+
+
+.flight_datails .imagesmflt {
+    display: block;
+    float: none;
+    margin-right: 0;
+    overflow: hidden;
+    text-align: center;
+}
+.flight_datails .flitsmdets{text-align:left;padding: 5px 0;}
+.detail_section .flname {
+    display: block;
+    font-size: 15px;
+    overflow: hidden;
+    width: 100%;
+    margin-top: -2px;
+}
+.detail_section .sprite.reflone{float:right;margin: 0;}
+.centovr {
+    background: #f4e4d8 none repeat scroll 0 0;
+    border-radius: 30px;
+    color: #333;
+    display: block;
+    font-size: 13px;
+    margin: 5px 0;
+    overflow: hidden;
+    padding: 5px;
+    text-align: center;
+}
+.flight_datails .alltwobnd {
+    display: block;
+    margin: 0 -5px;
+    overflow: hidden;
+}
+.rowfare:last-child {
+    border: 0 none;
+}
+.rowfare .pricelbl {
+    color: #333;
+  
+}
+.grandtl .infolbl{color: #203f7c;
+       color: #203f7c;
+    font-weight: 600;
+    display: block;
+    margin: 5px 6px 0;
+    text-align: center;
+    overflow: hidden;
+}
+.instops::after{
+    left: 16px!important;
+    right: 14px!important;
+}
+  .col-xs-3.nopad.text-right{
+        margin-top: 5px 
+    }
+
+.grandtl .pricelbl{color: #203f7c; font-weight: 600;
+    font-size: 18px;}
+.inboundiv.grand_totall{background: #f2f2f2;}
+
+.filter_show{ background: #fdb813 none repeat scroll 0 0;
+    border: 0 none;
+    /* border-radius: 100%; */
+    box-shadow: 0 1px 3px -2px #000;
+    color: #fff;
+    display: none;
+    font-size: 18px;
+    height: 35px;
+    left: 0;
+    position: absolute;
+    /* top: -2px; */
+    width: 49px;
+    z-index: 99;}
+.close_filter{background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border: 0 none;
+    color: #fdb813;
+	display:none;
+    font-size: 18px;
+    padding: 5px;
+    position: absolute;
+    right: 0;
+    width: 40px;
+    z-index: 10;}
+
+
+@media screen and (max-width:1200px){
+    .propopum{width:95%;}
+}
+@media screen and (max-width:1024px) and (min-width: 780px){
+    .booknow{
+        width: 96px;
+    }
+    .rndplace{
+        font-size: 13px;
+    }
+.madgrid .col-xs-3.new-div{
+
+}
+
+
+}
+@media screen and (max-width:768px) and (min-width: 650px){
+    .flights .width80{
+        width: 80%;
+    }
+     .flights  .celhtl.new-width20.width20{
+        width: 20%;    width: 20% !important;
+    margin-top: 20px;
+    } 
+    .flights .new-div .flect{
+            width: 100px;
+    float: left
+    }
+   .flights .rounds1 {
+            width: 100px;
+    float: left;
+    }
+    .flights .col-xs-3.new-div{
+        width: 25%;
+    }
+#one_return_div{
+    float: left;
+    width: 100%;
+}
+
+
+}
+@media screen and (max-width: 991px){
+.col30 {
+    display:none;
+    position: absolute;
+    width: 45%;
+    z-index: 100;
+}
+.col70{width:100% !important;}
+.in70{padding:20px 0 0;}
+.insidemyt {margin-left: 50px;}
+.filter_show, .close_filter{display:block;}
+.filtrsrch.open .col30{display:block;}
+}
+
+@media screen and (max-width: 850px){
+    .alltwobnd .ways_one{width:100%;}
+    .close_filter{top: -22px;right: -12px;}
+    .flight_datails .flitsmdets{text-align: center;padding: 8px 5px;}
+    .fltime{margin-left: 0;display: block;}
+}
+
+
+
+@media screen and (max-width: 768px){
+    .sirticon{display:none;}
+    .sorta{padding:0 10px; text-align:center;}
+    .flname {font-size: 16px;}
+    .sprite.reflone, .sprite.refltwo{display:none;}
+    .fare_flight{display:none;}
+    .sideprice{font-size:18px;}
+    .fare_full{width:100%;}
+    .width25{width: 20%;}
+    .width75 {width: 70%;}
+    .width20 {width: 20%;}
+    .flitruo{margin: 4px 2px;padding: 0px 0;}
+    .fligthsmll img { width: 45px;}
+    .sidepricewrp{padding: 5px 0;}
+    .booknow{display: block;padding: 5px;}
+    .padflt{padding:0;}
+    .fligthsmll{margin: 10px 0;}
+    .bookbtn{padding: 0 4px;}
+    .sprite.retime, .airlinename, .termnl1, .instops{display: none;}
+    .flect{padding: 5px;}
+    .farecaled{padding: 0 0 10px;}
+    .topmisty{margin: 0 0 5px;}
+    .rangebox{margin: 0;}
+    .boxtop{margin-bottom: 0;}
+    .nopad5{padding: 0;}
+}
+@media screen and (max-width: 550px){
+    .detlnavi .timlbl.right{
+    width: 100%;
+    float: left;
+}
+.col30{width: 60%;}
+.fligthsmll{width:60px;}
+/*.width20, .width80{width:100%;}*/
+/*.ifroundway .fligthsmll, .fligthsmll {
+    float: left;
+    height: auto;
+    line-height: normal;
+    margin: 5px;
+    padding: 5px;
+    width: auto;
+}*/
+.flitrlbl{font-size: 13px !important;font-weight: 400;}
+.rndplace{font-size: 13px !important;}
+}
+
+@media screen and (max-width: 460px){
+.hide_sort{display:none;}
+.sortul.flight_sort .sortli{width:33.33%;}
+.col30{width: 80%;}
+
+/*.width_hundred{width:100%;}*/
+.flight_datails .imagesmflt{float:left;}
+}
+
+@media screen and (max-width: 420px){
+.modifysrch strong{display:none;}
+.modifysrch{float:right;width:50px;padding:0;}
+.sorta{font-size:12px;}
+/*.fltime{margin-left: 2px;}*/
+.flname {
+    font-size: 13px;
+}
+/*.flitrlbl { font-size: 12px !important; }
+.rndplace { font-size: 12px !important; }*/
+}
+.second_heading
+{
+    text-align: left !important;
+    padding: 5px 15px  !important;
+    font-size: 16px  !important;
+    background: #ec444a  !important;
+    color: #fff  !important;
+}
+
+
+.newmodify .pad_ten {
+
+}
+
+.ranghead:after {
+    content: "\f0d7";
+    color: #000;
+    font-family: "Font Awesome 5 Pro";
+    font-size: 14px;
+
+    font-weight: bold;
+    top: 0;
+    float: right;
+}
+.cus-fa-icon{
+    font-size: 33px;
+    color: #cac3c3;
+}
+/*.flight_res.collapse.in .propopum.flight_datails{
+    display: block;
+}
+*/
+/*.rowresult .madgrid:active,*/
+/*.rowresult .sector_loop:active {*/
+/*  background: lightblue;*/
+/*}*/
+.main{
+    background:lightblue;
+}
+
+.propopum.flight_datails.sclr250 .popuphed button{
+    display: none;
+}
+.nw-stylss{
+        margin-bottom: 15px;
+        background: #fdb813;
+    padding: 5px 10px;
+}
+.nav.nav-tabs.flightrestab{
+    width: 100%;
+    border-bottom: 0px !important;
+}
+.nav.nav-tabs.flightrestab li{
+      /*  width: 33.3%;*/
+    text-align: center;
+    background: #FFF;
+    border-radius: 0px;
+    margin-bottom: 0px !important;
+    border-right: 1px solid #bcbcbc;
+}
+.nav.nav-tabs.flightrestab li:last-child{
+     border-right:0px solid #bcbcbc;
+}
+.nav.nav-tabs.flightrestab li a{
+    width: 100%;
+    border-top: 5px solid #fff;
+    color:#000;
+
+}
+.nav.nav-tabs.flightrestab>li.active>a, 
+.nav.nav-tabs.flightrestab>li.active>a:focus, 
+.nav.nav-tabs.flightrestab>li.active>a:hover{
+    background: #203f7c;
+    color: #fff;
+    border-top: 5px solid #203f7c;
+    border-radius: 0px;
+    padding-bottom: 11px;
+}
+ul.dropdown-menu.mysign1 {
+   
+    z-index: 0;
+}
+#alternate h5{
+    margin-bottom: 10px;
+}
+/**/
+.pre_summery .hotel_prebook img{
+    width: 100%;
+    height: 90px;
+}
+
+.get_non_stop_flight .nav-tabs>li>a {
+    border: 0px solid transparent;
+    border-radius: 0px 0px 0 0;
+}
+
+
+/*flight new loader*/
+.lds-ellipsis {
+  display:table;
+  position: relative;
+  width: 160px;
+  height: 64px;
+  margin:0 auto;
+  float: none;
+
+}
+.lds-ellipsis div {
+  position: absolute;
+  top: 27px;
+  width: 20px;
+  height: 20px;
+  margin:0 10px;
+  border-radius: 50%;
+  background: #000;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.lds-ellipsis div:nth-child(1) {
+  left: 12px;
+  animation: lds-ellipsis1 0.6s infinite;
+  background: #00aeef;
+}
+.lds-ellipsis div:nth-child(2) {
+  left: 23px;
+  animation: lds-ellipsis2 0.6s infinite;
+  background: #ffae00;
+}
+.lds-ellipsis div:nth-child(3) {
+  left: 57px;
+  animation: lds-ellipsis2 0.6s infinite;
+  background: #673ab7;
+}
+.lds-ellipsis div:nth-child(4) {
+  left: 98px;
+  animation: lds-ellipsis3 0.6s infinite;
+  background: #FF5722;
+}
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(19px, 0);
+  }
+}
+
+/*flight new loader*/
+.lds-ellipsis {
+  display:table;
+  position: relative;
+  width: 160px;
+  height: 64px;
+  margin:0 auto;
+  float: none;
+
+}
+.lds-ellipsis div {
+  position: absolute;
+  top: 27px;
+  width: 20px;
+  height: 20px;
+  margin:0 10px;
+  border-radius: 50%;
+  background: #000;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.lds-ellipsis div:nth-child(1) {
+  left: 12px;
+  animation: lds-ellipsis1 0.6s infinite;
+  background: #00aeef;
+}
+.lds-ellipsis div:nth-child(2) {
+  left: 23px;
+  animation: lds-ellipsis2 0.6s infinite;
+  background: #ffae00;
+}
+.lds-ellipsis div:nth-child(3) {
+  left: 57px;
+  animation: lds-ellipsis2 0.6s infinite;
+  background: #673ab7;
+}
+.lds-ellipsis div:nth-child(4) {
+  left: 98px;
+  animation: lds-ellipsis3 0.6s infinite;
+  background: #FF5722;
+}
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(19px, 0);
+  }
+}
+
+.lodrefrentrev.flight_fliter_loader{
+    width: 100%;
+    float: left;
+   /* background: #00000047;
+    height: 700px;*/
+    z-index: -9999;
+}
+@media screen and (max-width: 649px){
+    .sideprice {
+    text-align: center;
+}
+.bookbtn{
+    float: none;margin: 0 auto;
+}
+.fligthsmll {
+    float: right;
+}
+}
+
+
+
+
+
+
+
+
+
+

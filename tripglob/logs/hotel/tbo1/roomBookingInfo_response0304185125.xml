@@ -1,0 +1,1 @@
+{"BookResult":{"VoucherStatus":false,"ResponseStatus":2,"Error":{"ErrorCode":2,"ErrorMessage":"Error in Supplier Response: Error from supplier: ProcessingErr: Technical Failure"},"TraceId":"4e6405b0-ab54-4bf3-b080-297c0d58fc0a","Status":0,"HotelBookingStatus":null,"ConfirmationNo":null,"BookingRefNo":null,"BookingId":0,"IsPriceChanged":false,"IsCancellationPolicyChanged":false}}

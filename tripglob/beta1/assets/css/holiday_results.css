@@ -1,0 +1,82 @@
+.h_img img{
+	width: 100%;
+	max-height: 250px;
+	min-height: 250px;
+}
+.holi_txt{padding: 8px;}
+.holi_txt h4{font-size: 18px;}
+.holi-listing-price {
+    color: #ca3902;
+    font-size: 36px;
+    margin-bottom: 5px;
+    line-height: 44px;
+}
+.btn_vdetails{
+	background-color: #5d5858;
+    color: #fff;
+    margin: 10px 0;
+    padding: 8px;
+    width: 100%;
+    font-size:18px;
+}
+.btn_vdetails:hover{color: #fff;}
+.price_borderleft:before {
+    height: 100vh;
+    border-left: 1px solid #ccc;
+    content: '';
+    position: absolute;
+    left: 0;
+}
+.price_borderleft{position: relative;}
+.holi_detail{padding-top: 40px;}
+.holi_sprite{
+    display: block;
+    position: relative;
+    background-color: #fff;
+    margin-bottom: 5px;
+    padding: 4px 0 8px;
+    border: 1px solid #e8e8e8;
+    overflow: hidden;
+}
+.holi_sprite ul li{
+	text-align: center;
+    display: inline-block;
+    width: 20%;
+    float: left;
+}
+.holi_sprite ul li span{
+	border-radius: 50%;
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    width: 100%;
+}
+.ico-bed-black {
+    background-position: 0 0 !important;
+    height: 25px;
+    width: 40px;
+}
+.ico-car-black {
+    background-position: -53px 0px !important;
+    height: 25px;
+    width: 40px;
+}
+.ico-food-black {
+    background-position: -105px 0px !important;
+    height: 25px;
+    width: 40px;
+}
+.ico-tour-black {
+    background-position: -154px 0px !important;
+    height: 25px;
+    width: 40px;
+}
+.ico {
+    display: inline-block;
+    position: relative;
+    background: transparent url(../images/holiday-sprite.png) 0 0 no-repeat;
+    content: " ";
+    display: inline-block;
+    vertical-align: middle;
+}
+.ngt_day{color: #4b9acc;}

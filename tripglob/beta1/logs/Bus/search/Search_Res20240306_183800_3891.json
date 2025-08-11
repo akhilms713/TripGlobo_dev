@@ -1,0 +1,1 @@
+{"BusSearchResult":{"ResponseStatus":2,"Error":{"ErrorCode":2,"ErrorMessage":"Error in Supplier Response: Error: Authorization failed please send valid consumer key and secret in the api request."},"Destination":null,"Origin":null,"TraceId":"cf71f894-3846-402f-815d-5d4415fb6a29","BusResults":null}}

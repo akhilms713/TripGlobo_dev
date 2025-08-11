@@ -1,0 +1,512 @@
+<?php
+if (! defined ( 'BASEPATH' ))
+exit ( 'No direct script access allowed' );
+
+/**
+ * @package Globalduniya
+ * @subpackage Payment Gateway Controller
+ * @version V1
+ */
+class Payment_Gateway extends CI_Controller {
+	public function __construct() {
+		parent::__construct ();
+		$this->load->model ( 'module_model' );
+	}
+
+	
+	/**
+	 * Redirection to payment gateway
+	 * @param string $app_reference		Unique string to identify every booking - app_reference
+	 * @param number $book_origin	Unique origin of booking
+	 */
+	public function payment($app_reference, $book_origin, $booking_source=''){
+		
+		$this->load->model('transaction');
+		$PG = $this->config->item('active_payment_gateway');
+		// echo $PG;die;
+		load_pg_lib ( $PG );
+
+		$pg_record = $this->transaction->read_payment_record($app_reference);
+		
+		//Converting Application Payment Amount to Pyment Gateway Currency
+		$ccavenue_pg_record = 
+		array(
+		'app_reference'  => $pg_record['app_reference'],
+		'original_amount'=> $pg_record['amount'],
+		'currency'       => $pg_record['currency'], 
+		'conversion_rate'=> ((isset($pg_record['currency_conversion_rate'])) && ($pg_record['currency_conversion_rate'] != "")) ? $pg_record['currency_conversion_rate'] : 1, 
+		'pg_compare_amount'=> roundoff_number($pg_record['amount']*$pg_record['currency_conversion_rate']), 
+		'date_time'      => $pg_record['created_datetime']
+		);
+		$this->db->insert('ccavenue_pg_record',$ccavenue_pg_record); 
+		$pg_record['amount'] = roundoff_number($pg_record['amount']*$pg_record['currency_conversion_rate']);
+		// $pg_record['amount'] = roundoff_number($pg_record['amount']);
+
+		if (empty($pg_record) == false and valid_array($pg_record) == true) {
+			$params = json_decode($pg_record['request_params'], true);
+			
+			$pg_initialize_data = array (
+				'txnid' => $params['txnid'],
+				'pgi_amount' => $pg_record['amount'],
+				'firstname' => $params['firstname'],
+				'email'=>$params['email'],
+				'phone'=>$params['phone'],
+				'productinfo'=> $params['productinfo'],
+				'currency' => $pg_record['currency'],
+				'booking_source' => $booking_source
+			);
+		} else {
+			echo 'Under Construction :p';
+			exit;
+		}
+		//defined in provab_config.php
+		$payment_gateway_status = $this->config->item('enable_payment_gateway');
+
+		if ($payment_gateway_status == true) {
+			$this->pg->initialize ( $pg_initialize_data );
+			$page_data['pay_data'] = $this->pg->process_payment ($app_reference);
+			$page_data['card_details'] = unserialized_data($params['card_details']);
+			
+			//Not to show cache data in browser
+			header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+			header("Cache-Control: post-check=0, pre-check=0", false);
+			header("Pragma: no-cache");
+			// echo $this->template->isolated_view('payment/'.$PG.'/ipg', $page_data);
+			echo $this->template->isolated_view('payment/'.$PG.'/index', $page_data);
+		} else {
+			redirect('flight/secure_booking/'.$app_reference);
+		}
+	}
+/*ccavenu code start here*/
+/**
+	 *
+	 */
+	 public function ccavRequestHandler() 
+	 {
+	 	$PG = $this->config->item('active_payment_gateway');
+	 	if ($this->config->item('active_payment_system') == "test") {
+			$access_code  = ACCESS_CODE;
+			$working_key  = WORKING_KEY;
+			$urlhit = 'https://test.ccavenue.com/transaction/transaction.do?command=initiateTransaction';
+		} else {
+			//live
+			$access_code  = ACCESS_CODE;
+			$working_key  = WORKING_KEY;
+			$urlhit = 'https://secure.ccavenue.com/transaction/transaction.do?command=initiateTransaction';
+	 	}
+	 	$merchant_data = '';
+	 	foreach ($_POST as $key => $value){ 
+			$merchant_data.=$key.'='.$value.'&'; 
+		}
+		//debug($merchant_data);exit;
+		$page_data['encrypted_data'] = $this->encrypt($merchant_data,$working_key); // Method for encrypting the data.
+		$page_data['access_code'] = $access_code;
+		$page_data['urlhit'] = $urlhit;
+		//debug($page_data); die;
+		echo $this->template->view('payment/'.$PG.'/ccavRequestHandler', $page_data);
+	 	
+	 }
+
+	 /****
+	*****sudheep EBS synch*****   
+	****/
+	  
+	 function cancel() {
+	 	if ($this->config->item('active_payment_system') == "test") {
+	 		$access_code  = ACCESS_CODE;
+			$working_key  = WORKING_KEY;  
+	 		$urlhit = 'https://test.ccavenue.com/transaction/transaction.do?command=initiateTransaction';
+	 	} else {
+	 		//live
+	 		$access_code  = ACCESS_CODE;
+			$working_key  = WORKING_KEY;  
+	 		$urlhit = 'https://secure.ccavenue.com/transaction/transaction.do?command=initiateTransaction';
+	 	}
+	 	$encResponse=$_POST["encResp"];			//This is the response sent by the CCAvenue Server
+	 	$rcvdString=$this->decrypt($encResponse,$working_key);		//Crypto Decryption used as per the specified working key.
+	 	
+	 	
+	 	$order_status="";
+	 	$decryptValues=explode('&', $rcvdString);
+	 	$dataSize=sizeof($decryptValues);
+	 	$information=explode('=',$decryptValues[3]);
+	 	
+	 	if ($information[1] == "Aborted") {
+	 		$tracking_id=explode('=',$decryptValues[1]);
+	 		$information=explode('=',$decryptValues[3]);
+	 		$booking_id=explode('=',$decryptValues[27]);
+	 		$productinfo=explode('=',$decryptValues[26]);
+	 		$book_id =$booking_id[1];
+	 		$productinfo =$productinfo[1];
+	 		$temp_booking = $this->custom_db->single_table_records ( 'temp_booking', '', array (
+	 				'book_id' => $book_id
+	 		) );
+	 		$this->load->model('transaction');
+	 		
+	 		$pg_record = $this->transaction->read_payment_record($book_id);
+	 		
+	 		if (empty($pg_record) == false and valid_array($pg_record) == true) {
+	 			$response_params = $_REQUEST; 		
+	 			//debug($productinfo); die;
+	 			$this->transaction->update_payment_record_status($book_id, DECLINED, $response_params);
+	 			$msg = "Payment Cancelled by user, Please try again.";
+	 			switch ($productinfo) {
+	 				
+	 				case META_PACKAGE_COURSE :
+	 					redirect ( base_url () . 'index.php/general/exception?op=booking_exception&notification=' . $msg );
+	 					break;
+	 					case 'package booking' :
+	 						redirect ( base_url () . 'index.php/general/exception?op=booking_exception&notification=' . $msg );
+	 						break;
+	 			}
+	 		}
+	 		
+	 	}
+	 	
+	 	//debug($information); die;
+	 	
+	 	if(!empty($_REQUEST)){
+	 		//debug($_REQUEST); die;
+	 		$product = $_REQUEST ['productinfo'];
+	 		$book_id = $_REQUEST ['txnid'];
+	 		$temp_booking = $this->custom_db->single_table_records ( 'temp_booking', '', array (
+	 				'book_id' => $book_id
+	 		) );
+	 		$pg_record = $this->transaction->read_payment_record($book_id);
+	 		if (empty($pg_record) == false and valid_array($pg_record) == true && valid_array ( $temp_booking ['data'] )) {
+	 			$response_params = $_REQUEST;
+	 			$this->transaction->update_payment_record_status($book_id, DECLINED, $response_params);
+	 			$msg = "Payment Unsuccessful, Please try again.";
+	 			switch ($product) {
+	 				case META_AIRLINE_COURSE :
+	 					redirect ( base_url () . 'index.php/flight/exception?op=booking_exception&notification=' . $msg );
+	 					break;
+	 				case META_BUS_COURSE :
+	 					redirect ( base_url () . 'index.php/bus/exception?op=booking_exception&notification=' . $msg );
+	 					break;
+	 				case META_ACCOMODATION_COURSE :
+	 					redirect ( base_url () . 'index.php/hotel/exception?op=booking_exception&notification=' . $msg );
+	 					break;
+	 			}
+	 		}
+	 	}
+	  
+	 }
+
+	 function response(){
+			if ($this->config->item('active_payment_system') == "test") {
+	 		$access_code  = ACCESS_CODE;
+			$working_key  = WORKING_KEY;
+			$urlhit = 'https://test.ccavenue.com/transaction/transaction.do?command=initiateTransaction';
+			} else {
+				//live
+				$access_code  = ACCESS_CODE;
+			$working_key  = WORKING_KEY;
+				$urlhit = 'https://secure.ccavenue.com/transaction/transaction.do?command=initiateTransaction';
+		 	}
+			
+			$encResponse=$_POST["encResp"];			//This is the response sent by the CCAvenue Server
+			$rcvdString=$this->decrypt($encResponse,$working_key);		//Crypto Decryption used as per the specified working key.
+			// debug($rcvdString); die;
+			$order_status="";
+			$decryptValues=explode('&', $rcvdString);
+			$dataSize=sizeof($decryptValues);
+			$information=explode('=',$decryptValues[3]);
+			//PAYMENT GATEWAY AMOUNT DEDUCTED
+			$pgad=$pg_amount_deducted=explode('=',$decryptValues[10]);
+			$tracking=explode('=',$decryptValues[1]);
+			// debug($tracking);exit;
+			$tracking_id=$tracking[1];
+			// debug($tracking_id);exit;
+			$booking_id=explode('=',$decryptValues[27]); 
+			$book_id=$booking_id[1];
+			$final_pg_record = $this->transaction->read_ccavenue_payment_record($book_id); 
+			$track_status= $this->transaction->check_tracking_id($tracking_id); 
+			// debug($track_status);exit; 
+			if ($information[1] == "Success" && round($pgad[1])==$final_pg_record['pg_compare_amount'] && $track_status==true) { 
+				$productinfo=explode('=',$decryptValues[26]);
+				$booking_id=explode('=',$decryptValues[27]);
+				// debug($book_id);debug($tracking_id);die;
+				$this->transaction->update_tracking_id($book_id,$tracking_id);
+				redirect ( base_url () . 'index.php/payment_gateway/success/' . $booking_id[1] . '/' . $productinfo[1] );
+			} 
+			else 
+			{  
+				// $tracking_id=explode('=',$decryptValues[1]);
+				$information=explode('=',$decryptValues[3]);
+				$this->transaction->update_tracking_id($book_id,$tracking_id);
+				/*debug($encResponse);
+				echo "status";debug($information[1]);
+				echo "amount";debug(round($pgad[1])==$final_pg_record['pg_compare_amount']);
+				echo "track_status";debug($track_status);*/
+				$productinfo=explode('=',$decryptValues[26])[1];
+				$booking_id=explode('=',$decryptValues[27])[1];
+				redirect ( base_url () . 'index.php/payment_gateway/cancelpayment/' . $booking_id . '/' . $productinfo);
+			}
+	}
+function encrypt($plainText,$key)
+	{
+		$secretKey = $this->hextobin(md5($key));
+		$initVector = pack("C*", 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f);
+	  	$openMode = mcrypt_module_open(MCRYPT_RIJNDAEL_128, '','cbc', '');
+	  	$blockSize = mcrypt_get_block_size(MCRYPT_RIJNDAEL_128, 'cbc');
+		$plainPad = $this->pkcs5_pad($plainText, $blockSize);
+	  	if (mcrypt_generic_init($openMode, $secretKey, $initVector) != -1) 
+		{
+		      $encryptedText = mcrypt_generic($openMode, $plainPad);
+	      	      mcrypt_generic_deinit($openMode);
+		      			
+		} 
+		return bin2hex($encryptedText);
+	}
+
+	function decrypt($encryptedText,$key)
+	{
+		$secretKey = $this->hextobin(md5($key));
+		$initVector = pack("C*", 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f);
+		$encryptedText=$this->hextobin($encryptedText);
+	  	$openMode = mcrypt_module_open(MCRYPT_RIJNDAEL_128, '','cbc', '');
+		mcrypt_generic_init($openMode, $secretKey, $initVector);
+		$decryptedText = mdecrypt_generic($openMode, $encryptedText);
+		$decryptedText = rtrim($decryptedText, "\0");
+	 	mcrypt_generic_deinit($openMode);
+		return $decryptedText;
+		
+	}
+	//*********** Padding Function *********************
+
+	function pkcs5_pad ($plainText, $blockSize)
+	{
+	    $pad = $blockSize - (strlen($plainText) % $blockSize);
+	    return $plainText . str_repeat(chr($pad), $pad);
+	}
+
+	//********** Hexadecimal to Binary function for php 4.0 version ********
+
+	function hextobin($hexString) 
+   	 { 
+        	$length = strlen($hexString); 
+        	$binString="";   
+        	$count=0; 
+        	while($count<$length) 
+        	{       
+        	    $subString =substr($hexString,$count,2);           
+        	    $packedString = pack("H*",$subString); 
+        	    if ($count==0)
+		    {
+				$binString=$packedString;
+		    } 
+        	    
+		    else 
+		    {
+				$binString.=$packedString;
+		    } 
+        	    
+		    $count+=2; 
+        	} 
+  	        return $binString; 
+    	  } 
+/*ccavenu code end here*/
+	/*
+	 * Call this function on payment successful
+	 */
+	function success($book_id,$product) {
+		$this->load->model('transaction');
+		/*$product = clean_data_single($_REQUEST ['productinfo']);
+		$book_id = clean_data_single($_REQUEST ['txnid']);*/
+		// $booking_source = clean_data_single($_REQUEST ['booking_source']);
+		$temp_booking = $this->custom_db->single_table_records ( 'temp_booking', '', array (
+				'book_id' => $book_id 
+		) );
+
+		$pg_status = clean_data_single($_REQUEST['status']); 
+		$pg_record = $this->transaction->read_payment_record($book_id); 
+
+		if ($pg_status == 'APPROVED' and empty($pg_record) == false and valid_array($pg_record) == true && valid_array ( $temp_booking ['data'] )) {
+			$response_params = clean_data($_REQUEST);
+			
+			//insert card details into user_card_details
+			$user_id = @$GLOBALS ['CI']->entity_user_id;
+			if($user_id){
+				$params = json_decode($pg_record['request_params']);
+				$details = unserialized_data($params->card_details);
+				
+				$card_number = $details['cardnumber'];
+				$card_holder_name = $details['bname'];
+				$exp_month = $details['expmonth'];
+				$exp_year = $details['expyear'];
+				
+				$card_sql = "SELECT COUNT(*) AS count FROM user_card_details WHERE user_id=$user_id AND card_number= '$card_number'";
+				$saved_card_details = $this->custom_db->get_custom_data($card_sql);
+				
+				if($saved_card_details[0]['count'] == 0){
+					$user_card_details = array(
+						'user_id' => $user_id,
+						'card_number' => str_replace(' ', '', trim($card_number)),
+						'card_holder_name' => $card_holder_name,
+						'exp_month' => $exp_month,
+						'exp_year' => $exp_year
+					);
+			    	$this->custom_db->insert_record('user_card_details', $user_card_details);
+				}	
+			}
+				
+			$this->transaction->update_payment_record_status($book_id, ACCEPTED, $response_params);
+			$book_origin = $temp_booking ['data'] ['0'] ['id'];
+
+			switch ($product) {
+				case META_AIRLINE_COURSE :
+					redirect ( base_url () . 'flight/secure_booking/' . $book_id );
+					break;
+				case META_BUS_COURSE :
+					redirect ( base_url () . 'bus/secure_booking/' . $book_id . '/' . $book_origin );
+					break;
+				case META_ACCOMODATION_COURSE :
+				    redirect ( base_url () . 'accomodation/secure_booking/' . $book_id );				
+					break;
+				default :
+					redirect ( base_url() );
+					break;
+			}
+		}
+		else {
+			echo "cancel"; exit;
+		}
+	}
+
+	/**
+	 * Call this function on payment fail
+	 */
+	function cancelpayment($book_id,$product) {
+		$this->load->model('transaction');
+		/*$product = clean_data_single($_REQUEST ['productinfo']);
+		$book_id = clean_data_single($_REQUEST ['txnid']);*/
+		$temp_booking = $this->custom_db->single_table_records ( 'temp_booking', '', array (
+				'book_id' => $book_id 
+		) );
+		$pg_record = $this->transaction->read_payment_record($book_id);
+		
+		if (empty($pg_record) == false and valid_array($pg_record) == true && valid_array ( $temp_booking ['data'] )) {
+			$response_params = clean_data($_REQUEST);
+
+			$booking_attributes = unserialized_data ( @$temp_booking ['data'][0]['book_attributes']);	
+			$search_id = @$booking_attributes['search_id'];
+			$this->transaction->update_payment_record_status($book_id, DECLINED, $response_params);
+			$msg = "Payment Unsuccessful, Please try again.";
+			switch ($product) {
+				case META_AIRLINE_COURSE :
+					redirect ( base_url () . 'flight/pre_payment_confirmation/'.$search_id .'/'. $book_id .'/error');
+					break;
+				case META_BUS_COURSE :
+					redirect ( base_url () . 'bus/pre_booking/'.$search_id .'/'. $book_id .'/error');
+					break;
+				case META_ACCOMODATION_COURSE :
+					redirect ( base_url () . 'accomodation/pre_booking/'.$search_id .'/'. $book_id .'/error');
+					break;
+			}
+		}
+	}
+
+	private function redirect_process_url($product, $book_id, $search_id = '') {
+		$url = '';
+		switch ($product) {
+			case META_AIRLINE_COURSE :
+				$url = (base_url () . 'flight/secure_booking/' . $book_id);
+				break;
+			case META_BUS_COURSE :
+				$url = (base_url () . 'bus/secure_booking/' . $book_id);
+				break;
+			case META_ACCOMODATION_COURSE :
+				$url = (base_url () . 'hotel/secure_booking/' . $book_id);
+				break;
+			default :
+				redirect ( base_url () );
+				break;
+		}
+		return $url;
+	}
+
+	private function set_pg_params($reference_id, $amount, $card_brand='', $payment_mode='') {
+		$ebs_config = $this->config->item ( 'ebs_config' );
+		$_POST ['account_id'] = trim ( $ebs_config ['account_id'] );
+		$_POST ['address'] = 'Bangalore';
+		$_POST ['amount'] = $amount;
+		$_POST ['bank_code'] = "";
+		$_POST ['card_brand'] = $card_brand;
+		$_POST ['channel'] = 0;
+		$_POST ['city'] = "Bang";
+		$_POST ['country'] = "IN";
+		$_POST ['currency'] = "INR";
+		$_POST ['description'] = "Payment Transaction";
+		$_POST ['display_currency'] = "INR";
+		$_POST ['display_currency_rates'] = 1; // remove in case of issue
+		$_POST ['email'] = isset($this->entity_email) ? $this->entity_email : 'b2c@neptune.com';
+		$_POST ['emi'] = "";
+		$_POST ['mode'] = trim ( $ebs_config ['mode'] );
+		$_POST ['name'] = $this->entity_domain_name;
+		$_POST ['page_id'] = "";
+		$_POST ['payment_mode'] = $payment_mode;
+		$_POST ['payment_option'] = "";
+		$_POST ['phone'] = isset($this->entity_phone) ? $this->entity_phone : '9743937617';
+		$_POST ['postal_code'] = "560078";
+		$_POST ['reference_no'] = $reference_id;
+		$_POST ['return_url'] = base_url () . "payment_gateway/response";
+		$_POST ['ship_address'] = "Bang";
+		$_POST ['ship_city'] = "";
+		$_POST ['ship_country'] = "";
+		$_POST ['ship_name'] = "";
+		$_POST ['ship_phone'] = "";
+		$_POST ['ship_postal_code'] = "";
+		$_POST ['ship_state'] = "";
+		$_POST ['state'] = "Karnataka";
+		unset( $_POST['app_reference']);
+	}
+	
+	function response08082018() {
+		$this->load->model ( 'flight_model' );
+		$this->load->model ( 'transaction' );
+		$response_array = clean_data($_REQUEST);
+		$book_id = @$response_array ['MerchantRefNo'];
+		$pg_record = $this->transaction->read_payment_record ( $book_id );
+		if (empty ( $pg_record ) == true || valid_array ( $pg_record ) == false) {
+			echo 'Unable to process transaction-001';
+			exit ();
+		}
+		$request_params = json_decode ( $pg_record ['request_params'], TRUE );
+		$product = $request_params ['productinfo'];
+		if (valid_array ( $response_array ) && intval ( $response_array ['ResponseCode'] ) == 0) {
+			// update payment gateway status
+			$response_params = clean_data($this->input->post ());
+			$this->transaction->update_payment_record_status ( $book_id, ACCEPTED, $response_array );
+
+			$page_params ['form_url'] = $this->redirect_process_url ( $product, $book_id );
+			$page_params ['form_method'] = 'POST';
+			$page_params ['form_params'] ['app_reference'] = $book_id;
+			echo $this->template->isolated_view ( 'share/dynamic_js_form_submission', $page_params );
+		} else {
+			$this->transaction->update_payment_record_status ( $book_id, 'failed', $response_array );
+			$msg = "Payment Unsuccessful, Please try again.";
+			switch ($product) {
+				case META_AIRLINE_COURSE :
+					redirect ( base_url () . 'flight/exception?op=booking_exception&notification=' . $msg );
+					break;
+				case META_BUS_COURSE :
+					redirect ( base_url () . 'bus/exception?op=booking_exception&notification=' . $msg );
+					break;
+				case META_ACCOMODATION_COURSE :
+					redirect ( base_url () . 'hotel/exception?op=booking_exception&notification=' . $msg );
+					break;
+				default :
+					echo 'unable to process your transction';
+					exit ();
+					break;
+			}
+		}
+		exit ();
+	}
+
+	function transaction_log() {
+		load_pg_lib ( 'PAYU' );
+		echo $this->template->isolated_view ( 'payment/PAYU/pay' );
+	}
+}

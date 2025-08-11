@@ -1,0 +1,1 @@
+{"BookResult":{"VoucherStatus":false,"ResponseStatus":4,"Error":{"ErrorCode":5,"ErrorMessage":"Your session (TraceId) is expired."},"TraceId":"4d2aa180-0117-4080-9878-c0766a5c0b82","Status":0,"HotelBookingStatus":null,"ConfirmationNo":null,"BookingRefNo":null,"BookingId":0,"IsPriceChanged":false,"IsCancellationPolicyChanged":false}}

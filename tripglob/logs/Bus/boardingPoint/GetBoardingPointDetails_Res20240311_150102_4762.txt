@@ -1,0 +1,1 @@
+{"GetBusRouteDetailResult":{"ResponseStatus":2,"Error":{"ErrorCode":2,"ErrorMessage":"Invalid Token"},"TraceId":"eff73bb2-a7bf-4a20-932a-60216d35491a","BoardingPointsDetails":null,"DroppingPointsDetails":null}}

@@ -1,0 +1,676 @@
+
+<?php //echo $status; exit; ?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title><?php echo PROJECT_TITLE; 	?> </title>
+  <link rel="icon" href="https://tripglobo.com/beta1/assets/theme_dark/images/favicon.png" type="image/x-icon">
+    <!-- Bootstrap core CSS -->
+
+    <link href="<?php echo ASSETS; ?>css/bootstrap.min.css" rel="stylesheet">
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link href="<?php echo ASSETS; ?>fonts/css/font-awesome.min.css" rel="stylesheet">
+    <link href="<?php echo ASSETS; ?>css/animate.min.css" rel="stylesheet">
+ 
+    <!-- Custom styling plus plugins -->
+    <link href="<?php echo ASSETS; ?>css/custom.css" rel="stylesheet">
+    <link href="<?php echo ASSETS; ?>css/icheck/flat/green.css" rel="stylesheet">
+
+     <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
+ <link href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css" rel="stylesheet">
+    
+<style>
+.switch-ios.switch-light {
+    
+    top: 0px !important; 
+}
+i{
+  margin-right:5px;
+  cursor:pointer;
+}
+.btn_view{
+    color: #fff;
+    background-color: #fdb813;
+    border-color: #fdb813;
+}
+
+<style>
+.switch-ios.switch-light {
+    
+    top: 0px !important; 
+}
+i{
+  margin-right:5px;
+  cursor:pointer;
+}
+
+        .list_of_sections a {
+            background: #fff none repeat scroll 0 0;
+            border: 1px solid #eeeeee;
+            border-radius: 3px;
+            box-shadow: 0 1px 2px 0 #ccc;
+            color: #666;
+            float: left;
+            font-size: 14px;
+            margin: 5px;
+            padding: 5px 10px;
+        }
+        .list_of_sections a{
+          margin-bottom: 20px;
+        }
+        .list_of_sections a.active {
+            color: #1b66a9;
+        }
+        .mT15{
+                margin-top: 15px;
+        }
+</style>
+    <script src="<?php echo ASSETS; ?>js/jquery.min.js"></script>
+
+    <!--[if lt IE 9]>
+        <script src="../assets/js/ie8-responsive-file-warning.js"></script>
+        <![endif]-->
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+          <![endif]-->
+
+      </head>
+
+
+      <body class="nav-md">
+
+        <div class="container body">
+
+
+            <div class="main_container">
+
+
+
+                <!-- top navigation -->
+
+                <?php echo $this->load->view('common/sidebar_menu'); ?>
+                <?php echo $this->load->view('common/top_menu'); ?>
+                <!-- /top navigation -->
+
+                <!-- page content -->
+                <div class="right_col" role="main">
+
+                    <div class="">
+                        <div class="page-title">
+                            <div class="title_left">
+                                <h3>
+                                  Deposit Management<em> <small><?php echo $deposit_status; ?></small></em>
+                                </h3>
+                            </div>
+
+
+                        </div>
+                        <div class="clearfix"></div>
+
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="x_panel">
+                                    
+                                    <div class="x_content" style="overflow: scroll;">
+                                    
+                                <?php if($status=='1'){?>
+                                    <div class="alert alert-block alert-success alert-dismissable">
+                                    <a href="#" data-dismiss="alert" class="close">×</a>
+                                    <h4 class="alert-heading">Success!</h4>
+                                    Your Amount Successfully Deposited.
+                                  </div>
+                              <?php }elseif($status=='0'){?>
+                                   <div class="alert alert-block alert-danger alert-dismissable">
+                                    <a href="#" data-dismiss="alert" class="close">×</a>
+                                    <h4 class="alert-heading">Failure!</h4>
+                                     Your Amount Not Deposited Due To Some Error. Please Try Again After Some Time.
+                                  </div>
+                               <?php }elseif($status=='11'){?>
+                               <div class="alert alert-block alert-danger alert-dismissable">
+                                    <a href="#" data-dismiss="alert" class="close">×</a>
+                                    <h4 class="alert-heading">Failure!</h4>
+                                       Please Enter Correct Details.
+                                  </div>
+                               <?php } elseif($status=='12'){?>
+                                     <div class="alert alert-block alert-success alert-dismissable">
+                                    <a href="#" data-dismiss="alert" class="close">×</a>
+                                    <h4 class="alert-heading">Success!</h4>
+                                     Status Updated Successfully.
+                                  </div>
+                               <?php } elseif($status=='13'){?>
+                                    <div class="alert alert-block alert-danger alert-dismissable">
+                                    <a href="#" data-dismiss="alert" class="close">×</a>
+                                    <h4 class="alert-heading">Failure!</h4>
+                                    
+                                    </div>
+                               <?php } ?>
+
+                             <div class="searc_fliter_all">
+                               <div class="filter_heading">Make your search easy</div>
+                               <div class="list_of_sections">
+                               <?php 
+                                  $today_search = date('Y-m-d');
+                                  $last_today_search = date('Y-m-d', strtotime('-1 day'));
+                            
+                                  $last_3_search = date('Y-m-d', strtotime('-3 day'));
+                                  $last_7_search = date('Y-m-d', strtotime('-7 day'));
+                                  $last_15_search = date('Y-m-d', strtotime('-15 day'));
+                                  $last_1m_search = date('Y-m-d', strtotime('-1 month'));
+                                  $last_3m_search = date('Y-m-d', strtotime('-3 month'));
+                                ?>
+                                   <a class="<?=(($today_search == @$_GET['today_booking_data']) ? 'active' : '')?>" href="<?=base_url()?>deposit/deopsit_control?today_booking_data=<?=date('Y-m-d')?>">Today Search</a>
+                                   <a class="<?=(($last_today_search == @$_GET['last_day_booking_data']) ? 'active' : '')?>" href="<?=base_url()?>deposit/deopsit_control?last_day_booking_data=<?=date('Y-m-d', strtotime('-1 day'))?>">Last Day Search</a>
+                                   <a class="<?=(($last_3_search == @$_GET['prev_booking_data']) ? 'active' : '')?>" href="<?=base_url()?>deposit/deopsit_control?prev_booking_data=<?=date('Y-m-d', strtotime('-3 day'))?>">Last 3 Day Search</a>
+                                   <a class="<?=(($last_7_search == @$_GET['prev_booking_data']) ? 'active' : '')?>" href="<?=base_url()?>deposit/deopsit_control?prev_booking_data=<?=date('Y-m-d', strtotime('-7 day'))?>">Last 7 Day Search</a>
+                                   <a class="<?=(($last_15_search == @$_GET['prev_booking_data']) ? 'active' : '')?>" href="<?=base_url()?>deposit/deopsit_control?prev_booking_data=<?=date('Y-m-d', strtotime('-15 day'))?>">Last 15 Day Search</a>
+                                   <a class="<?=(($last_1m_search == @$_GET['prev_booking_data']) ? 'active' : '')?>" href="<?=base_url()?>deposit/deopsit_control?prev_booking_data=<?=date('Y-m-d', strtotime('-1 month'))?>">Last 1 Month Search</a>
+                                   <a class="<?=(($last_3m_search == @$_GET['prev_booking_data']) ? 'active' : '')?>" href="<?=base_url()?>deposit/deopsit_control?prev_booking_data=<?=date('Y-m-d', strtotime('-3 month'))?>">Last 3 Month Search</a>
+                               </div>
+                            </div>  
+
+
+                           <table id="example" class="table table-striped responsive-utilities jambo_table">
+                                    <thead>
+                                        <tr class="headings">
+
+                                            <th>Sl No </th>
+                                            <th>Profile Photo </th>
+                                            <th>User Name</th>
+                                            <th >Email</th>
+                                            <!--<th>Balance</th>-->
+                                            <th >Deposite Mode</th>
+                                            <th>Deposit No</th>
+                                            <th>Date</th> 
+                                            <th>Amount</th>
+                                            <th>Agent Remarks</th>
+                                            <th>Collecter Remarks</th>
+                                             <th>Collected BY</th>
+                                             <th>Superadmin Remarks</th>
+                                            <th>Status</th>
+                                            <?php if(($this->session->userdata('admin_type_id')==1)){ ?>
+                                            <th>Superadmin Status</th>
+                                            <?php } ?>
+                                            <?php if(($this->session->userdata('admin_type_id')==2)){ ?>
+                                            <th>Admin Action</th>
+                                            <?php } ?>
+                                            <?php if(($this->session->userdata('admin_type_id')==1)){ ?>
+                                            <th>Superadmin Action</th>
+                                            <?php } ?>
+                                            <th>More Action</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <?php 
+                                      
+										$i=1;
+										if(!empty($deposits))
+										{
+                                        foreach($deposits as $deposit)
+                                        {
+                                              //echo "<pre/>";print_r($deposit);exit();
+                                              $CI =& get_instance();
+                                              $CI->load->model('admin_Model');
+                                              $result = $CI->admin_Model->get_admin_details_id($deposit->collected_by);
+                                              
+                                        $mode=ucfirst($deposit->deposit_mode);
+                                        
+                                        if($mode=="On"){
+                                            if($deposit->cheque_number==""){
+                                                $mode='Banking';
+                                            }else{
+                                               $mode ='Cheque';
+                                            }
+                                        }
+
+                                           ?>
+                                           <tr class="even pointer">
+
+                                            <td class=" "><?php echo $i++; ?></td>
+                                            <td class=""> <img width="50" title="<?php echo $deposit->user_name; ?>" alt="<?php echo $deposit->user_name; ?>" src="<?php echo UPLOAD_PATH.$deposit->profile_picture; ?>">
+                                            </td>
+                                            <td class=""><?php echo $deposit->user_name; ?></td>
+                                            <td class=""><?php echo $deposit->user_email; ?></td>
+                                        <!-- <td class=""><?php echo $deposit->balance_credit; ?></td>-->
+                                          <td class=""><?php echo $mode; ?>
+                                        
+                                          <td class=""><?php echo $deposit->deposit_number; ?>
+                                          
+                                           <?php
+            								if($deposit->deposit_slip!='')
+            								{
+            								?>
+                                            <a title="Downlaod Transaction Slip" href="<?php echo $deposit->deposit_slip; ?>" download><span class="fa fa-paperclip"></span></a>
+                                            <?php
+            								}
+            								?>
+                                          </td>
+                                           <td class=""><?php echo date("Y-m-d",strtotime($deposit->creation_date_time)); ?></td>
+                                            <td class=""><?php echo $deposit->amount; ?></td>
+                                                <td class=""><?php echo $deposit->remarks; ?></td>
+                                                <td class=""><?php echo $deposit->admin_remarks; ?></td>
+                                                <td class=""><?php echo $result->admin_name; ?></td>
+                                                <td class=""><?php echo $deposit->superadmin_remark; ?></td>
+                                               
+                                             <td class=""> <?php if($deposit->deposit_status == 'ACCEPTED'){?>
+                                              <a class='btn btn-success btn-xs has-tooltip' data-placement='top' title='Accepted'>
+                                                  <span class='fa fa-check'></span>
+                                                </a>
+                                              <?php }else if($deposit->deposit_status == 'DECLINED'){?>
+                                              <a class='btn btn-danger btn-xs has-tooltip' data-placement='top' title='Cancelled'>
+                                                  <span class='fa fa-remove'></span>
+                                                </a>
+                                              <?php }else { ?>
+                          									  <a class='btn btn-danger btn-xs has-tooltip' data-placement='top' title='Pending'>
+                                                <span class='fa fa-exclamation'></span>
+                                              </a>
+              								   <?php } ?>
+              								  </td>
+              								<?php if(($this->session->userdata('admin_type_id')==1)){ ?>
+              								  
+              								  <td class=""> <?php if($deposit->superadmin_status == 'ACCEPTED'){?>
+                                              <a class='btn btn-success btn-xs has-tooltip' data-placement='top' title='Accepted'>
+                                                  <span class='fa fa-check'></span>
+                                                </a>
+                                              <?php }else if($deposit->superadmin_status == 'DECLINED'){?>
+                                              <a class='btn btn-danger btn-xs has-tooltip' data-placement='top' title='Cancelled'>
+                                                  <span class='fa fa-remove'></span>
+                                                </a>
+                                              <?php }else { ?>
+                          									  <a class='btn btn-danger btn-xs has-tooltip' data-placement='top' title='Pending'>
+                                                <span class='fa fa-exclamation'></span>
+                                              </a>
+              								   <?php } ?>
+              								          
+              								  </td>
+                                            <?php } ?>
+                                            
+                                        
+                                    <?php if(($this->session->userdata('admin_type_id')==2)){ ?>
+                                        <td class="admin_action">
+                                       
+                                        <select onchange="activate(this.value);" <?php if($deposit->deposit_status != 'PENDING'){?> disabled <?php } ?> >
+                                           <?php if($deposit->deposit_status == 'ACCEPTED'){?>
+                                            <option value="<?php echo WEB_URL; ?>deposit/update_deposit_status/<?php echo $deposit->deposit_id; ?>/ACCEPTED/<?php echo $deposit->user_deposit_id?>" selected >ACCEPTED</option>
+                                            <option value="<?php echo WEB_URL; ?>deposit/update_deposit_status/<?php echo $deposit->deposit_id; ?>/PENDING/<?php echo $deposit->user_deposit_id?>" >PENDING</option>
+                                            <option value="<?php echo WEB_URL; ?>deposit/update_deposit_status/<?php echo $deposit->deposit_id; ?>/DECLINED/<?php echo $deposit->user_deposit_id?>" >DECLINED</option>
+                                            <?php }else if($deposit->deposit_status == 'PENDING'){?>
+                                            <option value="<?php echo WEB_URL; ?>deposit/update_deposit_status/<?php echo $deposit->deposit_id; ?>/ACCEPTED/<?php echo $deposit->user_deposit_id?>">ACCEPTED</option>
+                                            <option value="<?php echo WEB_URL; ?>deposit/update_deposit_status/<?php echo $deposit->deposit_id; ?>/PENDING/<?php echo $deposit->user_deposit_id?>" selected>PENDING</option>
+                                            <option value="<?php echo WEB_URL; ?>deposit/update_deposit_status/<?php echo $deposit->deposit_id; ?>/DECLINED/<?php echo $deposit->user_deposit_id?>" >DECLINED</option>
+                                            <?php 
+                								}
+                                            else {
+        										?>
+        									<option value="<?php echo WEB_URL; ?>deposit/update_deposit_status/<?php echo $deposit->deposit_id; ?>/ACCEPTED/<?php echo $deposit->user_deposit_id?>" >ACCEPTED</option>
+                                            <option value="<?php echo WEB_URL; ?>deposit/update_deposit_status/<?php echo $deposit->deposit_id; ?>/PENDING/<?php echo $deposit->user_deposit_id?>" >PENDING</option>
+                                            <option value="<?php echo WEB_URL; ?>deposit/update_deposit_status/<?php echo $deposit->deposit_id; ?>/DECLINED/<?php echo $deposit->user_deposit_id?>" selected >DECLINED</option>
+        										<?php
+        									}
+                                            ?>
+                                        </select>
+                                        
+                                  
+                                          <!-- Service charge popup Starts here -->
+                                          <a class='btn-xs has-tooltip'  data-toggle="modal" data-target="#service_charge<?php echo $i; ?>"   data-placement='top' title='service_charge' id="show_service"></a>
+                                           <div class="modal fade bs-example-modal-sm" id="service_charge<?php echo $i; ?>" tabindex="-1" role="dialog" aria-hidden="true">
+        									   <div class="modal-dialog modal-sm">
+        										   <form id="service_deposit" name="service_deposit" method="post" action="">
+        										   <div class="modal-content">
+        											   <div class="modal-header">
+        												   <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
+        												   <h4 class="modal-title" id="myModalLabel">Service Charge Details</h4>
+        												</div>
+        												<div class="modal-body">
+        													<div class='form-group' id="ss" ><strong>Service Charge</strong>
+        													<div class=''>
+        														<input type='number' data-rule-required='true' id="service_fee" Placeholder="Service Charges" name="service_fee"  class="form-control col-md-7 col-xs-12" />
+        													</div>
+        												</div>
+        												
+        													<div class='form-group'><strong>Remarks</strong>
+        													<div class=''>
+        														<input type='text' data-rule-required='true' id="remarks" Placeholder="Remarks" name="Remarks"  class="form-control col-md-7 col-xs-12" />
+        													</div>
+        												</div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                                    </div>
+                        
+                                                </div>
+                                             </form>
+                                            </div>
+                                        </div>
+                                        
+                                    </td>
+                                    <?php } ?>
+                                    
+                                    <?php if(($this->session->userdata('admin_type_id')==1)){ ?>
+                                            <td class="superadmin_action">
+                                            <?php if($deposit->deposit_status == 'ACCEPTED'){ ?> 
+                                                <select onchange="super_admin_activate(this.value);" <?php if($deposit->superadmin_status != 'PENDING'){?> disabled <?php } ?> >
+                                               <?php if($deposit->superadmin_status == 'ACCEPTED'){?>
+                                                <option value="<?php echo WEB_URL; ?>deposit/superadmin_deposit_action/<?php echo $deposit->deposit_id; ?>/ACCEPTED/<?php echo $deposit->user_deposit_id?>" selected >ACCEPTED</option>
+                                                <option value="<?php echo WEB_URL; ?>deposit/superadmin_deposit_action/<?php echo $deposit->deposit_id; ?>/PENDING/<?php echo $deposit->user_deposit_id?>" >PENDING</option>
+                                                <option value="<?php echo WEB_URL; ?>deposit/superadmin_deposit_action/<?php echo $deposit->deposit_id; ?>/DECLINED/<?php echo $deposit->user_deposit_id?>" >DECLINED</option>
+                                                <?php }else if($deposit->superadmin_status == 'PENDING'){?>
+                                                <option value="<?php echo WEB_URL; ?>deposit/superadmin_deposit_action/<?php echo $deposit->deposit_id; ?>/ACCEPTED/<?php echo $deposit->user_deposit_id?>">ACCEPTED</option>
+                                                <option value="<?php echo WEB_URL; ?>deposit/superadmin_deposit_action/<?php echo $deposit->deposit_id; ?>/PENDING/<?php echo $deposit->user_deposit_id?>" selected>PENDING</option>
+                                                <option value="<?php echo WEB_URL; ?>deposit/superadmin_deposit_action/<?php echo $deposit->deposit_id; ?>/DECLINED/<?php echo $deposit->user_deposit_id?>" >DECLINED</option>
+                                                <?php 
+                    								}
+                                                else {
+            										?>
+            									<option value="<?php echo WEB_URL; ?>deposit/superadmin_deposit_action/<?php echo $deposit->deposit_id; ?>/ACCEPTED/<?php echo $deposit->user_deposit_id?>" >ACCEPTED</option>
+                                                <option value="<?php echo WEB_URL; ?>deposit/superadmin_deposit_action/<?php echo $deposit->deposit_id; ?>/PENDING/<?php echo $deposit->user_deposit_id?>" >PENDING</option>
+                                                <option value="<?php echo WEB_URL; ?>deposit/superadmin_deposit_action/<?php echo $deposit->deposit_id; ?>/DECLINED/<?php echo $deposit->user_deposit_id?>" selected >DECLINED</option>
+            										<?php
+            									}
+                                                ?>
+                                                </select> 
+                                                <?php } ?>
+                                                <!-- Service charge popup Starts here -->
+                                                      <a class='btn-xs has-tooltip btn btn-success'  data-toggle="modal" data-target="#spadmin_remark<?php echo $i; ?>"   data-placement='top' title='superAdmin_remark' id="superAdmin_remark">Receipt</a>
+                                                       <div class="modal fade bs-example-modal-sm" id="spadmin_remark<?php echo $i; ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                    									   <div class="modal-dialog modal-sm">
+                    										   <form id="super_remarks" name="super_remarks" method="post" action="">
+                    										   <div class="modal-content">
+                    											   <div class="modal-header">
+                    												   <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
+                    												   <h4 class="modal-title" id="myModalLabel">Deposit Slip</h4>
+                    												</div>
+                    												<div class="modal-body">
+                    												    <img src="<?= $deposit->deposit_slip;?>" style="height:auto;width:230px;">
+                    												<!--	<div class='form-group'><strong>Remarks</strong>-->
+                    												<!--	<div class=''>-->
+                    												<!--		<input type='text' data-rule-required='true' id="remarks" Placeholder="Remarks" name="Remarks"  class="form-control col-md-7 col-xs-12" />-->
+                    												<!--	</div>-->
+                    												<!--</div>-->
+                                                                </div>
+                                                                <!--<div class="modal-footer">-->
+                                                                <!--    <button type="submit" class="btn btn-primary">Submit</button>-->
+                                                                <!--</div>-->
+                                    
+                                                            </div>
+                                                         </form>
+                                                        </div>
+                                                    </div>
+                                                
+                                            </td>
+                                        <?php } ?>
+                                    
+                                    <td>
+                                    <!-- Service charge popup ends here --> 
+                                  
+                                   <a class='btn btn_view btn-xs has-tooltip'  data-toggle="modal" data-target="#ssss<?php echo $i; ?>"   data-placement='top' title='View'>
+                                    View
+                                  </a>
+                                           <div class="modal fade bs-example-modal-sm" id="ssss<?php echo $i; ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                                    <div class="modal-dialog modal-sm">
+                                    
+                                        <div class="modal-content">
+
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                                                </button>
+                                                <h4 class="modal-title" id="myModalLabel">Deposit Details</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                     <div class="">
+                                <ul class="list-unstyled timeline">
+                                <?php if($deposit->bank_name != ''){ ?>
+                                    <li>
+                                         <div class="block" style="margin-left:0px;">
+                                           
+                                            <div class="block_content">
+                                                <h2 class="title">
+                                      Bank Name
+                                    </h2>
+                                                
+                                                <p class="excerpt"><?php echo $deposit->bank_name; ?>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <?php } if($deposit->bank_branch != ''){ ?>
+                                    <li>
+                                          <div class="block" style="margin-left:0px;">
+                                            <div class="block_content">
+                                                <h2 class="title">
+                                      Bank Branch
+                                    </h2>
+                                                
+                                                <p class="excerpt"><?php echo $deposit->bank_branch; ?>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <?php } if($deposit->bank_city != ''){ ?>
+                                    <li>
+                                          <div class="block" style="margin-left:0px;">
+                                           
+                                            <div class="block_content">
+                                                <h2 class="title">
+                                      Bank City
+                                    </h2>
+                                                
+                                                <p class="excerpt"><?php echo $deposit->bank_city; ?>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <?php } if($deposit->cheque_number != ''){ ?>
+                                    
+                                     <li>
+                                        <div class="block" style="margin-left:0px;">
+                                           
+                                            <div class="block_content">
+                                                <h2 class="title">
+                                      Cheque Number
+                                    </h2>
+                                                
+                                                <p class="excerpt"><?php echo $deposit->cheque_number; ?>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <?php } if($deposit->cheque_date != ''){ ?>
+                                    
+                                     <li>
+                                          <div class="block" style="margin-left:0px;">
+                                           
+                                            <div class="block_content">
+                                                <h2 class="title">
+                                     Cheque Deposited Date
+                                    </h2>
+                                                
+                                                <p class="excerpt"><?php echo $deposit->cheque_date; ?>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <?php } ?>
+                                  
+                                        </ul>
+                                      <p class="excerpt"><?php echo 
+                                      $dd= substr($deposit->remarks, 0, 20);
+                                     echo $dd.'...';
+                                      ?>
+                                            </p>
+                                    </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            </div>
+
+                                        </div>
+                                     
+                                    </div>
+                                </div> 
+                                </td>
+                                        </tr>
+                                        <?php
+                                    }
+										}
+                                    ?>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- footer content -->
+        
+        <!-- /footer content -->
+
+    </div>
+    <!-- /page content -->
+    <?php echo $this->load->view('common/footer'); ?>  
+</div>
+
+</div>
+
+<div id="custom_notifications" class="custom-notifications dsp_none">
+    <ul class="list-unstyled notifications clearfix" data-tabbed_notifications="notif-group">
+    </ul>
+    <div class="clearfix"></div>
+    <div id="notif-group" class="tabbed_notifications"></div>
+</div>
+
+<script src="<?php echo ASSETS; ?>js/bootstrap.min.js"></script>
+
+<!-- chart js -->
+<script src="<?php echo ASSETS; ?>js/chartjs/chart.min.js"></script>
+<!-- bootstrap progress js -->
+<script src="<?php echo ASSETS; ?>js/progressbar/bootstrap-progressbar.min.js"></script>
+<script src="<?php echo ASSETS; ?>js/nicescroll/jquery.nicescroll.min.js"></script>
+<!-- icheck -->
+<script src="<?php echo ASSETS; ?>js/icheck/icheck.min.js"></script>
+
+<script src="<?php echo ASSETS; ?>js/custom.js"></script>
+
+
+<!-- form validation -->
+
+
+<script src="<?php echo ASSETS; ?>js/validator/validator.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.flash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
+
+<script>
+   $(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    } );
+} );
+</script>
+    <script>
+$('.whiteip1').on('click', function() {
+	
+		var curEle = $(this);
+		var id1 = $(this).data('alert_id1');
+		var status1 = $('#alert_status_'+id1).val();
+		
+		if(status1=='ACTIVE' || status1=='INACTIVE')
+		{
+   		$('#whiteip_load1'+id1).fadeIn();
+		if(id1) {
+			_id1 = id1.toString().trim();
+		}
+		
+			_status1 = status1.toString().trim();
+	if(_status1=='INACTIVE')
+	{
+		var s_status1 = 'ACTIVE';
+	}
+	else
+	{
+		var s_status1 = 'INACTIVE';
+	}
+	
+		if(_id1.toString().length > 0 && !isNaN(_id1)) {
+				
+			$.ajax({
+				url: '<?php echo WEB_URL; ?>b2c/update_user_status',
+				data: {id: _id1,status: s_status1},
+				method: "POST",
+				 dataType: 'json',
+				success: function(result) {
+					 $('#alert_status_'+id1).val(s_status1);
+					$('#whiteip_load1'+id1).fadeOut();
+				}
+			});
+		} else {
+			
+		}
+		}
+	});
+
+
+    </script>
+
+</body>
+
+</html><script type="text/javascript">
+function activate(that){
+	var url = that;
+	var redirect_url = that.split('/'); 
+	if(jQuery.inArray("ACCEPTED", redirect_url) !== -1){
+		$('#service_deposit').attr("action", url);
+		$('#show_service').click();		
+	} else if(jQuery.inArray("DECLINED", redirect_url) !== -1){
+	    $("#ss").hide();
+		$('#service_deposit').attr("action", url);
+		$('#show_service').click();		
+	} else {
+		window.location.href=that;
+	}
+}
+
+function super_admin_activate(that){
+    
+	/*var url = that;
+	window.location.href=that;*/
+	
+	var url = that;
+	var redirect_url = that.split('/'); 
+	if(jQuery.inArray("ACCEPTED", redirect_url) !== -1){
+		$('#super_remarks').attr("action", url);
+		$('#superAdmin_remark').click();		
+	} else if(jQuery.inArray("DECLINED", redirect_url) !== -1){
+		$('#super_remarks').attr("action", url);
+		$('#superAdmin_remark').click();		
+	} else {
+		window.location.href=that;
+	}
+}
+
+
+
+$('.close').click(function(){
+	location.reload();
+});
+</script>

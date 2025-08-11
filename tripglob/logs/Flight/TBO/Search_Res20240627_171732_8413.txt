@@ -1,0 +1,1 @@
+{"Response":{"ResponseStatus":3,"Error":{"ErrorCode":3,"ErrorMessage":"Departure date of 2nd segment can't be less than arrival of 1st segment."},"TraceId":"db94d537-c9a7-4dea-b5d4-44bed019096d"}}

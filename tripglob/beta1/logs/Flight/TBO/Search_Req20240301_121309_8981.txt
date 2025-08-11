@@ -1,0 +1,1 @@
+{"EndUserIp":"103.78.245.113","TokenId":"4aa27b10-b3dd-4a48-ab04-85a3a464e5c0","AdultCount":"5","ChildCount":"4","InfantCount":"5","DirectFlight":"false","OneStopFlight":"false","JourneyType":"1","PreferredAirlines":null,"Segments":[{"Origin":"DXB","Destination":"KWI","FlightCabinClass":"1","PreferredDepartureTime":"2024-07-31T00: 00: 00"}],"Sources":null}
