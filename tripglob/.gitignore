@@ -1,0 +1,38 @@
+# Ignore the .env file (contains secrets)
+.env
+
+# Ignore sensitive CodeIgniter config files
+# application/config/database.php
+# application/config/routes.php
+
+# Ignore Composer vendor directory (if you ever add Composer)
+vendor/
+
+# Ignore system cache and logs
+application/cache/*
+!application/cache/index.html
+
+application/logs/*
+!application/logs/index.html
+
+# Ignore writable/uploads folders (if used)
+uploads/*
+!uploads/index.html
+
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE/editor settings
+*.sublime-project
+*.sublime-workspace
+.idea/
+.vscode/
+nbproject/
+
+# Ignore backup files
+*.bak
+*.tmp
+*.swp
+*.swo
+*~
