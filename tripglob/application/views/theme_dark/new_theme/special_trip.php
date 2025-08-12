@@ -83,8 +83,20 @@
 .trip_dtls{
     font-weight: 600;
 }
-      </style>
-      </head>
+
+        @media (min-width: 769px) {
+            
+            .card-flight{
+                margin-top:2rem;
+            }
+        }
+        @media (max-width: 768px) {
+            .card-flight{
+                margin-top:2rem;
+            }
+        }
+    </style>
+</head>
    <body class="bg_clr">
    	  <!-- Navigation -->
       <?php echo $this->load->view(PROJECT_THEME.'/new_theme/header'); ?>
@@ -100,14 +112,16 @@
                     // debug($value);exit();
                     $from=json_decode($value['from_location'],1);
                     $to=json_decode($value['to_location'],1);
-                    ?>                    
-                     <a href="<?=base_url()?>general/allFlightTrip_details/<?=base64_encode(json_encode($value['flight_trip_id'])) ?>" class="scpl_trip_anchor col-md-3 col-xs-4">
-                       <img src="https://tripglobo.com/admin-panel/uploads/special_trip/<?=$value['flight_image']?>" alt="">
-                        <div class="spcl_trip_fromto">
-                            <p class="prnt_fromto"> <span class="_fromto"><?=$from[0]?> To <?=$to[0]?></span></p> 
-                            <h6><span class="inr_price">INR <?=number_format($value['amount'],2)?></span> <span class="trip_dtls"></span></h6>
-                        </div>
-                     </a>
+                    ?>  
+                    <div class="col-sm-4 card-flight">
+                        <a href="<?=base_url()?>general/allFlightTrip_details/<?=base64_encode(json_encode($value['flight_trip_id'])) ?>" class="scpl_trip_anchor ">
+                            <img src="https://tripglobo.com/admin-panel/uploads/special_trip/<?=$value['flight_image']?>" alt="">
+                            <div class="spcl_trip_fromto">
+                                <p class="prnt_fromto"> <span class="_fromto"><?=$from[0]?> To <?=$to[0]?></span></p> 
+                                <h6><span class="inr_price">INR <?=number_format($value['amount'],2)?></span> <span class="trip_dtls"></span></h6>
+                            </div>
+                        </a>
+                    </div>
                <?php } ?>                     
               </div>    
 		     </div>

@@ -18,7 +18,7 @@
       <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"> 
       <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
       <style>
-      	.cont_pad{ padding: 30px 0px;}
+      	/* .cont_pad{ padding: 30px 0px;} */
       	.sub_btn{width: 100%;background: #fdb813;height: 40px;font-size: 15px;}
       	.input_ss{height: 40px;}
       	.bg_clr{background: #f2f2f2;}
@@ -27,9 +27,21 @@
 		    padding: 25px 25px;
 		    border-radius: 5px;
 		    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.08), 0 6px 20px 0 rgba(0, 0, 0, 0.08);
-		    margin-top:70px;
+		    margin-bottom: 2rem;
+            margin-top: 13rem;
 		    
 		}
+        @media (min-width: 769px) {
+            
+            .inputField{
+                margin-right:1rem;
+            }
+        }
+        @media (max-width: 768px) {
+            .inputField{
+                margin-top:3rem;
+            }
+        }
       </style>
       </head>
    <body class="bg_clr">
@@ -47,7 +59,7 @@
 			<div class="col-md-8 fgt_secss">
 		    	 <h2><center>My Bookings</center></h2><br><br>
 		    	 <div class="col-md-1"></div>
-			     <div class="col-md-6">
+			     <div class="col-md-6 inputField">
 			     	<label>Reference Number</label>
 			     	<input type="text" name="pnr" class="form-control input_ss" placeholder="Reference Number" required>
 			     </div>
