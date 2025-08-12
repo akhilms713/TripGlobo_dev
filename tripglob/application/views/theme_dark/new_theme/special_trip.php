@@ -20,7 +20,8 @@
       	.fgt_secss{    
 		    padding: 25px 25px;
 		    border-radius: 5px;
-		    margin-top:70px;    
+		     margin-top: 13rem;
+            margin-bottom: 2rem;   
 		}
 		.topssec{
 			position: fixed;

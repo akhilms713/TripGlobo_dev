@@ -749,8 +749,6 @@ ul {
 .hotel-card {
 
     position: relative;
-    width: auto; /* Square size */
-    height: auto; /* Square size */
     overflow: hidden;
     background: #000;
     margin-bottom:1rem;

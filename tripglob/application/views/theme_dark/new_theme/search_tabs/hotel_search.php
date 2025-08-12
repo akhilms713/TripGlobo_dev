@@ -26,6 +26,27 @@ div#ui-datepicker-div{
 .city_hotel_drp_srch{
     text-align:left;
 }
+
+@media (max-width: 768px) {
+  .btnHotel{
+    top:12.5rem;
+    left:75%;
+  }
+  .secondSection{
+   flex-direction: column;
+  }
+}
+
+@media (min-width: 769px) {
+  .btnHotel{
+      position: absolute;
+      top: 13.5rem;
+      right: 3rem;
+  }
+}
+.outsideserach{
+   padding:1rem;
+}
 </style>
 <?php
 
@@ -129,64 +150,43 @@ $header_product1 = explode('/',$_SERVER['REQUEST_URI']);
                   <div class="city_hotel_drp_srch">
                      <input type="text" required  placeholder="Region, City, Area (Worldwide)" class="ft hotelCityIp iconLoc contr_form" id="city" name="city" value="<?php if(isset($city)) { echo $city.' , '.$country; } else { echo @$hotel_search_params['location']; } ?>">
                   </div>
-                  <!-- <div class="form-group">
-                     <span class="formlabel">No.of Nights</span>
-                     <div class="plcetogo nitmark selctmark sidebord">
-                        <select class="normalsel padselct arimo form-control contr_form" id="no_of_nights">
-                           <?php for($k=1;$k<=10;$k++):?>
-                              <?php
-                                 $selected = '';
-                                 if(isset($no_of_nights)){
-                                    if($no_of_nights==$k){
-                                       $selected = 'selected=selected';
-                                    }
-                                 } 
-                              ?>
-                                 <option value="<?=$k?>" <?=$selected?>><?=$k?></option>
-                           <?php endfor;?>
-                           
-                        </select>
-                     </div>
-                  </div> -->
-                  
+                                   
                   </div> 
                 </div>
                </div>
                <br>
-               <div class="col-sm-12 col-xs-12 nopad">
-                <div class="col-sm-4 col-xs-12">
-                  <div class="brdr_bx">
-                  <div class="datapickerss">
-                    <span class="formlabel" style="color:#000;">Checkin Date</span>
-                     <div class="input-field first-wrap" style="display:flex;height: 27px;">
-                  <input  name="checkin" id="check-in" required type="text" class="ft fromflight contr_form forminput date_picker"  value="<?php if($check_in != '') { echo  date('M d,Y' , strtotime($check_in)); } else if(isset($hotel_search_params)) { echo date('M d,Y' , strtotime(@$hotel_search_params['from_date'])); } else { echo ''; }  ?>" placeholder="Checkin Date"  readonly />
-                   <i class="fa fa-calendar" style="margin-top:8px; margin-bottom:10px; margin-right:30%; color:#1356F7;"></i>   
-                  </div></div></div></div>
-                   <div class="col-sm-4 col-xs-12">
-                    <div class="brdr_bx" style="margin: 0px 3px;">
-                      <div class="datapickerss">
-                                    <span class="formlabel" style="color:#000;">Check Out</span>
+               <div class="col-sm-12  col-xs-12 nopad secondSection" style="display:flex;gap:2px">
+                  <div class="col-sm-4 col-xs-12">
+                     <div class="brdr_bx">
+                        <div class="datapickerss">
+                           <span class="formlabel" style="color:#000;">Checkin Date</span>
+                           <div class="input-field first-wrap" style="display:flex;height: 27px;">
+                              <input  name="checkin" id="check-in" required type="text" class="ft fromflight contr_form forminput date_picker"  value="<?php if($check_in != '') { echo  date('M d,Y' , strtotime($check_in)); } else if(isset($hotel_search_params)) { echo date('M d,Y' , strtotime(@$hotel_search_params['from_date'])); } else { echo ''; }  ?>" placeholder="Checkin Date"  readonly />
+                              <i class="fa fa-calendar" style="margin-right:3%; color:#1356F7;"></i>   
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-sm-4 col-xs-12">
+                     <div class="brdr_bx" >
+                        <div class="datapickerss">
+                           <span class="formlabel" style="color:#000;">Check Out</span>
                            <div class="input-field first-wrap" style="display:flex;height: 27px;">           
-                       <input  name="checkout" id="check-out" required type="text" class="ft fromflight contr_form forminput date_picker"  value="<?php if($check_out != '') { echo  date('M d,Y' , strtotime($check_out)); } else if(isset($hotel_search_params)) { echo date('M d,Y' , strtotime(@$hotel_search_params['to_date'])); } else { echo ''; }  ?>" placeholder="Checkout Date"  readonly />
-                         <i class="fa fa-calendar" style="margin-top:8px; margin-bottom:10px; margin-right:30%; color:#1356F7;"></i>   
-                       </div> </div>
-                    <!-- <div class="curr_date mm" id="valdate_hotel_datepicker"></div>
-                     <div id="hotel_datepicker"></div>
-                      <input type="hidden" name="hotel_datepicker_val" id="hotel_datepicker_val">-->
-                </div>
-               </div>
-<div class="col-sm-4 col-xs-12 " style="">
-  <div class="brdr_bx">
-               <div class="form-group">
-                    
-                        <!-- <span class="formlabel">Travelers</span> -->
-                        <div class="totlall totlall_1">
-                            
-                           <input type="hidden" value="<?=@$room_count_config?>" id="room-count" name="rooms" min="1" max="3">
-                           <span class="remngwd" id="hotel-pax-summary"><?php if(empty($adult)) echo "2";?><?php echo array_sum($adult)?> Adults,<?php echo array_sum($child)?> <?php if(!empty($child)) echo 'Child,';?> <?php if(empty($rooms))echo "1";?> <?=$rooms?> Room</span>
-                           <div class="roomcount">
-                              <div class="inallsn">
-                                <?php
+                              <input  name="checkout" id="check-out" required type="text" class="ft fromflight contr_form forminput date_picker"  value="<?php if($check_out != '') { echo  date('M d,Y' , strtotime($check_out)); } else if(isset($hotel_search_params)) { echo date('M d,Y' , strtotime(@$hotel_search_params['to_date'])); } else { echo ''; }  ?>" placeholder="Checkout Date"  readonly />
+                              <i class="fa fa-calendar" style="margin-right:3%; color:#1356F7;"></i>   
+                           </div> 
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-sm-4 col-xs-12 " style="">
+                     <div class="brdr_bx">
+                        <div class="form-group">
+                           <div class="totlall totlall_1">
+                              <input type="hidden" value="<?=@$room_count_config?>" id="room-count" name="rooms" min="1" max="3">
+                              <span class="remngwd" id="hotel-pax-summary"><?php if(empty($adult)) echo "2";?><?php echo array_sum($adult)?> Adults,<?php echo array_sum($child)?> <?php if(!empty($child)) echo 'Child,';?> <?php if(empty($rooms))echo "1";?> <?=$rooms?> Room</span>
+                              <div class="roomcount">
+                                 <div class="inallsn">
+                                 <?php
 
                                     $max_rooms = 3;
                                     $min_adults = 2;
@@ -204,21 +204,20 @@ $header_product1 = explode('/',$_SERVER['REQUEST_URI']);
                                        }
                                       
                                        $current_room_child_count = intval(@$room_child_config[($room-1)]);
-                                ?>
+                                 ?>
                                  <div class="oneroom" id="room-wrapper-<?=$room?>" style="<?=$room_visibility?>">
                                     <div class="roomone">Room <?=$room?></div>
-                                    <div class="roomrow">
-                                       <div class="celroe col-xs-6">Adults<span class="agemns">(12+)</span></div>
-                                       <div class="celroe col-xs-6">
-                                          <div class="onlynum newhpad pax-count-wrapper">
-                                             <button type="button" class="btn btn-default btn-number_h btnpot" data-type="minus" data-field="adult[]"> <span class="fa fa-minus"></span> </button>
-                                             <input type="text" name="adult[]" id="adult_text_<?=$room-1?>" class="form-control input-number centertext" value="<?=intval(@$room_adult_config[$room-1])?>" data-min="1" data-max="3" readonly>
-                                             <button type="button" class="btn btn-default btn-number_h btnpot btn_right" data-type="plus" data-field="adult[]"> <span class="fa fa-plus"></span> </button>
+                                       <div class="roomrow">
+                                          <div class="celroe col-xs-6">Adults<span class="agemns">(12+)</span></div>
+                                          <div class="celroe col-xs-6">
+                                             <div class="onlynum newhpad pax-count-wrapper">
+                                                <button type="button" class="btn btn-default btn-number_h btnpot" data-type="minus" data-field="adult[]"> <span class="fa fa-minus"></span> </button>
+                                                <input type="text" name="adult[]" id="adult_text_<?=$room-1?>" class="form-control input-number centertext" value="<?=intval(@$room_adult_config[$room-1])?>" data-min="1" data-max="3" readonly>
+                                                <button type="button" class="btn btn-default btn-number_h btnpot btn_right" data-type="plus" data-field="adult[]"> <span class="fa fa-plus"></span> </button>
+                                             </div>
                                           </div>
                                        </div>
-                                    </div>
-                              
-                                    <div class="roomrow">
+                                       <div class="roomrow">
                                        <div class="celroe col-xs-6">Child<span class="agemns">(2-11 yrs)</span></div>
                                        <div class="celroe col-xs-6">
                                           <div class="onlynum newhpad pax-count-wrapper">
@@ -230,9 +229,7 @@ $header_product1 = explode('/',$_SERVER['REQUEST_URI']);
                                     </div>
                                     <div class="clearfix"></div>
                                     <div class="add_remove">
-                                      <!--  <div class="col-xs-6 nopad">
-                                          <a class="done1 comnbtn_room1"><span class="fa fa-check"></span> Done</a>
-                                       </div> -->
+                                      
                                        <div class="col-xs-6 nopad">
                                           <button class="remove_rooms comnbtn_room"> <span class="fa fa-minus-circle"></span>Remove room </button>
                                        </div>
@@ -294,19 +291,18 @@ $header_product1 = explode('/',$_SERVER['REQUEST_URI']);
                            </div>
                         </div>
                      
-                  </div></div>
-                </div>
-                 <!--  <div class="curr_date" id="valdate1">October 2 2017</div>
-                  <div id="datepicker1"></div> -->
-                 <input type="hidden" name="page" value="1">
+                     </div>
+                  </div>
+               </div>
+               
+               <input type="hidden" name="page" value="1">
                <div class="clearfix"></div>
               
-               </div>
+            </div>
               
-                   <!--   <span class="formlabel formlabel_two">&nbsp;</span> -->
-                     <div class="formsubmit"  style="top:120px; left:80%;">
-                        <button id="search_hotel" class="srchbutn comncolor btn  btn_newdaqas">Search <i class="fa fa-arrow-right fa-xl" style="width:40px"></i> </button>
-                     </div> 
+            <div class="formsubmit btnHotel"  >
+               <button id="search_hotel" class="srchbutn comncolor btn  btn_newdaqas">Search <i class="fa fa-arrow-right fa-xl" style="width:40px"></i> </button>
+            </div> 
                 
               
             </div>

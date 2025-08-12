@@ -26,7 +26,8 @@
 $env_base_url = getenv('BASE_URL');
 
 if ($env_base_url && strlen(trim($env_base_url)) > 0) {
-    $config['base_url'] = rtrim($env_base_url, '/') . '/';  // ensure trailing slash
+    // Remove trailing slash to avoid double slashes when concatenated with leading slash paths
+    $config['base_url'] = rtrim($env_base_url, '/');
 } elseif (isset($_SERVER['HTTP_HOST'])) {
     $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'
                  || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
@@ -35,9 +36,12 @@ if ($env_base_url && strlen(trim($env_base_url)) > 0) {
     $script_name = $_SERVER['SCRIPT_NAME'];
     $path = str_replace(basename($script_name), '', $script_name);
 
+    // Remove trailing slash from $path as well
+    $path = rtrim($path, '/');
+
     $config['base_url'] = $protocol . $host . $path;
 } else {
-    $config['base_url'] = "http://localhost/tripglob/";
+    $config['base_url'] = "http://localhost/tripglob";  // no trailing slash
 }
 
 

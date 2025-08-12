@@ -1,6 +1,6 @@
 # Ignore the .env file (contains secrets)
 .env
-
+.htaccess
 # Ignore sensitive CodeIgniter config files
 # application/config/database.php
 # application/config/routes.php

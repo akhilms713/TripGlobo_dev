@@ -19,15 +19,14 @@
       <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
       <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
       <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-      <!-- Custom CSS -->
-<!--       <link href="<?php //echo base_url(); ?>assets/theme_dark/css/index.css" rel="stylesheet" />
-      <link href="<?php //echo base_url(); ?>assets/theme_dark/css/main_ff.css" rel="stylesheet" />  -->
+
 
 <style type="text/css">
 .data_forms .ft .col-md-6{padding-bottom:5px;}
 .data_forms h3{text-align:center;}
 .fgt_secss{
-    	    margin-top:70px;
+    margin-top: 13rem;
+    margin-bottom: 2rem;	
 		 
 }
 </style>

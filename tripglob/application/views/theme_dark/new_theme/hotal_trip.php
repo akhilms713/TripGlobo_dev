@@ -18,14 +18,15 @@
       <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"> 
       <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
       <style>
-      	.cont_pad{ padding: 30px 0px;}
+      	/* .cont_pad{ padding: 30px 0px;} */
       	.sub_btn{width: 100%;background: #fdb813;height: 40px;font-size: 15px;}
       	.input_ss{height: 40px;}
       	.bg_clr{background: #f2f2f2;}
       	.fgt_secss{    
 		    padding: 20px 20px;
 		    border-radius: 5px;
-		    margin-top:70px;
+		    margin-top: 13rem;
+            margin-bottom: 2rem;	
 		    
 		}
 		.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
@@ -46,10 +47,7 @@
     position: relative;
 }
 .scpl_trip_anchor img{
-    width:95%;
-    height:200px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+   max-width: 100%; height: auto; display: block;
 }
 .star_hotel_fa{
     color: #f5933b;
@@ -65,13 +63,11 @@
     left:20px;
 }
 .spcl_trip_fromto{
-    width:95%;
+    width:100%;
     background-color: #fff;
     padding: 10px;
     height: 75px;
     max-height:150px;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
     box-shadow: 0px 3px 9px 0px #ccc;
 }
 .spcl_trip_fromto span{
@@ -83,9 +79,9 @@
     margin-bottom: 5px;
     color:#333;
 }
-.spcl_trip_imgs{
+/* .spcl_trip_imgs{
     padding:0 10%;
-}
+} */
 .inr_price{
     color: #2471A3  !important;
     font-weight: 600;
@@ -96,6 +92,37 @@
 }
 .star_on_img .fa-star{
     color:  #F1C40F;
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card-box {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid #eee;
+  padding: 10px;
+  background: #fff;
+  text-align: center;
+  box-sizing: border-box;
+}
+.trip-image-wrapper {
+  width: 100%;
+  height: 200px; /* Set fixed height */
+  overflow: hidden;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+.trip-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; 
+  display: block;
+}
+.hotelCard{
+    padding: .5rem;
 }
       </style>
       </head>
@@ -119,21 +146,38 @@
                          $night=$diff->days-1;                       
                      }
                       ?>
-                     <a href="<?=base_url()?>general/allhotelTrip_details/<?=base64_encode(json_encode($value->hotel_trip_id)) ?>" class="scpl_trip_anchor-1 col-md-3 col-xs-4">
-                        <img src="https://tripglobo.com/admin-panel/uploads/special_trip/<?=$value->hotel_image?>" alt="">
-                            <div class="star_hotel" data-star="<?=$value->rating?>">
+                                   
+
+
+                    <div class="col-xs-12 col-sm-3 hotelCard">
+                        <a href="<?= base_url() ?>general/allhotelTrip_details/<?= base64_encode(json_encode($value->hotel_trip_id)) ?>" class="scpl_trip_anchor card-box">
+                            
+                            <!-- Image Container -->
+                            <div class="trip-image-wrapper">
+                            <img src="https://tripglobo.com/admin-panel/uploads/special_trip/<?= $value->hotel_image ?>" alt="Hotel Image">
+                            </div>
+                            
+                            <!-- Rating -->
+                            <div class="star_hotel" data-star="<?= $value->rating ?>">
                             <span class="fa fa-star star_hotel_fa"></span>
                             <span class="fa fa-star star_hotel_fa"></span>
                             <span class="fa fa-star star_hotel_fa"></span>
                             <span class="fa fa-star star_hotel_fa"></span>
                             <span class="far fa-star star_hotel_fa"></span>
-                           
                             </div>
-                        <div class="spcl_trip_fromto">
-                            <p class="prnt_fromto"> <?=$value->city_name?> </p> 
-                            <h6><span class="inr_price">INR <?=number_format($value->price,2)?></span> <span class="trip_dtls">(<?=$diff->days?> Days <?=$night?> night )</span></h6>
+                            
+                            <!-- Trip Details -->
+                            <div class="spcl_trip_fromto">
+                            <p class="prnt_fromto"><?= $value->city_name ?></p>
+                            <h6>
+                                <span class="inr_price">INR <?= number_format($value->price, 2) ?></span>
+                                <span class="trip_dtls">(<?= $diff->days ?> Days <?= $night ?> night)</span>
+                            </h6>
+                            </div>
+
+                        </a>
                         </div>
-                     </a>
+
                     <?php } ?>
               </div>			     
 		     </div>

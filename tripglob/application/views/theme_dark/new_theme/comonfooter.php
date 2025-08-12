@@ -217,7 +217,7 @@
       </div> -->
 
 
-      <div class="col-sm-3 col-xs-12 ft_custom margin-top-xs">
+      <div class="col-sm-3 col-xs-6 ft_custom margin-top-xs">
          <!--  <div class="foot_logo">
             <img src="<?php echo base_url();?>assets/theme_dark/images/logo.png">
             </div>  --> 
@@ -235,7 +235,7 @@
 
       <?php foreach ($footer as $valueFooter){ ?>
         
-      <div class="col-sm-3 col-xs-12 ft_custom margin-top-xs">
+      <div class="col-sm-3 col-xs-6 ft_custom margin-top-xs">
          <h4><?=$valueFooter->footer_name?></h4>
          <div class="footer_cities">
             <?=$valueFooter->description?>
@@ -284,7 +284,7 @@
   gtag('config', 'UA-126204130-2');
 
 </script>
- <div class="last_copyright">
+ <div class="last_copyright" style="position: absolute;width: 100%;margin-bottom: 0;">
       <div class="">
          <div class="col-md-12 text-center" style="background:#fdb813;">
           <br>

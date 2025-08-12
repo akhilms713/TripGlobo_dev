@@ -18,14 +18,16 @@
       <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"> 
       <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
       <style>
-      	.cont_pad{ padding: 30px 0px;}
+      	/* .cont_pad{ padding: 30px 0px;} */
       	.sub_btn{width: 100%;background: #fdb813;height: 40px;font-size: 15px;}
       	.input_ss{height: 40px;}
       	.bg_clr{background: #f2f2f2;}
       	.fgt_secss{    
-		    padding: 20px 20px;
+		    /* padding: 20px 20px; */
 		    border-radius: 5px;
 		    margin-top:70px;
+            margin-top: 13rem;
+            margin-bottom: 2rem;	
 		    
 		}
 		.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
@@ -37,7 +39,6 @@
     font-size: 30px;
     color: #fdb813;
     font-weight: 500;
-    margin-bottom: 35px;
 }
 .bustrip_list{
     width:32%;
@@ -48,13 +49,11 @@
     text-decoration: none !important;
 }
 .scpl_trip_anchor img{
-    width:95%;
+    width:100%;
     height:200px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
 }
 .spcl_trip_fromto{
-    width:95%;
+    width:100%;
     background-color: #fff;
     padding: 10px;
     height:75px;
@@ -80,9 +79,7 @@
     margin-bottom: 5px;
     color:#333;
 }
-.spcl_trip_imgs{
-    padding:0 10%;
-}
+
 .inr_price{
     color: #2471A3  !important;
     font-weight: 600;
@@ -91,8 +88,22 @@
 .trip_dtls{
     font-weight: 600;
 }
-      </style>
-      </head>
+
+        @media (min-width: 769px) {
+            .busCard{
+               padding :1rem;
+               margin-top:2rem
+            }
+           
+        }
+        @media (max-width: 768px) {
+        
+            .busCard{
+                margin-top:2rem
+            }
+        }
+    </style>
+</head>
    <body class="bg_clr">
    	  <!-- Navigation -->
       <?php echo $this->load->view(PROJECT_THEME.'/new_theme/header'); ?>
@@ -104,21 +115,21 @@
 			<div class="col-md-12 fgt_secss">
 		    	 <h2 class="bus_trip_specil"><span>Bus Trip</span></h2>
                  <div class="spcl_trip_imgs row">
-                    <?php foreach ($bus_trip_details as $key => $value) {
-// debug($bus_trip_details);exit();
-
-                        ?>
+                    <?php foreach ($bus_trip_details as $key => $value) { ?>
                         
-                     <a href="<?=base_url()?>general/allbusTrip_details/<?=base64_encode(json_encode($value->bus_trip_id)) ?>" class="scpl_trip_anchor col-md-3 col-xs-4">
-                        <img src="https://tripglobo.com/admin-panel/uploads/special_trip/<?=$value->bus_image?>" alt="">
-                        <div class="spcl_trip_fromto">
-                          <i class="fal fa-bus"></i>
-                          <div>
-                            <span class="prnt_fromto"> <?=$value->from_location?> To <?=$value->to_location?>  </span> 
-                            <h6><span class="inr_price">INR <?=number_format($value->amount,2)?></span> <span class="trip_dtls">(Approx)</span></h6>
-                          </div>
-                        </div>
-                     </a>
+                    <div class="col-sm-3 col-xs-12 busCard">
+                        <a href="<?=base_url()?>general/allbusTrip_details/<?=base64_encode(json_encode($value->bus_trip_id)) ?>" class="scpl_trip_anchor">
+                            <img src="https://tripglobo.com/admin-panel/uploads/special_trip/<?=$value->bus_image?>" alt="">
+                            <div class="spcl_trip_fromto">
+                                <i class="fal fa-bus"></i>
+                                <div>
+                                <span class="prnt_fromto"> <?=$value->from_location?> To <?=$value->to_location?>  </span> 
+                                <h6><span class="inr_price">INR <?=number_format($value->amount,2)?></span> <span class="trip_dtls">(Approx)</span></h6>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    
                     <?php } ?>
                     
               </div>

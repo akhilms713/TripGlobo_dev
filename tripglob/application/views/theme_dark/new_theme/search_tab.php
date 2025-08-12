@@ -119,12 +119,12 @@
                 <li id="blank_select_bus" class=" tab-current act"> 
                   <a href="#bus" data-toggle="tab"> <i class="fal fa-bus"></i> <p class="p_head">Bus</p></a> 
                 </li>
-               <li id="blank_select_transfer" class=" tab-current act"> 
+               <!-- <li id="blank_select_transfer" class=" tab-current act"> 
                <a href="#transfer" data-toggle="tab"> <i class="fal fa-car"></i> <p class="p_head">Transfers</p></a> 
                </li>
                  <li id="blank_select_insurance" class=" tab-current act"> 
                <a href="#Insurance" data-toggle="tab"><i class="fal fa-shield-check"></i> <p class="p_head">Insurance</p></a> 
-               </li>
+               </li> -->
               </ul> 
           </div>
             <?php //} ?>

@@ -155,11 +155,11 @@
 .oneroom.fltravlr .celroe {
 }
 .celroe {
-    padding: 4px 0px;
+    /* padding: 4px 0px; */
     float: left;
     line-height: 31px;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
 }
 .agemns {
     color: #666;

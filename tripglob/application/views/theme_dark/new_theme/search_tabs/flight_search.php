@@ -52,9 +52,9 @@
     font-size: 13px;
     height: 36px;
     line-height: 36px;
-    padding: 0 10px;
+    padding: 0 9px;
     position: relative;
-    width: 90%;
+    /* width: 90%; */
     /*margin: 5px auto;*/
 }
 .remngwd {
@@ -196,12 +196,11 @@
     display: table-cell;
 }
 .roomrow .btn {
-    padding: 5px !important;
+    padding: 2px 15px !important;
     width: auto !important;
     border: none;
     font-size: 14px !important;
     border-radius: 2px !important;
-   
     color: #000 !important;
     outline: none !important;
 }
@@ -221,18 +220,17 @@
 }
  
 .flyinputsnor.contr_form {
-    color: #333;
-    border-radius: 0px;
-    padding: 0;
-    /*margin: 2px 0px 2px 4px;*/
-  
-    border: none;
-    border: none;
-    padding-left: 50px;
-    line-height: 44px;
-    width: 150px;
-    margin: -3px 0px 0px 0px;
-    margin-bottom: 15px;
+  color: #333;
+  /* border-radius: 0px; */
+  /* padding: 0; */
+  /* margin: 2px 0px 2px 4px; */
+  /* border: none; */
+  /* border: none; */
+  /* padding-left: 40px; */
+  /* line-height: 44px; */
+  width: 24rem;
+  /* margin: 0px 0px 0px 0px; */
+  /* margin-bottom: 15px;*/
 } 
 .col-md-4.col-xs-12.input-field.fouth-wrap.nopad.traveller_filed_input {
    border: 2px solid #fdb813;
@@ -270,8 +268,8 @@
 }
 
 @media screen and (max-width: 1366px) and (min-width: 991px){
-  .flyinputsnor.contr_form {
-    margin: 5px 0px 0px 0px;}
+  /* .flyinputsnor.contr_form {
+    margin: 5px 0px 0px 0px;} */
     
 
 
@@ -397,6 +395,40 @@ span.flight-down-item-icon {
   width:22%;
   }
 }
+/*============== new style ================= */
+
+.wrapper {
+  display: flex;
+  flex-wrap: wrap;          
+  gap: 16px;            
+}
+
+.field {
+  flex: 1 1 calc(25% - 16px); 
+  min-width: 200px;           
+  box-sizing: border-box;
+  padding: 12px;
+  background: #f3f3f3;
+  border-radius: 6px;
+}
+
+@media (max-width: 768px) {
+  .field {
+    flex: 1 1 calc(50% - 16px); 
+  }
+  .fifth-wrap{
+    position: static;
+  }
+}
+
+@media (min-width: 769px) {
+  .fifth-wrap{
+    position: absolute;
+    top:14rem;
+    right:1rem;
+  }
+}
+
 <?php 
 if ($this->session->userdata('user_id') !== "") {
       $user_id = $this->session->userdata('user_id');
@@ -449,112 +481,165 @@ if ($this->session->userdata('user_id') !== "") {
       
     <div class="intabs">
       <div class="waywy col-sm-12 nopad make_large small-screen">
-            <div class="smalway">
-                <input type="hidden" id="getUrl2" value="<?php echo $_SERVER['REQUEST_URI']?>">
-
-               <ul class="tabType">
-                  <input type="hidden" id="check_type_select" value="<?php echo $triptype;?>" >
-                     <input type="hidden" class="triprad iradio_flat-blue" id="trip_type" name="trip_type" value="<?php echo ($triptype != "") ? $triptype : 'round';?>"/>
-                  <li class="roundTab anim " id="round_t">
-                      <input type="checkbox" class="tabCheckbox" />
-                     <?php if(! isset($triptype)) $triptype = 'round';?>
-                     <a id='round' class="wament round <?php if(isset($triptype) && $triptype == 'round') echo 'active';?>" >
-                         <img src="<?php echo base_url();?>assets/theme_dark/images/round_way.png" width="30px"> Round Trip
-                         </a>
-                  </li>
-                  <li class="onewayTab anim" id="oneway">
-                       <input type="checkbox" class="tabCheckbox" />
-                     <a id='oneway' class="wament oneway <?php if(isset($triptype) && $triptype == 'oneway') echo 'active'; ?>" > <img src="<?php echo base_url();?>assets/theme_dark/images/one_way.png" width="30px"> One Way
-                     
-                     </a> 
-                  </li>
-                  
-                  <li style="margin-left:10px;">
-                      <div class="roomrow">
-                                        <div class="celroe col-xs-7">Adults</div>
-                                        <div class="celroe col-xs-5" style="margin-top: -3px;">
-                                          <div class="input-group countmore pax-count-wrapper adult_count_div"> 
-                                            <span class="input-group-btn">
-                                            
-                                                <?php
-
-                                                    $a_disabled = 'disabled';
-                                                     if(isset($ADT)) {
-                                                       $a_disabled ='';
-                                                     } 
-                                                      $c_disabled = 'disabled';
-                                                     if(isset($CHD)) {
-                                                       $c_disabled ='';
-                                                     } 
-                                                      $i_disabled = 'disabled';
-                                                     if(isset($INF)) {
-                                                       $i_disabled ='';
-                                                     } 
-
-                                                 ?>
-
-                                              <button type="button" class="btn btn-default btn-number btnpot" data-type="minus" data-field="adult" <?=$a_disabled?> > 
-                                                <span>-</span> 
-                                              </button>
-
-                                            </span>
-
-                                            <input type="text" name="adult" id="adult" value="1" readonly class="form-control input-number centertext valid" value="<?php if(isset($ADT)) echo $ADT; else echo '1'; ?>" data-min="1" data-max="9" aria-invalid="false">
-
-                                            <span class="input-group-btn">
-                                              <button type="button" class="btn btn-default btn-number btnpot btn_right" data-type="plus" data-field="adult"> 
-                                                <span>+</span> 
-                                              </button>
-                                            </span> 
-
-                                          </div>
-                                        </div>
-                                      </div>  
-                  </li>
-                  
-                  <li style="margin-left:10px;">
-                    <div class="roomrow">
-                                        <div class="celroe col-xs-7">
-                                         Children
-                                        </div>
-                                        <div class="celroe col-xs-5"  style="margin-top: -3px;">
-                                          <div class="input-group countmore pax-count-wrapper child_count_div"> 
-                                            <span class="input-group-btn">
-                                              <button type="button" class="btn btn-default btn-number btnpot" <?=$c_disabled?> data-type="minus" data-field="child"> 
-                                                <span>-</span> 
-                                              </button>
-                                            </span>
-                                            <input type="text" name="child" id="child" readonly class="form-control input-number centertext" value="<?php if(isset($CHD)) echo $CHD; else echo '0'; ?>" data-min="0" data-max="8">
-                                            <span class="input-group-btn">
-                                              <button type="button" class="btn btn-default btn-number btnpot btn_right" data-type="plus" data-field="child"> 
-                                                <span>+</span> 
-                                              </button>
-                                            </span> 
-                                          </div>
-                                        </div>
-                                      </div>  
-                  </li>
-                  <li>
-                       <select class="mySelectBoxClass flyinputsnor form-control contr_form alladvnce" id="class" name="class2" required>
-                                   <option value="Economy" <?php if(isset($class) && $class == 'Economy') echo 'Selected'; ?>>Economy</option>
-                                   <option value="PremiumEconomy" <?php if(isset($class) && $class == 'PremiumEconomy') echo 'Selected'; ?>>Premium Economy</option>
-                                   <option value="Business" <?php if(isset($class) && $class == 'Business') echo 'Selected'; ?>>Business</option>
-                                   <option value="PremiumBusiness" <?php if(isset($class) && $class == 'PremiumBusiness') echo 'Selected'; ?>>Premium Business</option>
-                                   <option value="First" <?php if(isset($class) && $class == 'First') echo 'Selected'; ?>>First</option>
-                                   
-                                </select>
-                  </li>
-                  
-                <!-- <?php if(! $no_multi) { ?>-->
-                <!--  <li class="multiTab anim" id="multicity_t">-->
-                <!--       <input type="checkbox" class="tabCheckbox" />-->
-                <!--     <a id='multicity' class="wament multicity 
-                <!--<?php if(isset($triptype) && $triptype == 'M') echo 'active'; else echo ''; ?>" ><img src="<?php echo base_url();?>assets/theme_dark/images/multi_city.png" width="30px"> Multi-City-->
-                <!--     </a>  -->
-                <!--  </li>-->
-                <!--<?php } ?>-->
-               </ul>
+        <div class="smalway">
+          <input type="hidden" id="getUrl2" value="<?php echo $_SERVER['REQUEST_URI']?>">
+          <input type="hidden" id="check_type_select" value="<?php echo $triptype;?>" >
+          <input type="hidden" class="triprad iradio_flat-blue" id="trip_type" name="trip_type" value="<?php echo ($triptype != "") ? $triptype : 'round';?>"/>
+          <div class="wrapper">
+            <div class="field tabType">
+              <div class="roundTab anim " id="round_t" style="margin-right:3rem">
+                <input type="checkbox" class="tabCheckbox" />
+                <?php if(! isset($triptype)) $triptype = 'round';?>
+                <a id='round' class="wament round <?php if(isset($triptype) && $triptype == 'round') echo 'active';?>" >
+                  <img src="<?php echo base_url();?>assets/theme_dark/images/round_way.png" width="30px"> Round Trip
+                </a>
+              </div>
+              <div class="onewayTab anim" id="oneway">
+                <input type="checkbox" class="tabCheckbox" />
+                <a id='oneway' class="wament oneway <?php if(isset($triptype) && $triptype == 'oneway') echo 'active'; ?>" > <img src="<?php echo base_url();?>assets/theme_dark/images/one_way.png" width="30px"> One Way</a> 
+              </div>
             </div>
+            <div class="field tabType">
+              <div style="margin-left:10px;">
+                <div class="roomrow">
+                  <div class="celroe col-xs-7">Adults</div>
+                  <div class="celroe col-xs-5" style="margin-top: -3px;">
+                    <div class="input-group countmore pax-count-wrapper adult_count_div"> 
+                      <span class="input-group-btn">
+                        <?php
+                          $a_disabled = 'disabled';
+                          if(isset($ADT)) {
+                            $a_disabled ='';
+                          } 
+                          $c_disabled = 'disabled';
+                          if(isset($CHD)) {
+                            $c_disabled ='';
+                          } 
+                          $i_disabled = 'disabled';
+                          if(isset($INF)) {
+                            $i_disabled ='';
+                          } 
+                        ?>
+                        <button type="button" class="btn btn-default btn-number btnpot" data-type="minus" data-field="adult" <?=$a_disabled?> > 
+                          <span>-</span> 
+                        </button>
+                      </span>
+                      <input type="text" name="adult" id="adult" value="1" readonly class="form-control input-number centertext valid" value="<?php if(isset($ADT)) echo $ADT; else echo '1'; ?>" data-min="1" data-max="9" aria-invalid="false">
+                      <span class="input-group-btn">
+                        <button type="button" class="btn btn-default btn-number btnpot btn_right" data-type="plus" data-field="adult"> 
+                          <span>+</span> 
+                        </button>
+                      </span> 
+                    </div>
+                  </div>
+                </div>  
+              </div>
+            </div>
+            <div class="field tabType">
+              <div style="margin-left:10px;">
+                <div class="roomrow">
+                  <div class="celroe col-xs-7">
+                    Children
+                  </div>
+                  <div class="celroe col-xs-5"  style="margin-top: -3px;">
+                    <div class="input-group countmore pax-count-wrapper child_count_div"> 
+                      <span class="input-group-btn">
+                        <button type="button" class="btn btn-default btn-number btnpot" <?=$c_disabled?> data-type="minus" data-field="child"> 
+                          <span>-</span> 
+                        </button>
+                      </span>
+                      <input type="text" name="child" id="child" readonly class="form-control input-number centertext" value="<?php if(isset($CHD)) echo $CHD; else echo '0'; ?>" data-min="0" data-max="8">
+                      <span class="input-group-btn">
+                        <button type="button" class="btn btn-default btn-number btnpot btn_right" data-type="plus" data-field="child"> 
+                          <span>+</span> 
+                        </button>
+                      </span> 
+                    </div>
+                  </div>
+                </div>  
+              </div>
+            </div>
+            <div class="field tabType">
+              <div>
+                <select class="mySelectBoxClass flyinputsnor form-control contr_form alladvnce" id="class" name="class2" required>
+                  <option value="Economy" <?php if(isset($class) && $class == 'Economy') echo 'Selected'; ?>>Economy</option>
+                  <option value="PremiumEconomy" <?php if(isset($class) && $class == 'PremiumEconomy') echo 'Selected'; ?>>Premium Economy</option>
+                  <option value="Business" <?php if(isset($class) && $class == 'Business') echo 'Selected'; ?>>Business</option>
+                  <option value="PremiumBusiness" <?php if(isset($class) && $class == 'PremiumBusiness') echo 'Selected'; ?>>Premium Business</option>
+                  <option value="First" <?php if(isset($class) && $class == 'First') echo 'Selected'; ?>>First</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <!-- <ul class="tabType">
+
+            <li style="margin-left:10px;">
+              <div class="roomrow">
+                <div class="celroe col-xs-7">Adults</div>
+                <div class="celroe col-xs-5" style="margin-top: -3px;">
+                  <div class="input-group countmore pax-count-wrapper adult_count_div"> 
+                    <span class="input-group-btn">
+                      <?php
+                        $a_disabled = 'disabled';
+                        if(isset($ADT)) {
+                          $a_disabled ='';
+                        } 
+                        $c_disabled = 'disabled';
+                        if(isset($CHD)) {
+                          $c_disabled ='';
+                        } 
+                        $i_disabled = 'disabled';
+                        if(isset($INF)) {
+                          $i_disabled ='';
+                        } 
+                      ?>
+                      <button type="button" class="btn btn-default btn-number btnpot" data-type="minus" data-field="adult" <?=$a_disabled?> > 
+                        <span>-</span> 
+                      </button>
+                    </span>
+                    <input type="text" name="adult" id="adult" value="1" readonly class="form-control input-number centertext valid" value="<?php if(isset($ADT)) echo $ADT; else echo '1'; ?>" data-min="1" data-max="9" aria-invalid="false">
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-default btn-number btnpot btn_right" data-type="plus" data-field="adult"> 
+                        <span>+</span> 
+                      </button>
+                    </span> 
+                  </div>
+                </div>
+              </div>  
+            </li>
+            <li style="margin-left:10px;">
+              <div class="roomrow">
+                <div class="celroe col-xs-7">
+                  Children
+                </div>
+                <div class="celroe col-xs-5"  style="margin-top: -3px;">
+                  <div class="input-group countmore pax-count-wrapper child_count_div"> 
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-default btn-number btnpot" <?=$c_disabled?> data-type="minus" data-field="child"> 
+                        <span>-</span> 
+                      </button>
+                    </span>
+                    <input type="text" name="child" id="child" readonly class="form-control input-number centertext" value="<?php if(isset($CHD)) echo $CHD; else echo '0'; ?>" data-min="0" data-max="8">
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-default btn-number btnpot btn_right" data-type="plus" data-field="child"> 
+                        <span>+</span> 
+                      </button>
+                    </span> 
+                  </div>
+                </div>
+              </div>  
+            </li>
+            <li>
+              <select class="mySelectBoxClass flyinputsnor form-control contr_form alladvnce" id="class" name="class2" required>
+                <option value="Economy" <?php if(isset($class) && $class == 'Economy') echo 'Selected'; ?>>Economy</option>
+                <option value="PremiumEconomy" <?php if(isset($class) && $class == 'PremiumEconomy') echo 'Selected'; ?>>Premium Economy</option>
+                <option value="Business" <?php if(isset($class) && $class == 'Business') echo 'Selected'; ?>>Business</option>
+                <option value="PremiumBusiness" <?php if(isset($class) && $class == 'PremiumBusiness') echo 'Selected'; ?>>Premium Business</option>
+                <option value="First" <?php if(isset($class) && $class == 'First') echo 'Selected'; ?>>First</option>
+              </select>
+            </li>
+          </ul> -->
+        </div>
             
             <div class="">
               <form>
@@ -593,7 +678,7 @@ if ($this->session->userdata('user_id') !== "") {
                             <h4>Depature Date</h4>
                             <div class="input-field second-wrap"  style="display:flex;">
                               <input class="datepicker contr_form" name="depature" id="depature" type="text" class="forminput date_picker contr_form" readonly="readonly" placeholder="Departure Date" value="<?php if(isset($depart_date)) echo date('M d', strtotime($depart_date)).','.date("Y", strtotime($depart_date)); ?>" />
-                               <i class="fa fa-calendar" style="margin-top:8px; margin-bottom:10px; margin-right:25%;color:#1356F7;"></i>   
+                               <i class="fa fa-calendar" style="margin-top:5px; margin-right:5%;color:#1356F7;"></i>   
                             </div> 
                           </div>
 
@@ -606,7 +691,7 @@ if ($this->session->userdata('user_id') !== "") {
                               <?php } else { ?>
                                       <input  name="return" id="return" type="text" class="forminput date_picker contr_form" readonly="readonly" placeholder="Return Date" disabled="true" />
                                       <?php } ?>
-                                    <i class="fa fa-calendar" style="margin-top:8px; margin-bottom:10px; margin-right:30%; color:#1356F7;"></i>   
+                                    <i class="fa fa-calendar" style="margin-top:5px; margin-right:5%; color:#1356F7;"></i>   
 
                             </div>
                            </div>
@@ -805,7 +890,7 @@ if ($this->session->userdata('user_id') !== "") {
                 
                     <div class="new_mobile_tab"></div>
 
-                    <div class="input-field fifth-wrap" style="text-align:center;position:absolute;  bottom:-44px; left:80%;">
+                    <div class="input-field fifth-wrap" style="text-align:center;">
                       <button class="srchbutn comncolor btn btn-search search_fly btn_newdaqas">Search <i class="fa fa-arrow-right fa-xl" style="width:40px"></i> </button>
                     </div>
 

@@ -22,7 +22,7 @@ RewriteRule ^(.*)$ index.php/$1 [L]
    php_value memory_limit 1024M
    php_value post_max_size 8M
    php_value session.gc_maxlifetime 1440
-   php_value session.save_path "/var/lib/php/sessions"
+   php_value session.save_path "C:\xampp\tmp"
    php_value upload_max_filesize 1024M
    php_flag zlib.output_compression On
 </IfModule>
@@ -35,7 +35,7 @@ RewriteRule ^(.*)$ index.php/$1 [L]
    php_value memory_limit 1024M
    php_value post_max_size 8M
    php_value session.gc_maxlifetime 1440
-   php_value session.save_path "/var/lib/php/sessions"
+   php_value session.save_path "C:\xampp\tmp"
    php_value upload_max_filesize 1024M
    php_flag zlib.output_compression On
 </IfModule>

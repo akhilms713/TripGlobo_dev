@@ -20,7 +20,6 @@
       <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"> 
       <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
       <style>
-      	.cont_pad{ padding: 30px 0px;}
       	.sub_btn{width: 100%;background: #fdb813;height: 40px;font-size: 15px;}
       	.input_ss{height: 40px;}
       	.bg_clr{background: #f2f2f2;}
@@ -29,13 +28,28 @@
 		    padding: 25px 25px;
 		    border-radius: 5px;
 		    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.08), 0 6px 20px 0 rgba(0, 0, 0, 0.08);
-		    margin-top:70px;
-		    
+            margin-top: 13rem;
+            margin-bottom: 2rem;		    
 		}
     .table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td{
           border-top: none!important;
     }
 
+        @media (min-width: 769px) {
+            
+            .inputField{
+                margin-right:1rem;
+            }
+        }
+        @media (max-width: 768px) {
+            .inputField{
+                margin-top:3rem;
+            }
+            .tableCard{
+                margin-top: 3rem;
+            }
+                
+        }
       </style>
       </head>
    <body class="bg_clr">
@@ -44,13 +58,11 @@
       <div class="clearfix"></div>
 
 		<div class="container cont_pad">
-			<div class="col-md-1"></div>
-			<div class="col-md-10 fgt_secss">
-		    	 <h2><center>Special Flight Trip</center></h2><br><br>
-		    
-		    	 <div class="col-md-1"></div>
-			     <div class="col-md-12">
-			     	<table class="table ">
+			<div class="col-md-12 fgt_secss">
+		    	<h2><center>Special Flight Trip</center></h2><br><br>
+		        <div class="col-md-12 tableCard">
+			     	<div class="table-responsive">
+                        <table class="table">
 			     	    <tr>
 			     	        <th >S.No</th>
 			     	        <th>Module Name</th>
@@ -65,7 +77,7 @@
 			     	        <th>Amount</th>
 			     	        <th>Action</th>
 			     	    </tr>
-			     	    <?//php print_r($flight_details);
+			     	    <?php 
 			     	    $i=1;
 			     	       foreach($flight_details as $key => $vals)
 			     	       {
@@ -78,7 +90,7 @@
 			     	    ?>
 			     	    <tr>
 			     	        <td><?= $i++;?></td>
-			     	         <td><?php echo $vals['moduleName']?></td>
+			     	        <td><?php echo $vals['moduleName']?></td>
 			     	        <td><?php foreach($from as $form_val){ echo $form_val."<br>";}?></td>
 			     	        <td><?php foreach($to as $to_val){ echo $to_val."<br>";}?></td>
 			     	        <td><?php echo $vals['stops']?></td>
@@ -100,6 +112,7 @@
 			     	    </tr>
 			     	    <?php } ?>
 			     	</table>
+                    </div>
 			     </div>
 			   
 		     </div>

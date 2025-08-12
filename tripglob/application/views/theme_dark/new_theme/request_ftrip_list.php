@@ -30,7 +30,8 @@
 		    padding: 25px 25px;
 		    border-radius: 5px;
 		    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.08), 0 6px 20px 0 rgba(0, 0, 0, 0.08);
-		    margin-top:70px;
+		     margin-top: 13rem;
+    		margin-bottom: 2rem;
 		    
 		}
       </style>

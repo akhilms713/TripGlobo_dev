@@ -62,7 +62,7 @@ ul.mysign2 li ul li a{ text-decoration: none; }
       <div class="sidall">
         <div class="topmenu">
           <div class="navbdclose">
-          <div class="top_items explore_div main_con desk-view-only ">
+          <div class="top_items  main_con desk-view-only ">
           <a  href="<?php echo WEB_URL?>" target=""> <i class="fa fa-plane" aria-hidden="true"></i> FLIGHTS
           </a>
         <a  href="<?php echo WEB_URL.'hotel/search' ?>" target="_blank" id=""> <i class="fa fa-hotel" aria-hidden="true"></i> HOTELS
