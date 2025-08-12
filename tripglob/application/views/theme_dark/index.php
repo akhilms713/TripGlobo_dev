@@ -574,8 +574,8 @@ img.main_abosule_n {
 .box19:hover .icon li a:hover{background:#203f7cb3;border-color:#fff;}
 .box19 .icon li:first-child a{transition:all .6s cubic-bezier(.175,.885,.32,1.275) 0s}
 .box19 .icon li:last-child a{transition:all .6s cubic-bezier(.175,.885,.32,1.275) .1s}
-@media only screen and (max-width:990px){.box19{margin-bottom:30px}
-}
+/* @media only screen and (max-width:990px){.box19{margin-bottom:30px} */
+/* } */
 @media only screen and (max-width:360px){.box19 .box-content{padding-top:20%}
 }
 
@@ -600,8 +600,8 @@ img.main_abosule_n {
 .box14 .icon li a{    display: block;width: 110px;height: 40px;padding: 0px 10px;line-height: 38px;border: 1px solid #fff;border-radius: 0 16px;font-size: 14px;color: #fff;vertical-align: middle;margin-right: 5px;transition: all .4s ease 0s;
 }
 .box14 .icon li a:hover{background:#203f7cb3;border-color:#fff;}
-@media only screen and (max-width:990px){.box14{margin-bottom:30px}
-}
+/* @media only screen and (max-width:990px){.box14{margin-bottom:30px} */
+/* } */
 
 ul {
     list-style-type: none;
@@ -737,11 +737,12 @@ ul {
 
 /* Hotel card container */
 .hotel-card-container {
-    display: flex;
+    /* display: flex;
   justify-content: space-between;
     gap: 20px;
     width: 100%;
-    left:0;
+    left:0; */
+    padding:2rem;
 }
 
 /* Hotel card styling */
@@ -752,6 +753,7 @@ ul {
     height: auto; /* Square size */
     overflow: hidden;
     background: #000;
+    margin-bottom:1rem;
 }
 
 /* Hotel image should fit properly */
@@ -894,7 +896,7 @@ ul {
 </div>
 
 <div  style= "display:flex;  align-items:center; justify-content:center; margin-top: 30px;">
-  <div class="main_header_iconsaq">
+  <div class="main_header_iconsaq" style="padding-bottom: 2rem;">
     <!--<div class="poppoular-icons hidden-xs hidden-sm">-->
     <!--      <img class="img-responsive" src="<?php echo base_url(); ?>assets/theme_dark/images/poppoular-icons.png" alt="logo">-->
     <!--</div>-->
@@ -905,9 +907,9 @@ ul {
 </div>
 
 <div class="hotel-scroll-container">
-    <div class="hotel-card-container">
+    <div class="hotel-card-container row">
         <!-- Hotel Card 1 -->
-        <div class="hotel-card">
+        <div class="hotel-card col-xs-12 col-sm-6">
             <img src="https://tripglobo.com/admin-panel/uploads/flightdeal/Asset 293@4x.png" alt="Luxury Resort">
             
             <div class="hotel-card-content">
@@ -929,7 +931,7 @@ ul {
         </div>
 
         <!-- Hotel Card 2 -->
-        <div class="hotel-card">
+        <div class="hotel-card col-xs-12 col-sm-6">
             <img src="https://tripglobo.com/admin-panel/uploads/flightdeal/Asset 294@4x.png" alt="Lakeview Retreat">
             <div class="hotel-card-content">
                 <div class="hotel-text">
@@ -1226,55 +1228,37 @@ ul {
 
 <section class="main_newd_leftrdf">
   <div class="container">
-  <div class="col-md-12 ">
-       <div class="col-md-1"></div>
-    <div class="col-md-5">
-      <h3>Subscribe our Newsletter and offers</h3>
-      <p>By subscribing to our mailing list you will always be 
-update with the latest news from us.</p>
-     <input type="email" id="sub_mail" class="email" placeholder="Your Email" required="required" onclick="ValidateEmail(document.form1.text1)">
-      <button type="button" id="subscribe" class="btn btn-primary button_newd_mamkp_q">Subscribe </button>
-       <div class="success" style="color: green;"></div>
+    <div class="col-md-12 ">
+      <div class="col-md-6 col-xs-12 text-center">
+        <h3>Subscribe our Newsletter and offers</h3>
+        <p>By subscribing to our mailing list you will always be update with the latest news from us.</p>
+        <div style="margin-top:3rem;">
+          <input type="email" id="sub_mail" class="email" placeholder="Your Email" required="required" onclick="ValidateEmail(document.form1.text1)">
+          <button type="button" id="subscribe" class="btn btn-primary button_newd_mamkp_q">Subscribe </button>
+          <div class="success" style="color: green;"></div>
+        </div>
       </div>
-      
-      <div class="col-md-1"></div>
-      
-      <div class="col-md-5">
-      <h3>Follow us</h3>
-      <p>By connecting our social media
-        follow us </p>
-        <div class="social-icon">
-      <ul>
-      <?php
-      $CI = get_instance();
-      $CI->load->model('home_model');  
-      $social_links_details = $CI->home_model->social_links(); 
-      foreach($social_links_details as $links) {
-      $icon_img = $links->icon;
-      $link = $links->link;
-      ?>
-      
-        <li><a href="<?php echo $link;  ?>" target="_blank"><i class="<?php echo $icon_img; ?>"></i></a></li>
-        <?php
-        }
-        ?>
-      
-      
-      </ul>
-    </div>
-      </div>
-      
-      <div class="col-md-1"></div>
-
-      <!--<div class="col-md-2 footer_cities">
+      <div class="col-md-6 col-xs-12 text-center">
+        <h3>Follow us</h3>
+        <p>By connecting our social media </p>
+        <div class="social-icon" style="display: flex;justify-content: center;">
           <ul>
-        	<li><a href="<?php echo base_url(); ?>general/work_with_uss" target="_blank">Work with us</a></li>
-        	<li><a href="<?php echo base_url(); ?>general/advertise" target="_blank">Advertise with Us</a></li>
-        	<li><a href="<?php echo base_url(); ?>general/feedback" target="_blank">FeedBack</a></li>
-        </ul>
-      </div>-->
-
-  </div>
+            <?php
+            $CI = get_instance();
+            $CI->load->model('home_model');  
+            $social_links_details = $CI->home_model->social_links(); 
+            foreach($social_links_details as $links) {
+            $icon_img = $links->icon;
+            $link = $links->link;
+            ?>
+            <li><a href="<?php echo $link;  ?>" target="_blank"><i class="<?php echo $icon_img; ?>"></i></a></li>
+            <?php
+            }
+            ?>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
