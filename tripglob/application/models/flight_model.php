@@ -999,7 +999,7 @@ class Flight_Model extends CI_Model {
                 $data[$i]['agent_markup'] = $agent_markup_price;
                 $data[$i]['admin_baseprice'] = $TotalPrice; // $temp['Admin_BasePrice'];
                 $data[$i]['bundle_search_id'] = @$request->id;
-                $data[$i]['arrival_time_filter'] = '';
+                $data[$i]['arrival_time_filter'] = 0;
                 $data[$i]['con_air_filter'] = $seg1[0][1]->Origin->Airport->AirportCode;
                 $data[$i]['prefer'] = $Refundable;
                 $data[$i]['nonRefundable'] = $Refundable;
