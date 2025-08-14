@@ -152,7 +152,7 @@
 .roomrow {
     display: inline-block;
     width: 100%;
-    margin-right: 20px;
+    /* margin-right: 20px; */
     border-bottom: none;
 }
 .oneroom.fltravlr .celroe {
@@ -228,7 +228,7 @@
   /* border: none; */
   /* padding-left: 40px; */
   /* line-height: 44px; */
-  width: 24rem;
+
   /* margin: 0px 0px 0px 0px; */
   /* margin-bottom: 15px;*/
 } 
@@ -400,7 +400,8 @@ span.flight-down-item-icon {
 .wrapper {
   display: flex;
   flex-wrap: wrap;          
-  gap: 16px;            
+  gap: 16px; 
+  margin-top:1rem;           
 }
 
 .field {
@@ -419,6 +420,9 @@ span.flight-down-item-icon {
   .fifth-wrap{
     position: static;
   }
+  .flyinputsnor.contr_form{
+    width: 19rem;
+  }
 }
 
 @media (min-width: 769px) {
@@ -426,6 +430,9 @@ span.flight-down-item-icon {
     position: absolute;
     top:14rem;
     right:1rem;
+  }
+  .flyinputsnor.contr_form{
+    width: 23rem;
   }
 }
 
@@ -500,7 +507,7 @@ if ($this->session->userdata('user_id') !== "") {
               </div>
             </div>
             <div class="field tabType">
-              <div style="margin-left:10px;">
+              <div >
                 <div class="roomrow">
                   <div class="celroe col-xs-7">Adults</div>
                   <div class="celroe col-xs-5" style="margin-top: -3px;">
@@ -536,7 +543,7 @@ if ($this->session->userdata('user_id') !== "") {
               </div>
             </div>
             <div class="field tabType">
-              <div style="margin-left:10px;">
+              <div style="">
                 <div class="roomrow">
                   <div class="celroe col-xs-7">
                     Children
