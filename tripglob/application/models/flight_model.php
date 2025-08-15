@@ -1004,6 +1004,7 @@ class Flight_Model extends CI_Model {
                 $data[$i]['prefer'] = $Refundable;
                 $data[$i]['nonRefundable'] = $Refundable;
                 $data[$i]['type'] =$result[$i]['type'] ;
+                $data[$i]['desc'] ='' ;
                 if (!empty($seg1[0][1]->Origin->Airport->AirportCode))
                     $this->db->insert('connecting_airports_filter', ['session_id' => $session_id, 'airport_code' => $seg1[0][1]->Origin->Airport->AirportCode]);
             }
