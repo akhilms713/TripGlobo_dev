@@ -48,18 +48,17 @@ class Bus extends CI_Controller {
      
         if ($authresponse['Status'] == true) {
             $raw_bus_list = get_bus_list(abs($search_params['search_id']),$authresponse);
-            // debug($raw_bus_list);die;
+            debug($raw_bus_list);die;
         }        
         $from_id = @$raw_bus_list['data']['result']['Destination'];
         $to_id = @$raw_bus_list['data']['result']['Origin'];     
-        $form_data = $this->bus_model->get_bus_station_data($from_id);//$search_data['from_station_id']);
+        $form_data = $this->bus_model->get_bus_station_data($search_data['from_station_id']);
         // debug($search_data);
-        $to_data = $this->bus_model->get_bus_station_data($to_id);//$search_data['to_station_id']);
+        $to_data = $this->bus_model->get_bus_station_data($search_data['to_station_id']);
         // debug($to_data);exit;
         $search_data_city = array('from_id' => $form_data->station_id,
             'to_id' => $to_data->station_id);
         //exit;
-debug($search_data_city);exit;
         if ($raw_bus_list['status']) {            
             $config = array();
         $config['base_url'] =$_SERVER["HTTP_REFERER"];
