@@ -45,7 +45,7 @@ class Bus extends CI_Controller {
         $search_params = $this->input->get();
         $session_data_main= $data['session_data'] = $session_data = $this->generate_rand_no().date("mdHis");
         $authresponse = auth_tektravel();
-                
+              debug($authresponse);exit;  
         if ($authresponse['Status'] == true) {
             $raw_bus_list = get_bus_list(abs($search_params['search_id']),$authresponse);
             // debug($raw_bus_list);die;
