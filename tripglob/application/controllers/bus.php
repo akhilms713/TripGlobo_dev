@@ -40,7 +40,7 @@ class Bus extends CI_Controller {
     public function bus_list($search_id ='')
 
     {
-        error_reporting(0);
+        error_reporting(1);
         $search_params =array();
         $search_params = $this->input->get();
         $session_data_main= $data['session_data'] = $session_data = $this->generate_rand_no().date("mdHis");
