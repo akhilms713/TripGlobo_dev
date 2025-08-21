@@ -48,7 +48,7 @@ class Bus extends CI_Controller {
      
         if ($authresponse['Status'] == true) {
             $raw_bus_list = get_bus_list(abs($search_params['search_id']),$authresponse);
-            // debug($raw_bus_list);die;
+            debug($search_params);die;
         }        
         $from_id = @$raw_bus_list['data']['result']['Destination'];
         $to_id = @$raw_bus_list['data']['result']['Origin'];     
