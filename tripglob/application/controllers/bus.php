@@ -38,7 +38,6 @@ class Bus extends CI_Controller {
     }
 
     public function bus_list($search_id ='')
-
     {
         error_reporting(1);
         $search_params =array();
