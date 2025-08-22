@@ -40,13 +40,15 @@ class Bus extends CI_Controller {
     public function bus_list($search_id ='')
 
     {
-        debug($search_id);die;
+        
         error_reporting(0);
         $search_params =array();
         $search_params = $this->input->get();
         $session_data_main= $data['session_data'] = $session_data = $this->generate_rand_no().date("mdHis");
         $authresponse = auth_tektravel();
-     
+     debug($search_params);
+        debug($authresponse);die;
+
         if ($authresponse['Status'] == true) {
             $raw_bus_list = get_bus_list(abs($search_params['search_id']),$authresponse);
             // debug($raw_bus_list);die;
