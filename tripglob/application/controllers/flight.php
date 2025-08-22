@@ -1294,12 +1294,11 @@ class FLight extends CI_Controller {
             $result['onward'] = $this->Flight_Model->get_flight_data_segments_r($uid);
             }
             $result['search_id'] =$uid_v1->search_id;
-            // debug($result);die;
+            debug($result);die;
             
             // $pricedetails=json_decode($result['PricingDetails']);            
-              debug($result);
+              // debug($result);exit;
             $dataresult['result'] = $this->load->view(PROJECT_THEME . '/flight/connection_return', $result, true);  
-            debug($result);exit;
             echo json_encode($dataresult['result']);
             // exit;
            
