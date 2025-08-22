@@ -44,7 +44,9 @@ class Booking extends CI_Controller {
         }
     }
 	public function index($session_id='',$search_id='',$search_module=''){
-		// debug($search_id);
+		debug($session_id);
+		debug($search_id);
+		debug($search_module);exit;
 		// error_reporting(E_ALL);
 	if ($search_id==='domestic_flight') {
 		    $idd=json_decode(base64_decode($session_id),1);
