@@ -1297,8 +1297,9 @@ class FLight extends CI_Controller {
             // debug($result);die;
             
             // $pricedetails=json_decode($result['PricingDetails']);            
-              // debug($result);exit;
+              debug($result);
             $dataresult['result'] = $this->load->view(PROJECT_THEME . '/flight/connection_return', $result, true);  
+            debug($result);exit;
             echo json_encode($dataresult['result']);
             // exit;
            

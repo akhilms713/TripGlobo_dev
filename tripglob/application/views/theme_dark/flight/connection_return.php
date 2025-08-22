@@ -84,7 +84,7 @@ for ($i = 0; $i < count($onward); $i++)
                <div class="sector_loop ">
                   <div class="celhtl   width25 midlbord">
                      <div class="fligthsmll">
-                        <img src="https://c.fareportal.com/n/common/air/ai/<?=$onward_data['Airline']['AirlineCode']?>.gif" ;="" alt="">
+                        <img src="https://c.fareportal.com/n/common/air/ai/<?=$onward_data['Airline']['AirlineCode']?>.gif" alt="">
                         
                      </div>
                      <div class="airlinename"><?=$onward_data['Airline']['AirlineName']?>                        <?=$onward_data['Airline']['AirlineCode']?> -  <?=$onward_data['Airline']['FlightNumber']?>                     </div>
@@ -155,7 +155,7 @@ for ($i = 0; $i < count($onward); $i++)
                <div class="sector_loop ">
                   <div class="celhtl   width25 midlbord">
                      <div class="fligthsmll">
-                        <img src="https://c.fareportal.com/n/common/air/ai/<?=$return_data['Airline']['AirlineCode']?>.gif" ;="" alt="">
+                        <img src="https://c.fareportal.com/n/common/air/ai/<?=$return_data['Airline']['AirlineCode']?>.gif"  alt="">
                         <!--<div class="flitsmdets">
                            </div>-->
                      </div>
