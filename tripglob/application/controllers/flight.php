@@ -1294,7 +1294,7 @@ class FLight extends CI_Controller {
             $result['onward'] = $this->Flight_Model->get_flight_data_segments_r($uid);
             }
             $result['search_id'] =$uid_v1->search_id;
-            debug($result);die;
+
             
             // $pricedetails=json_decode($result['PricingDetails']);            
               // debug($result);exit;
