@@ -97,7 +97,6 @@
    
    ?>
 <input type="hidden" name="baseUrl" id="baseUrl" value="<?php echo base_url();?>">
-<input type="hidden" name="searchId" id="searchId" value="<?php echo $search_id; ?>">
 <link rel="icon" href="<?php echo base_url(); ?>assets/theme_dark/images/favicon.png" type="image/x-icon">
 <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Lato|Source+Sans+Pro" rel="stylesheet">
@@ -187,33 +186,103 @@
    }
 </style>
 <script>
-   function load_busses() {
+   var load_busses = function () {
+   
+   
+   
        var basUrl = $('#baseUrl').val();
-       var searchId = $('#searchId').val(); // safer way than PHP echo inside JS
-
+   
+   
+   
+        //show_result_pre_loader();
+   
+   
+   
        $.ajax({
+   
+   
+   
            type: 'GET',
-           url: `${basUrl}index.php/bus/bus_list?search_id=${searchId}&op=load`,
-           cache: false,
+   
+   
+   
+           url: basUrl + 'index.php/bus/bus_list?search_id=<?php echo $search_id ?>&op=load',
+   
+   
+   
+           async: true,
+   
+   
+   
+           cache: true,
+   
+   
+   
            dataType: 'json',
+   
+   
+   
            success: function (res) {
-               if (typeof process_result_update === "function") {
-                   process_result_update(res);
-               } else {
-                   console.error("process_result_update is not defined.");
-               }
+   
+   
+   
+               var dui;
+   
+   
+   
+               var r = res;
+   
+   
+   
+               dui = setInterval(function () {
+   
+   
+   
+                   if (typeof (process_result_update) != "undefined" && $.isFunction(process_result_update) == true) {
+   
+   
+   
+                       clearInterval(dui);
+   
+   
+   
+                       process_result_update(r);
+   
+   
+   
+                   }
+   
+   
+   
+               }, 1);
+   
+   
+   
                $('#onwFltContainer').hide();
-           },
-           error: function (xhr, status, error) {
-               console.error("Error loading buses:", error);
+   
+   
+   
            }
+   
+   
+   
        });
+   
+   
+   
    }
-
-   // Load buses from active source
+   
+   
+   
+   //Load buss from active source
+   
+   
+   
    load_busses();
+   
+   
+   
 </script>
-
 <span class="hide">    
 <input type="hidden" id="pri_search_id" value="<?= $search_id ?>" >
 </span>
