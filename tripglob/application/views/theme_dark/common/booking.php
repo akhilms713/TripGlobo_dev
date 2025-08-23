@@ -1887,7 +1887,7 @@
                               <div class="col-md-12 nopad">
                                  <div class="checkcontent" style="overflow: inherit;">
                                     <div class="squaredThree"><input type="checkbox" value="0" name="confirm" class="filter_airline" id="squaredThree1"><label for="squaredThree1"></label></div>
-                                    <label for="squaredThree1" class="lbllbl">By booking this item, you agree to pay the total amount shown, which includes Service Fees, on the right and to the
+                                    <label for="squaredThree1" class="lbllbl">By booking this item, you agree to pay the total amount shown, which includes Service Fees1, on the right and to the
                                     <!-- Button trigger modal -->
 
 <a data-toggle="modal" data-target="#terms_n_conditions" class="colorbl">
