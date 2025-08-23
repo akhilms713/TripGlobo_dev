@@ -49,7 +49,7 @@
   }
 </style>
 <div class="carttoloadr"><strong>Confirming your flight...</strong></div>
-<?php// echo "<pre>";print_r($flight_result[0]['PricingDetails']);?>
+
 <?php if(!empty($flight_result)){ //echo '<pre>';print_r($flight_result);exit('views');
    $flight_count_result=count($flight_result);
    for($i=0;$i<$flight_count_result;$i++){ ?>
