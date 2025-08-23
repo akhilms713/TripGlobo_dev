@@ -2910,7 +2910,7 @@
 
                                   <div class="squaredThree"><input type="checkbox" value="0" name="confirm" class="filter_airline" id="squaredThree1"><label for="squaredThree1"></label></div>
 
-                                  <label for="squaredThree1" class="lbllbl">By booking this item, you agree to pay the total amount shown, which includes Service Fees, on the right and to the<a data-toggle="modal" data-target="#terms_n_conditions" class="colorbl"> Terms &amp; Conditions</a>.</label>
+                                  <label for="squaredThree1" class="lbllbl">By booking this item, you agree to pay the total amount shown, which includes Service Fees4, on the right and to the<a data-toggle="modal" data-target="#terms_n_conditions" class="colorbl"> Terms &amp; Conditions</a>.</label>
 
                                </div>
 
