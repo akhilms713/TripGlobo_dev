@@ -22,7 +22,7 @@
 | a PHP script and you can easily do that on your own.
 |
 */ //http://".$_SERVER['HTTP_HOST']."/t9x
-$env_base_url = getenv('BASE_URL');
+$env_base_url = getenv('ADMIN_URL');
 
 if ($env_base_url && strlen(trim($env_base_url)) > 0) {
     // Remove trailing slash to avoid double slashes when concatenated with leading slash paths
