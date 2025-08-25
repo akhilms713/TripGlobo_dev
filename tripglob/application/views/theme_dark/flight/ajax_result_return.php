@@ -518,7 +518,7 @@
 </div>
 
 <div class="col-lg-6 col-md-6">
-<?php// echo "<pre>";print_r($flight_result[0]['PricingDetails']);?>
+
 <?php if(!empty($flight_result)){ //echo '<pre>';print_r($flight_result);exit('views');
    $flight_count_result=count($flight_result);
    for($i=0;$i<$flight_count_result;$i++){
