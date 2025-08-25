@@ -1,6 +1,12 @@
-RewriteEngine On
-RewriteCond %{REQUEST_URI} ^/system.*
-RewriteRule ^(.*)$ index.php?/$1 [L]
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.+)$ index.php?/$1 [L]
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /admin-panel/
+
+    # Deny direct access to system or application folders
+    RewriteRule ^(system|application)/ - [F,L]
+
+    # If the requested resource doesn't exist, route to index.php
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php/$1 [L,QSA]
+</IfModule>
