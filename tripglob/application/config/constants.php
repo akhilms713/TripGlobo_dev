@@ -37,7 +37,7 @@ if ($env_base_url && strlen(trim($env_base_url)) > 0) {
 
     $base_url = $protocol . $host . $path;
 } else {
-    $base_url = "http://localhost/tripglob";  // no trailing slash
+    $base_url = "http://localhost/tripglobo_dev/tripglob";  // no trailing slash
 }
 
 /*
