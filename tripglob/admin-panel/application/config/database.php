@@ -48,10 +48,11 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = 'localhost';
-$db['default']['username'] = 'tripglobo_tripglobo';
-$db['default']['password'] = 'Z%^aC4+zVW!j';
-$db['default']['database'] = 'tripglobo_main';
+$db['default']['hostname'] = getenv('DB_HOST');//'localhost';
+$db['default']['username'] = getenv('DB_USER');//'root';
+$db['default']['password'] = getenv('DB_PASS');
+$db['default']['database'] = getenv('DB_NAME');
+
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;
