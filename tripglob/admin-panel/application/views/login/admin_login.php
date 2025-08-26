@@ -50,7 +50,7 @@
                          <img src="<?php echo WEB_URL?>assets/images/logo.png" alt="">
                     </div><br>
                     <!-- <div class="reltivefligtgo">        <div class="flitfly"></div>        </div> -->
-                    <form class="form form-validate  floating-label" onSubmit="return validates();" novalidate action="<?php echo base_url()."/"; ?>login " accept-charset="utf-8" method="post">
+                    <form class="form form-validate  floating-label" onSubmit="return validates();" novalidate action="<?php echo base_url(); ?>login " accept-charset="utf-8" method="post">
                     <div class="log_full_bg login_content">
                         <div class="log_form col-sm-6">
                             <h1>Login Form</h1>
