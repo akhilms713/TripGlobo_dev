@@ -10,7 +10,7 @@
 	</head>
 	<body>
 		<div class="container">
-			<form method="post" class="form-inline" action="https://tripglobo.com/ccavenue/dataform.php">
+			<form method="post" class="form-inline" action="<?php echo base_url(); ?>ccavenue/dataform.php">
 			   	<div class="form-group">
 					<input type="name" class="form-control" id="name" placeholder="Enter name" name="name">
 					</div>

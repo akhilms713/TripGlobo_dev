@@ -60,8 +60,8 @@ $phone = isset($_POST['phone']) ? $_POST['phone'] : '';
 <td></td><td><input type="submit" value="CheckOut"></td>
 </tr>
 <input type="hidden"  name="integration_type" value="iframe_normal"/>
-<input type="hidden" name="redirect_url" value="https://tripglobo.com/ccavenue/ccavResponseHandler.php"/>
-<input type="hidden" name="cancel_url" value="https://tripglobo.com/ccavenue/ccavResponseHandler.php"/>
+<input type="hidden" name="redirect_url" value="<?php echo base_url(); ?>ccavenue/ccavResponseHandler.php"/>
+<input type="hidden" name="cancel_url" value="<?php echo base_url(); ?>ccavenue/ccavResponseHandler.php"/>
 </table>
 </form>
 </body>

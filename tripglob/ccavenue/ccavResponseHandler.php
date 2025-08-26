@@ -7,7 +7,7 @@
 <?php include('Crypto.php')?>
 <?php 
    error_reporting(0);
-  $working_key='5C5912A907A3BB65234F77B3572F14E6';//Shared by CCAVENUES
+  $working_key='1D23E993BD08F9F33CD07BE38D9837CF';//Shared by CCAVENUES
   $access_code='AVCQ90HC88AH99QCHA';//Shared by CCAVENUES
   $amount_value='12';
   $merchant_id='251108';
