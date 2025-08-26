@@ -15,7 +15,7 @@ $name = isset($_POST['name']) ? $_POST['name'] : '' ;
 $email = isset($_POST['email']) ? $_POST['email'] : '';
 $phone = isset($_POST['phone']) ? $_POST['phone'] : '';
 ?>
-<form method="post" name="customerData" action="https://tripglobo.com/ccavenue/ccavRequestHandler.php">
+<form method="post" name="customerData" action="<?php echo base_url(); ?>ccavenue/ccavRequestHandler.php">
 <table width="40%" height="100" border='1' align="center"><caption><font size="4" color="blue"><b>CCAVENUE PAYMENT GATEWAY</b></font></caption></table>
 <table width="40%" height="100" border='1' align="center">
 <tr>
