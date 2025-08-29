@@ -8,7 +8,7 @@ class Ccpayment extends CI_Controller {
         $this->load->helper('crypto');
     }
 
-    public function index(){
+    public function index(){ print_r('here);
 
         $key = $this->input->get('key');
         if($key == "tripglobopay"){
