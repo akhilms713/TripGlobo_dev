@@ -752,6 +752,7 @@ ul {
     overflow: hidden;
     background: #000;
     margin-bottom:1rem;
+    height:fit-content;
 }
 
 /* Hotel image should fit properly */
