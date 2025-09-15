@@ -41,7 +41,7 @@ if ($env_base_url && strlen(trim($env_base_url)) > 0) {
 
     $config['base_url'] = $protocol . $host . $path;
 } else {
-    $config['base_url'] = "http://localhost/tripglob";  // no trailing slash
+    $config['base_url'] = "https://dev-tripglobo.dsocmarket.com";  // no trailing slash
 }
 
 
