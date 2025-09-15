@@ -244,8 +244,8 @@ class FLight extends CI_Controller {
     public function GetResults($Req_before_decode = '') {
         if (isset($_SESSION['this_form']) && !empty($_SESSION['this_form'])) {
             // code...
-        unset($_SESSION['this_form']);
-        unset($_SESSION['this_to']);
+            unset($_SESSION['this_form']);
+            unset($_SESSION['this_to']);
         }
         $data['request'] = $search_request = json_decode(base64_decode($Req_before_decode));
         $rand_id = md5(time() . rand() . crypt(time()));
@@ -256,12 +256,12 @@ class FLight extends CI_Controller {
         $active_api = $this->Flight_Model->get_api_list_flight();
         // debug($active_api);exit;
         for ($ai = 0; $ai < count($active_api); $ai++) {
-            $api_name = $active_api[$ai]->api_name; 
+            $api_name = $active_api[$ai]->api_name;
             //$api_name='AMADEUS';
 
 
             if ($api_name == 'AMADEUS') {
-                
+
                 $Amedus_LowFareSearchRes = Fare_MasterPricerTravelBoardSearchReq($search_request, $xml_response);
                 $results = $this->renderApiResponse($Amedus_LowFareSearchRes['Fare_MasterPricerTravelBoardSearchRes'], $rand_id);
                 // debug($results); die;
@@ -288,7 +288,7 @@ class FLight extends CI_Controller {
                                     $new_flight_arr[$i]['paxFareProduct'] = $r_value['paxFareProduct'];
                                     $i++;
                                 } else {
-                                    
+
                                 }
                             }
                         } else {
@@ -330,9 +330,9 @@ class FLight extends CI_Controller {
                 $_SESSION['token'] = $token_data;
                 $tt = $_SESSION['token'];
                 $results = SearchReq_Res($search_request, $tt);
-               // debug($results);exit;
+                // debug($results);exit;
                 $dataresult['session_data'] = $session_data_main;
-                
+
                 $this->Flight_Model->save_result_tbo($results, $session_data, $search_request, $api_name);
             }
         }
@@ -340,7 +340,7 @@ class FLight extends CI_Controller {
         $flight_data1 = $this->Flight_Model->get_arival_data_data($session_data);
         // debug($flight_data);exit;
 
-       // debug($data['request']);exit;
+        // debug($data['request']);exit;
         if ($api_name == 'AMADEUS') {
             $arival_data = json_decode($flight_data1['low_flight']->segment_data);
             $dataresult['ArrivalDate'] = $arival_data[0]->ArrivalDate[0];
@@ -360,7 +360,7 @@ class FLight extends CI_Controller {
         $dataresult['min_rate'] = floor((float) $flight_data['result_data']->min_rate * $this->curr_val);
         $total_flight_price = $flight_data['result_data']->max_rate;
         $dataresult['max_rate'] = ceil((float) $flight_data['result_data']->max_rate * $this->curr_val);
-        $data['airline_data'] = $flight_data['airline_data'];   
+        $data['airline_data'] = $flight_data['airline_data'];
         // debug($data['airline_data']);die;    
         $data['connecting_airports_filter'] = $flight_data['connecting_airports_filter'];
         $dataresult['stops_0min_rate'] = floor((float) $flight_data['stops_0']->min_rate * $this->curr_val);
@@ -381,11 +381,11 @@ class FLight extends CI_Controller {
         // debug($flight_data['airline_data']);
         foreach ($flight_data['airline_data'] as $airlinematrix) {
 
-           if (in_array($airlinematrix->airline,$airline_data_valied)) {
-        // debug($airline_data_valied);exit;
-            
-           }else{
-            $airlinematrixdata .= '<div class="item">
+            if (in_array($airlinematrix->airline,$airline_data_valied)) {
+                // debug($airline_data_valied);exit;
+
+            }else{
+                $airlinematrixdata .= '<div class="item">
 				<a class="pricedates" id=' . str_replace(" ", "_", $airlinematrix->airline) . '>
 					<div class="imgemtrx_plusmin">
 						<img src="https://c.fareportal.com/n/common/air/ai/' . $airlinematrix->airline_code . '.gif"  alt=""/>
@@ -394,8 +394,8 @@ class FLight extends CI_Controller {
 				 </a>
 			  </div>';
 
-           }
-        $airline_data_valied[]=$airlinematrix->airline;
+            }
+            $airline_data_valied[]=$airlinematrix->airline;
         }
         // debug($airlinematrixdata);exit;
         $data['flight_result'] = $this->Flight_Model->get_last_response($session_data, array('limit' => $this->perPage));
@@ -411,15 +411,15 @@ class FLight extends CI_Controller {
         $data['session_id'] = $session_data;
         if (in_array("return", array_column($data['flight_result'], 'type')))
         {
-         // debug(array_column($data['flight_result'], 'type'));exit;       
-        $dataresult['result'] = $this->load->view(PROJECT_THEME . '/flight/ajax_result_return', $data, true);
+            // debug(array_column($data['flight_result'], 'type'));exit;
+            $dataresult['result'] = $this->load->view(PROJECT_THEME . '/flight/ajax_result_return', $data, true);
         }
         else
         {
-                 
-        $dataresult['result'] = $this->load->view(PROJECT_THEME . '/flight/ajax_result', $data, true);
+
+            $dataresult['result'] = $this->load->view(PROJECT_THEME . '/flight/ajax_result', $data, true);
         }
-         
+
         // $dataresult['result'] = $this->load->view(PROJECT_THEME . '/flight/ajax_result', $data, true);
 
 // debug($dataresult);exit;
@@ -926,7 +926,7 @@ class FLight extends CI_Controller {
         xml_parser_free($parser);
         if (!$xml_values)
             return; //Hmm...
-            
+
 //echo "<pre>"; print_r($xml_values); echo "</pre>";  die();
         $xml_array = array();
         $parents = array();
@@ -1225,7 +1225,7 @@ class FLight extends CI_Controller {
                     $booking_cart_id = $this->Flight_Model->delete_cart_flight($result->bundle_search_id);
                 }
 
-                	// echo "<pre/>";print_r($cart_flight);exit("1185");
+                // echo "<pre/>";print_r($cart_flight);exit("1185");
                 $booking_cart_id = $this->Flight_Model->insert_cart_flight($cart_flight);
 
                 if ($this->session->userdata('user_id')) {
@@ -1266,7 +1266,7 @@ class FLight extends CI_Controller {
             echo json_encode($data);
         }
     }
-     public function addToCartReturn($uid = '') {
+    public function addToCartReturn($uid = '') {
         if ($uid != '') {
             $uid_v1 = json_decode(base64_decode($uid));
             $uid = $uid_v1->id;
@@ -1274,37 +1274,37 @@ class FLight extends CI_Controller {
             $fareBasis = $uid_v1->fareBasis;
             $result['data'] = $this->Flight_Model->get_flight_data_segments($uid);
             if (!empty($result['data'])) {
-                if ($result['data']->type == 'onward') {   
-                    unset($_SESSION['this_form']);                  
+                if ($result['data']->type == 'onward') {
+                    unset($_SESSION['this_form']);
                     $newdata = array(
-                    'uid_v1'  => $uid_v1,
-                    'uid'     => $uid                
+                        'uid_v1'  => $uid_v1,
+                        'uid'     => $uid
                     );
-                    $_SESSION['this_form'] = $newdata;   
-                 }else{
-                    unset($_SESSION['this_to']);                  
+                    $_SESSION['this_form'] = $newdata;
+                }else{
+                    unset($_SESSION['this_to']);
                     $newdata = array(
-                    'uid_v1'  => $uid_v1,
-                    'uid'     => $uid                
+                        'uid_v1'  => $uid_v1,
+                        'uid'     => $uid
                     );
-                    $_SESSION['this_to'] = $newdata;  
-                 } 
+                    $_SESSION['this_to'] = $newdata;
+                }
                 $uid=array($_SESSION['this_form']['uid'],$_SESSION['this_to']['uid']);
-            unset($result['data']); 
-            $result['onward'] = $this->Flight_Model->get_flight_data_segments_r($uid);
+                unset($result['data']);
+                $result['onward'] = $this->Flight_Model->get_flight_data_segments_r($uid);
             }
             $result['search_id'] =$uid_v1->search_id;
+            // debug($result);die;
 
-            
             // $pricedetails=json_decode($result['PricingDetails']);            
-              // debug($result);exit;
-            $dataresult['result'] = $this->load->view(PROJECT_THEME . '/flight/connection_return', $result, true);  
+            // debug($result);exit;
+            $dataresult['result'] = $this->load->view(PROJECT_THEME . '/flight/connection_return', $result, true);
             echo json_encode($dataresult['result']);
             // exit;
-           
+
         }
     }
-        public function addToCartfinal($uidd = '') {
+    public function addToCartfinal($uidd = '') {
         if ($uidd != '') {
             $uid_v1 = json_decode(base64_decode($uidd));
             $uid = $uid_v1->id;
@@ -1313,12 +1313,12 @@ class FLight extends CI_Controller {
             $results = $this->Flight_Model->get_flight_data_segments_f($uid);
             // debug($results);exit;
             if (is_array($results)) {
-                foreach ($results as $key => $result) {                    
-                // debug($results);exit;
-                $pricedetails=json_decode($result->PricingDetails);                
+                foreach ($results as $key => $result) {
+                    // debug($results);exit;
+                    $pricedetails=json_decode($result->PricingDetails);
                     $RoutingId = $result->routing_id;
                     $this->Flight_Model->insert_flight_data_segments_to_query_table($result->segment_data);
-                    $segment_data = json_decode($result->segment_data, 1);                    
+                    $segment_data = json_decode($result->segment_data, 1);
                     if ($result->api_name == 'AMADEUS') {
                         $api_id = 1;
                         $out_count = (count($segment_data[0]['DepartureDate']) - 1 );
@@ -1392,13 +1392,13 @@ class FLight extends CI_Controller {
                         'specific_rec_details' => $result->specific_rec_details,
                         'bundle_search_id' => @$result->bundle_search_id
                     );
-                    if ($key==0) {                        
-                    if ($result->bundle_search_id != '' || $result->bundle_search_id == 0) {
-                        $booking_cart_id = $this->Flight_Model->delete_cart_flight($result->bundle_search_id);
-                    }
+                    if ($key==0) {
+                        if ($result->bundle_search_id != '' || $result->bundle_search_id == 0) {
+                            $booking_cart_id = $this->Flight_Model->delete_cart_flight($result->bundle_search_id);
+                        }
                     }
 
-                        // echo "<pre/>";print_r($cart_flight);exit("1185");
+                    // echo "<pre/>";print_r($cart_flight);exit("1185");
                     $booking_cart_id = $this->Flight_Model->insert_cart_flight($cart_flight);
 
                     if ($this->session->userdata('user_id')) {
@@ -1421,7 +1421,7 @@ class FLight extends CI_Controller {
                         'ip_address' => $this->input->ip_address(),
                         'timestamp' => date('Y-m-d H:i:s')
                     );
-                    if ($key==0) {                        
+                    if ($key==0) {
                         if ($result->bundle_search_id != '' || $result->bundle_search_id == 0) {
                             $booking_cart_id = $this->Flight_Model->delete_cart_global($result->bundle_search_id);
                         }
@@ -1434,11 +1434,11 @@ class FLight extends CI_Controller {
                     $data['isCart'] = true;
                     $search_module_id = $uid_v1->search_id;
                     $search_module = $uid_v1->search_module;
-            // debug($data);exit;
+                    // debug($data);exit;
                 }
-                    $data['C_URL'] = WEB_URL . 'booking/' . $uidd . '/domestic_flight/'.$search_module;
+                $data['C_URL'] = WEB_URL . 'booking/' . $uidd . '/domestic_flight/'.$search_module;
             } else {
-            // debug($data);exit;
+                // debug($data);exit;
                 $data['isCart'] = false;
             }
             echo json_encode($data);
@@ -1544,7 +1544,7 @@ class FLight extends CI_Controller {
                     $max_return_tme = $arr['max'];
                 }
             }
-        } 
+        }
 
         $airline_filter1=$this->Flight_Model->airline_code_gen($airline_filter);
         // debug($airline_filter1);exit();
@@ -1589,21 +1589,21 @@ class FLight extends CI_Controller {
         $data['flight_result'] = $this->Flight_Model->get_last_response_filter($session_data, array('start' => $offset, 'limit' => $this->perPage), $cond);
 
 // debug($data);exit;
-	   // echo '<pre>';print_r($data['flight_result']);exit;
+        // echo '<pre>';print_r($data['flight_result']);exit;
         if (!$data['flight_result']) {
             $data['message'] = "No Result Found.";
         }
         $data['airline_filter'] = $cond['airline_filter'];
         $data['con_air_fil'] = $cond['con_air_filter'];
         $data['connecting_airports_filter'] = $flight_data['connecting_airports_filter'];
-       if (in_array("return", array_column($data['flight_result'], 'type')))
+        if (in_array("return", array_column($data['flight_result'], 'type')))
         {
-         // debug(array_column($data['flight_result'], 'type'));exit;       
-        $this->load->view(PROJECT_THEME . '/flight/ajax_result_return', $data);
+            // debug(array_column($data['flight_result'], 'type'));exit;
+            $this->load->view(PROJECT_THEME . '/flight/ajax_result_return', $data);
         }
         else
         {
-       $this->load->view(PROJECT_THEME . '/flight/ajax_result', $data);
+            $this->load->view(PROJECT_THEME . '/flight/ajax_result', $data);
         }
         // $this->load->view(PROJECT_THEME . '/flight/ajax_result', $data);
     }
