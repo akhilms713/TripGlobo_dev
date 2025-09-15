@@ -960,7 +960,7 @@ class Flight_Model extends CI_Model {
 
                 $data[$i]['api_name'] = $api_name;
                 $data[$i]['trip_type'] = $trip_type;
-                $data[$i]['ResultIndex'] = $temp['ResultIndex'];
+                $data[$i]['ResultIndex'] = substr(trim($temp['ResultIndex']), 0, 255);
                 $data[$i]['amount'] = floor($Final_price);
                 $data[$i]['api_tax'] = $Tax;
                 $data[$i]['currency'] = BASE_CURRENCY;
