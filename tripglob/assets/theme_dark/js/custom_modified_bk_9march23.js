@@ -1,5 +1,5 @@
    // room adding for hotel
- var WEB_URL='https://tripglobo.com/beta1/index.php/';
+ var WEB_URL='https://dev-tripglobo.dsocmarket.com/beta1/index.php/';
      function show_room_info(room_count,divid){
      var data = {};
      var data = $('#hotelSearchForm').serialize();

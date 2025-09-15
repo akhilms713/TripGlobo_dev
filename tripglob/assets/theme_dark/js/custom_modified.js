@@ -1,5 +1,5 @@
    // room adding for hotel
- var WEB_URL='https://tripglobo.com/index.php/';
+ var WEB_URL='https://dev-tripglobo.dsocmarket.com/index.php/';
      function show_room_info(room_count,divid){
      var data = {};
      var data = $('#hotelSearchForm').serialize();
@@ -1049,7 +1049,7 @@
             var FlightPlaceholderFrom = "From, Airport Code / City";      
             var FlightPlaceholderToSc = "To, Airport Code / City";
             var dipatureDate  =   "Departure date";
-           var WEB_URL2='https://tripglobo.com/';
+           var WEB_URL2='https://dev-tripglobo.dsocmarket.com/';
           $("#rowsFlight").append('<div class="appenddiv"><div class="s002"><div class="col-md-11" style="padding:0px;"><div class="inner-form"><div class="input-field first-wrap"><div class="col-md-4 nopad" style=""><div class="brde_on on_multi"><h4>From</h4><input type="text" class="ft fromflightm iconLoc contr_form" data-refid='+id+' id="from_m_'+id+'" data-id="'+id+'" value="" name="from_m[]" placeholder="Type departure city" required style="border-radius: 50px 0px 0px 50px;"/><input class="hide loc_id_holder" name="from_loc_id_'+id+'" id="from_loc_id_'+id+'" type="hidden" value="'+myvalueid+'" /></div></div></div><div class="input-field first-wrap"><div class="col-md-4 nopad " style=""><div class="brde_on on_multi"><h4>To</h4><input type="text" class="ft departflightm iconLoc contr_form" id="to_m_'+id+'" data-id="'+id+'" name="to_m[]" placeholder="Type destination city" /></div></div></div><div class="input-field second-wrap"><div class="col-md-4 nopad" style=""> <div class="brde_on on_multi"><h4>Depature Date</h4><input name="depature_m[]" id="depature_m_'+id+'" type="text" class="forminput date_picker contr_form" placeholder="'+dipatureDate+'" readonly="" style="border-radius: 0px 50px 50px 0px;"/></div></div></div></div></div><div class="col-md-1 fiveh pad5"><span class="formlabel">&nbsp;</span><div class="flightDate" id="addclose"><img src="'+WEB_URL2+'assets/theme_dark/images/minus-button.png" id="closeflights" onclick="closeFlights()" style="cursor:pointer;" /></div></div><div class="col-md-4"></div></div></div>');
           $(function() {
             $("#depature_m_"+id ).datepicker({
@@ -1174,7 +1174,7 @@ var WEB_URL='https://tripglobo.com/index.php/';
          var FlightPlaceholderFrom = "";      
          var FlightPlaceholderToSc = "";
          var dipatureDate  =   ""; 
-          var WEB_URL='https://tripglobo.com/';
+          var WEB_URL='https://dev-tripglobo.dsocmarket.com/';
        $("#rowsFlight").append('<div class="appenddiv"><div class="col-md-7 nopad"><div class="col-md-6 pad10 fullwidth_tab"><div class="marginbotom10"><div class="relativemask"><span class="maskimg mfrom"></span><div class="col-md-12 nopad brde_on" style="padding: 0;border: 2px solid #fdb813; border-radius: 4px; margin-bottom: 5px;"><h4>From</h4><input type="text" class="ft fromflightm" data-refid='+id+' id="from_m_'+id+'" name="from_m[]" placeholder="From, Airport Name or Airport City" /></div></div></div></div><div class="col-md-6 pad10 fullwidth_tab"><div class="marginbotom10"><div class="relativemask"><span class="maskimg mto"></span><input type="text" class="ft departflightm" name="to_m[]" data-refid='+id+' id="to_m_'+id+'" placeholder="To, Airport Name or Airport City" /></div></div></div></div><div class="col-md-4 nopad fullwidth_tab"><div class="marginbotom10"><div class="col-xs-8 fiveh pad10"><div class="relativemask"><span class="maskimg caln"></span><input name="depature_m[]" id="departure_multi'+id+'" type="text" class="forminput date_picker" placeholder="'+dipatureDate+'" /></div></div><div class="col-xs-4 fiveh pad10"><div class="flightDate" id="addclose"><div><img src="'+WEB_URL2+'assets/theme_dark/images/minus-button.png" id="closeflights" onclick="closeFlights()" style="cursor:pointer;" /></div></div></div></div></div></div>');
    
    
@@ -1257,7 +1257,7 @@ var WEB_URL='https://tripglobo.com/index.php/';
            $('#to').val(from);
            $(".flight_chnge .fa-exchange").toggleClass('rot_arrow');
      });
- var WEB_URL='https://tripglobo.com/index.php/';
+ var WEB_URL='https://dev-tripglobo.dsocmarket.com/index.php/';
        $(".fromflightm").autocomplete({
              source: WEB_URL+"general/get_flight_suggestions",
              minLength: 3,//search after two characters
