@@ -46,7 +46,7 @@ class Ccpayment extends CI_Controller {
     
     }
 
-     public function response() {
+     public function ccresponse() {
 
         $workingKey = getenv('CC_WorkingKey');  
 
