@@ -798,7 +798,7 @@ $('.toglefil').click(function(){
 	  var that = $(this);
 	        e.preventDefault();
 	        var att = $(this).attr('data-attr');
-	        var action = WEB_URL+'flight/addToCart/'+att;
+	        var action = 'https://dev-tripglobo.dsocmarket.com/flight/addToCart/'+att;
 			$.ajax({
 				type: "GET",
 				url: action,
