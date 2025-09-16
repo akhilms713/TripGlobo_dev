@@ -989,9 +989,9 @@ class Flight_Model extends CI_Model {
                 }               
                     $data[$i]['onwards_stops'] = $StopOverCount;              
                 if ($trip_type == "ROUNDTRIP") {
-                    $data[$i]['returns_stops'] = $seg1[0][1]->StopOver;
+                    $data[$i]['returns_stops'] = isset($seg1[0][1]->StopOver) ? $seg1[0][1]->StopOver : 0;
                 } else {
-                    $data[$i]['returns_stops'] = '';
+                    $data[$i]['returns_stops'] = 0;
                 }
                 $data[$i]['request_scenario'] = json_encode($request);
                 $data[$i]['specific_rec_details'] = '';
