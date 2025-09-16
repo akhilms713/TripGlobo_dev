@@ -402,7 +402,7 @@ $(function() {
     $.ajax({
       type:'GET', 
     dataType:"json",
-      url: '<?php echo WEB_URL;?>flight/GetResults/<?php echo $request;?>',
+      url: 'https://tripglobo.com/flight/GetResults/<?php echo $request;?>',
       beforeSend: function(XMLHttpRequest){
     $('.imgLoader').fadeIn();
     $('body').css('overflow', 'hidden');
