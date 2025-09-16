@@ -1,5 +1,5 @@
    // room adding for hotel
- var WEB_URL='http://tripglob.local/';
+ var WEB_URL='https://tripglobo.com/index.php/';
      function show_room_info(room_count,divid){
      var data = {};
      var data = $('#hotelSearchForm').serialize();

@@ -494,17 +494,28 @@ if ($this->session->userdata('user_id') !== "") {
           <input type="hidden" class="triprad iradio_flat-blue" id="trip_type" name="trip_type" value="<?php echo ($triptype != "") ? $triptype : 'oneway';?>"/>
           <div class="wrapper">
             <div class="field tabType">
-              <div class="roundTab anim " id="round_t" style="margin-right:3rem">
-                <input type="checkbox" class="tabCheckbox" />
+              <div class="roundTab anim " id="round_t" style="margin-right:3rem; cursor: pointer;"onclick="setTripType('round')">
+                <input type="checkbox" class="tabCheckbox" onclick="setTripType('round')"/>
                 <?php if(! isset($triptype)) $triptype = 'round';?>
                 <a id='round' class="wament round <?php if(isset($triptype) && $triptype == 'round') echo 'active';?>" >
                   <img src="<?php echo base_url();?>assets/theme_dark/images/round_way.png" width="30px"> Round Trip
                 </a>
               </div>
-              <div class="onewayTab anim" id="oneway">
-                <input type="checkbox" class="tabCheckbox" />
+              <div class="onewayTab anim" id="oneway" style="cursor: pointer;">
+                <input type="checkbox" class="tabCheckbox" onclick="setTripType('oneway')"/>
                 <a id='oneway' class="wament oneway <?php if(isset($triptype) && $triptype == 'oneway') echo 'active'; ?>" > <img src="<?php echo base_url();?>assets/theme_dark/images/one_way.png" width="30px"> One Way</a> 
               </div>
+              <!--Created By Ganga Dummy Multi City-->
+             <div class="multiTab anim" id="multicity_t" style="cursor: pointer;">
+    <input type="checkbox" class="tabCheckbox" onclick="setTripType('M')" />
+    <a id='multicity'
+       class="wament multicity <?php if(isset($triptype) && $triptype == 'M') echo 'active'; ?>" 
+       onclick="setTripType('M')">
+       <img src="<?php echo base_url();?>assets/theme_dark/images/multi_city.png" width="30px"> Multi-City
+    </a>
+</div>
+
+              
             </div>
             <div class="field tabType">
               <div >
@@ -860,6 +871,64 @@ if ($this->session->userdata('user_id') !== "") {
                                                $('.select2').select2();
                                       });
                                   </script>
+                                  
+                                  <script type="text/javascript">
+function setTripType(type) {
+    // reset all
+    $('.tabCheckbox').prop('checked', false);
+    $('.wament').removeClass('active');
+
+    if (type === 'oneway') {
+        $('#oneway .tabCheckbox').prop('checked', true);
+        $('#oneway').addClass('active');
+        $('#trip_type').val('oneway');
+        $('#rtrn').hide();
+
+    } else if (type === 'M') {
+        $('#multicity_t .tabCheckbox').prop('checked', true);
+        $('#multicity').addClass('active');
+        $('#trip_type').val('M');
+        $('#rtrn').hide();
+
+    } else {
+        $('#round_t .tabCheckbox').prop('checked', true);
+        $('#round').addClass('active');
+        $('#trip_type').val('round');
+        $('#rtrn').show();
+    }
+}
+
+// event listeners
+$('.tabCheckbox').on('change', function () {
+    const parentId = $(this).parent().attr('id');
+    if (parentId === 'oneway') {
+        setTripType('oneway');
+    } else if (parentId === 'multicity_t') {
+        setTripType('M');
+    } else {
+        setTripType('round');
+    }
+});
+
+$('.wament').on('click', function () {
+    if ($(this).hasClass('oneway')) {
+        setTripType('oneway');
+    } else if ($(this).hasClass('multicity')) {
+        setTripType('M');
+    } else {
+        setTripType('round');
+    }
+});
+
+// your swap from/to code can stay here
+$(".swipe_icon").click(function () {
+    var from = $("#from").val();
+    var to = $("#to").val();
+    $("#from").val(to);
+    $("#to").val(from);
+});
+</script>
+
                                   <style>
                 .select2-selection--single {
                                           color: #333;

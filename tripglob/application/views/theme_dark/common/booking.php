@@ -1766,6 +1766,14 @@
                               </div>
                               
                               <div class="comon_backbg">
+                                  <!--<div class="col-md-2">-->
+                                  <!--      <div class="form-check" style="border: 1px solid #ddd;margin: 10px;padding: 5px;border-radius: 10px;">-->
+                                  <!--          <input class="form-check-input" type="radio" name="payment_gateway" id="ccAvenue" value="ccAvenue" checked>-->
+                                  <!--          <label class="form-check-label" for="ccAvenue">-->
+                                  <!--              CcAvenue-->
+                                  <!--          </label>-->
+                                  <!--      </div>-->
+                                  <!--  </div>-->
                                  
                                     <div class="col-md-2">
                                         <div class="form-check" style="border: 1px solid #ddd;margin: 10px;padding: 5px;border-radius: 10px;">
@@ -1887,7 +1895,7 @@
                               <div class="col-md-12 nopad">
                                  <div class="checkcontent" style="overflow: inherit;">
                                     <div class="squaredThree"><input type="checkbox" value="0" name="confirm" class="filter_airline" id="squaredThree1"><label for="squaredThree1"></label></div>
-                                    <label for="squaredThree1" class="lbllbl">By booking this item, you agree to pay the total amount shown, which includes Service Fees1, on the right and to the
+                                    <label for="squaredThree1" class="lbllbl">By booking this item, you agree to pay the total amount shown, which includes Service Fees, on the right and to the
                                     <!-- Button trigger modal -->
 
 <a data-toggle="modal" data-target="#terms_n_conditions" class="colorbl">
@@ -2118,7 +2126,7 @@
                                              
                                              ?>
                                           <input type="hidden" value="<?php echo $price_val; ?>" id="total_amount"required>
-                                          <div class="ritaln cartcntamnt bigclrfnt finalAmt"><span id="curr_symbol"><?php echo 'рд░';?></span>&nbsp;<span class="amount" id="curr_amount"><?php echo number_format($total_value, 2);?></span></div>
+                                          <div class="ritaln cartcntamnt bigclrfnt finalAmt"><span id="curr_symbol"><?php echo 'र';?></span>&nbsp;<span class="amount" id="curr_amount"><?php echo number_format($total_value, 2);?></span></div>
                                        </div>
                                     </div>
                                  </div>

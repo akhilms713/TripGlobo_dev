@@ -121,7 +121,7 @@ a.spectal_trip_1 {
   }
 
 
-@media (max-width: 991px) {
+@media (max-width: 768px) {
   /*=========== hamburger ========= */
   .hamburger {
     width: 44px;
@@ -161,7 +161,7 @@ a.spectal_trip_1 {
   }
 
 }
-@media (min-width: 991px) {
+@media (min-width: 769px) {
   #navMenu{
     display:flex;
   }
