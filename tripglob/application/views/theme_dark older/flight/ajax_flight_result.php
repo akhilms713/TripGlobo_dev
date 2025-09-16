@@ -1,6 +1,5 @@
 <div class="carttoloadr"><strong>Confirming your flight...</strong></div>
-<?php echo '<pre/>';print_r($flight_result);exit; ?>
-<?php 
+<?php
 if(!empty($flight_result)){  //echo '<pre/>';print_r($flight_result);exit;
 		$flight_count_res=count($flight_result);
 			for($i=0;$i<$flight_count_res;$i++){ ?>
