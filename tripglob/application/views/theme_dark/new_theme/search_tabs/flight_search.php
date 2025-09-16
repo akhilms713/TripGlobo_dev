@@ -491,20 +491,31 @@ if ($this->session->userdata('user_id') !== "") {
         <div class="smalway">
           <input type="hidden" id="getUrl2" value="<?php echo $_SERVER['REQUEST_URI']?>">
           <input type="hidden" id="check_type_select" value="<?php echo $triptype;?>" >
-          <input type="hidden" class="triprad iradio_flat-blue" id="trip_type" name="trip_type" value="<?php echo ($triptype != "") ? $triptype : 'round';?>"/>
+          <input type="hidden" class="triprad iradio_flat-blue" id="trip_type" name="trip_type" value="<?php echo ($triptype != "") ? $triptype : 'oneway';?>"/>
           <div class="wrapper">
             <div class="field tabType">
-              <div class="roundTab anim " id="round_t" style="margin-right:3rem">
-                <input type="checkbox" class="tabCheckbox" />
+              <div class="roundTab anim " id="round_t" style="margin-right:3rem; cursor: pointer;"onclick="setTripType('round')">
+                <input type="checkbox" class="tabCheckbox" onclick="setTripType('round')"/>
                 <?php if(! isset($triptype)) $triptype = 'round';?>
                 <a id='round' class="wament round <?php if(isset($triptype) && $triptype == 'round') echo 'active';?>" >
                   <img src="<?php echo base_url();?>assets/theme_dark/images/round_way.png" width="30px"> Round Trip
                 </a>
               </div>
-              <div class="onewayTab anim" id="oneway">
-                <input type="checkbox" class="tabCheckbox" />
+              <div class="onewayTab anim" id="oneway" style="cursor: pointer;">
+                <input type="checkbox" class="tabCheckbox" onclick="setTripType('oneway')"/>
                 <a id='oneway' class="wament oneway <?php if(isset($triptype) && $triptype == 'oneway') echo 'active'; ?>" > <img src="<?php echo base_url();?>assets/theme_dark/images/one_way.png" width="30px"> One Way</a> 
               </div>
+              <!--Created By Ganga Dummy Multi City-->
+             <div class="multiTab anim" id="multicity_t" style="cursor: pointer;">
+    <input type="checkbox" class="tabCheckbox" onclick="setTripType('M')" />
+    <a id='multicity'
+       class="wament multicity <?php if(isset($triptype) && $triptype == 'M') echo 'active'; ?>" 
+       onclick="setTripType('M')">
+       <img src="<?php echo base_url();?>assets/theme_dark/images/multi_city.png" width="30px"> Multi-City
+    </a>
+</div>
+
+              
             </div>
             <div class="field tabType">
               <div >
@@ -689,7 +700,7 @@ if ($this->session->userdata('user_id') !== "") {
                             </div> 
                           </div>
 
-                          <div class="col-md-6 col-sm-6 nopad dpt_label">
+                          <div class="col-md-6 col-sm-6 nopad dpt_label" id="rtrn">
                             <h4 id="return_lbl">Return Date</h4>
                             <div class="input-field third-wrap" style="display:flex;">
                                 
@@ -860,6 +871,64 @@ if ($this->session->userdata('user_id') !== "") {
                                                $('.select2').select2();
                                       });
                                   </script>
+                                  
+                                  <script type="text/javascript">
+function setTripType(type) {
+    // reset all
+    $('.tabCheckbox').prop('checked', false);
+    $('.wament').removeClass('active');
+
+    if (type === 'oneway') {
+        $('#oneway .tabCheckbox').prop('checked', true);
+        $('#oneway').addClass('active');
+        $('#trip_type').val('oneway');
+        $('#rtrn').hide();
+
+    } else if (type === 'M') {
+        $('#multicity_t .tabCheckbox').prop('checked', true);
+        $('#multicity').addClass('active');
+        $('#trip_type').val('M');
+        $('#rtrn').hide();
+
+    } else {
+        $('#round_t .tabCheckbox').prop('checked', true);
+        $('#round').addClass('active');
+        $('#trip_type').val('round');
+        $('#rtrn').show();
+    }
+}
+
+// event listeners
+$('.tabCheckbox').on('change', function () {
+    const parentId = $(this).parent().attr('id');
+    if (parentId === 'oneway') {
+        setTripType('oneway');
+    } else if (parentId === 'multicity_t') {
+        setTripType('M');
+    } else {
+        setTripType('round');
+    }
+});
+
+$('.wament').on('click', function () {
+    if ($(this).hasClass('oneway')) {
+        setTripType('oneway');
+    } else if ($(this).hasClass('multicity')) {
+        setTripType('M');
+    } else {
+        setTripType('round');
+    }
+});
+
+// your swap from/to code can stay here
+$(".swipe_icon").click(function () {
+    var from = $("#from").val();
+    var to = $("#to").val();
+    $("#from").val(to);
+    $("#to").val(from);
+});
+</script>
+
                                   <style>
                 .select2-selection--single {
                                           color: #333;
@@ -1564,6 +1633,33 @@ background: red;
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 <script type="text/javascript">
+    $('#round_t .tabCheckbox').prop('checked', true);
+    $('.tabCheckbox').on('change', function () {
+        // Determine which checkbox was just clicked
+        const $clickedCheckbox = $(this);
+
+        if ($clickedCheckbox.parent().attr('id') === 'oneway') {
+            // If 'oneway' was checked, uncheck 'round_t'
+            $('#round_t .tabCheckbox').prop('checked', false);
+            // Set trip type to 'oneway' and hide the return date
+            $('#trip_type').val('oneway');
+            $('#rtrn').hide();
+        } else {
+            // If 'round_t' was checked, uncheck 'oneway'
+            $('#oneway .tabCheckbox').prop('checked', false);
+            // Set trip type to 'round' and show the return date
+            $('#trip_type').val('round');
+            $('#rtrn').show();
+        }
+    });
+
+    // also check on page load
+    if ($('#oneway .tabCheckbox').is(':checked')) {
+        $('#rtrn').hide();
+    } else {
+        $('#trip_type').val('round');
+        $('#rtrn').show();
+    }
  $(".swipe_icon").click(function(){
     var from = $("#from").val();
     var to = $("#to").val();

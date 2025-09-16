@@ -15,7 +15,7 @@
                       <div class="waywy">
                         <div class="smalway"> 
                          <input type="hidden" class="triprad iradio_flat-blue" id="trip_type" name="trip_type" value="round"/>
-                        <a class="wament <?php if(isset($triptype) && $triptype == 'O') echo 'active'; ?>" id="oneway">One Way</a> <a class="wament <?php if(isset($triptype) && $triptype == 'R') echo 'active'; else echo 'active'; ?>" id="round">Round Trip</a> </div>
+                        <a class="wament <?php if(isset($triptype) && $triptype == 'O') echo 'active'; ?>" id="oneway">One Dog</a> <a class="wament <?php if(isset($triptype) && $triptype == 'R') echo 'active'; else echo 'active'; ?>" id="round">Round Trip</a> </div>
                       </div>
                       <div class="clear"></div>
                       <div class="outsideserach">
