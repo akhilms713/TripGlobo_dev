@@ -641,7 +641,7 @@
 			$.ajax({
 		  type:'GET', 
 		  dataType:"json",
-		  url: 'https://tripglobo.com/flight/GetResults/<?php echo $request;?>',
+		  url: 'https://dev-tripglobo.dsocmarket.com/flight/GetResults/<?php echo $request;?>',
 		  beforeSend: function(XMLHttpRequest){
 			$('.imgLoader').fadeIn();
 			$('body').css('overflow', 'hidden');		
