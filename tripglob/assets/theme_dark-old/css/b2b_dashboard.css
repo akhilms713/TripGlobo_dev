@@ -1,0 +1,211 @@
+  a.logo{
+      width: 231px;
+    float: left;
+    padding: 5px 5px;
+}
+.container.module_header.b2b-dash{
+	margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+ul.sidebar-menu li{
+	width: 11%;
+}
+ul.sidebar-menu.nw-style li a p i {
+    font-size: 28px;
+}
+ul.sidebar-menu.nw-style li a{
+      height: 80px;
+}
+.dashboard_section .sidebar-menu{
+      top: -130px;
+}
+.search_panel {
+    padding:0px !important;
+    display: block;
+    min-height: auto;
+}
+.sidebar_wrap{
+  
+}
+#sidebar1 > ul > li > ul.sub {
+    position: relative;
+    left: 0px;
+}
+
+@media(max-width:500px) { 
+#sidebar1 > ul > li > ul.sub {
+    position: relative;
+    left: 0px;
+    }
+}
+ul li.sub-menu a ul.sub li,
+#sidebar1 .sub-menu > .sub li ,
+#sidebar1 .sub-menu > .sub li a{
+  width: 100%;
+  float: left;
+  padding:5px;
+  text-align: center;
+}
+.cent-block{
+  float: none;
+  display: block;
+  margin: 0 auto;
+
+}
+.dashboard_section .sidebar-menu{
+  width: 100%;
+}
+
+.adres_user .dash-profimg.fstusrp{
+      /*border: 1px solid #bcbcbc;
+    box-shadow: 2px 0px 5px 0px #bcbcbc96;*/
+}
+.dash-allbok .view_voucher_btn {
+    margin-left: 0;
+    margin-top: 0px;
+}
+.dasflight-btn .btns_bkd .view_invoice_btn {
+    margin: 0px -2px 0px 0px;
+    width: 112px;
+}
+.dasflight-btn .btns_bkd {
+    width: 100%;
+    margin: 0 auto;
+    float: left;
+}
+.dataTables_wrapper .dataTables_filter input{
+  padding: 0px 5px;
+}
+
+.user_profimag img{
+      width: 35px !important;
+      height: 35px !important;
+}
+#login_signup .dropdown-toggle.topa .userimage.user_profimag span {
+    padding-top: 2px;
+    line-height: 36px;
+}
+/*li#login_signup a div.reglog div.userimage.user_profimag span{
+display: none;
+}*/
+.ritsude > li > a{
+      margin: 10px 10px !important;
+}
+
+.user_profimag img{
+     /* margin-top: 5px;*/
+}
+.btns_bkd a button,
+.btns_bkd button{
+  width: 110px;
+  height: 36px;
+  margin-bottom: 6px !important;
+}
+.btns_bkd a button.btn.btn-primary{
+      background: linear-gradient(to bottom, #f6191e 1%,#f85032 100%) !important;
+      border: 1px solid #f85032 !important;
+}
+.btns_bkd a button.btn.btn-info{
+         background: #00aeef !important;
+    border: 1px solid #00aeef !important;
+}
+
+ .btns_bkd button.btn.btn-primary{
+        background: #005aab !important;
+    border: 1px solid #005aab !important;
+  }
+
+#BookingList .booking-inertab.tab-content{
+      background: #f0eeed;
+}
+ul.sidebar-menu.nw-style li ul.sub li a{
+  height:auto;
+}
+#BookingList .tab-pane .table-responsive table th,
+#BookingList .tab-pane .table-responsive table tr td{
+  font-size: 13px;
+}
+#BookingList .tab-pane .table-responsive table tr td .book_status{
+    font-size: 14px;
+    padding: 0px 0;
+    text-align: center;
+}
+ #BookingList .tab-pane .table-responsive table tr td .view_voucher_btn{
+      margin-bottom: 5px;
+      padding: 6px 0px;
+}
+#BookingList .tab-pane .table-responsive table th{
+  background: #E1F5FE;
+
+}
+#BookingList .tab-pane .table-responsive table tr td{
+  background: #fff;
+}
+div.dataTables_length label{
+      left: 0px;
+    position: absolute;
+}
+textarea{
+  padding: 5px 5px;
+}
+#BookingList .tab-pane .table-responsive table tr td .btns_bkd a button, 
+#BookingList .tab-pane .table-responsive table tr td .btns_bkd button {
+    width: 100px;
+    height: 33px;
+    margin-bottom: 3px !important;
+}
+.ade-pad0{
+  padding: 0px 10px 0px 0px;
+}
+
+.enbleink{
+  cursor:pointer;
+
+}
+.enbleink:hover{
+  color: #fff;
+  text-decoration: none;
+} 
+
+
+
+    @media screen and (max-width:768px){ 
+      ul.sidebar-menu li{width: 10%;}
+    }
+ @media screen and (max-width:767px){
+     div.dataTables_length label {
+    left: 0 !important;
+    position: relative !important;
+    float: left !important;
+    padding-left: 15px !important;
+}
+    #depostDatatable_filter label{
+    position: relative;
+    left: -13px;
+}
+
+     .dash-allbok ul li:last-child a {
+        height: auto !important;
+    }
+     #BookingList li{width:100%; float:left;
+     }
+      ul.sidebar-menu li{width: 11%;}
+      ul.sidebar-menu li a i {width: 100%;float: left;}
+    }
+    
+    @media screen and (max-width:500px){
+    ul.sidebar-menu li{width: 20% !important;}
+    .dashboard_section .sidebar-menu {top: -210px;} 
+    ul.sidebar-menu li a span {font-size: 9px;}
+    
+
+ul li.sub-menu a ul.sub li, #sidebar1 .sub-menu > .sub li, #sidebar1 .sub-menu > .sub li a {
+    width: 100% !important;
+    
+}
+    
+
+
+

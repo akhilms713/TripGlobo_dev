@@ -1,0 +1,107 @@
+.iconsofvcr.fa {
+background: #ddd none repeat scroll 0 0;
+    border: 1px solid #ddd;
+    border-radius: 100%;
+    color: #333;
+    float: right;
+    font-size: 16px;
+    height: 40px;
+    line-height: 38px;
+    margin: 20px 0 20px 20px;
+    text-align: center;
+    width: 40px;
+}
+.centervoucher2 {
+    display: table;
+    margin: 50px auto;
+    padding: 20px 1%;border: 1px solid #dddddd; background: #fff;
+    width: 70%;
+}
+.vcradrss {
+    color: #333;
+    display: block;
+    font-size: 16px;
+    line-height: 24px;
+    overflow: hidden;
+    text-align: right;
+}
+.vcradrss .fa{color: #666;
+    font-size: 14px;
+    margin-right: 10px;}
+.iconmania {
+    color: #666;
+    display: block;
+    font-family: roboto;
+    font-size: 14px;
+    overflow: hidden;
+}
+.agent_or_logo{
+    border-radius: 100%;
+    display: block;
+    height: 100px;
+    margin: 0 0 20px;
+    overflow: hidden;
+    width: 100px;
+}
+.contentvcr2{background:#fff;}
+.colprint{float: left;
+    width: 33.33%;}
+
+
+table{border-collapse:collapse;}
+.insideone{width: 100%;}
+.celpad5 tr td{color: #666;
+    font-size: 14px;
+    padding: 5px 10px;
+	vertical-align:middle;}
+.clrtr{background:#9EA8C0;}
+.clrtr th{border: 1px solid #bec8e0;
+    color: #fff;
+    padding: 10px;}
+
+
+.splalgn{width: 100%;}
+.splalgn tr td{padding:10px;border:1px solid #f6f6f6;color:#666;}
+
+.centervoucher { display: table; margin: 0px auto; padding: 0px 0; width: 70%;}
+.vouher_logo{ width:100%; height:auto; border-bottom:1px solid #ddd; display:table; padding-bottom:10px; margin-bottom:5px;}
+
+.centervoucher h2 { font-size:18px; color:#fff;  font-weight:normal;
+                   text-align:center; margin:0px; padding:5px 0px; background:#A6A6A6; margin-bottom:5px; text-transform:uppercase;}
+.hv_title4 { margin:0px; padding:0px; font-size:16px;}
+.confirmtionltr {
+    color: #666;
+    display: block;
+    font-size: 17px;
+    overflow: hidden;
+    padding: 20px;
+}
+.tables{border-collapse:collapse; font-size:14px;color:#555;}
+.tables tr td, .tables tr th{padding:5px; font-weight: normal;font-size: 14px;}
+.tables tr td.padding1 {
+    
+}
+.colsdets {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 0 10px;
+}
+.detailhed_trvels{font-size: 18px;
+    padding: 10px 0;}
+.set_bordr td{border: 1px solid #eee;}
+
+.new-brder td{border: 1px solid #c5c5c5;}
+
+.second_heading {
+    text-align: left !important;
+    padding: 0px !important;
+    font-size: 16px !important;
+    background: #fff !important;
+    color: #000 !important;
+}
+.inboundiv { padding: 0px; }
+
+
+
+.col-md-1,.col-md-2,.col-md-3,.col-md-4,.col-md-5,.col-md-6,.col-md-7,.col-md-8,.col-md-9,.col-md-10,.col-md-11 {float: left;}.col-md-1 {width: 8.333333333333332%;}.col-md-2 {width: 16.666666666666664%;}.col-md-3 {width: 25%;}.col-md-4 {width: 33.33333333333333%;}.col-md-5 {width: 41.66666666666667%;}.col-md-6 {width: 50%;}.col-md-7 {width: 58.333333333333336%;}.col-md-8 {width: 66.66666666666666%;}.col-md-9 {width: 75%;}.col-md-10 {width: 83.33333333333334%;}.col-md-11 {width: 91.66666666666666%;}.col-md-12 {width: 100%;}
+
