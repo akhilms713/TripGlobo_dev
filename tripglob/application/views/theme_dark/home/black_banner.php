@@ -5,10 +5,10 @@
     <div class="col-xs-6 nopad">
     	<div class="col-xs-6 nopad">
 			<a href="<?php echo WEB_URL.'Flights'; ?>">
-        	<!--<div class="bigimage afbf">-->
-         <!--   	<img src="<?php echo $this->general_model->convert_image_base64(ASSETS.'images/b_flight.jpg'); ?>" alt="">-->
-         <!--       <span class="modulename">Flight</span>              -->
-         <!--   </div>-->
+        	<div class="bigimage afbf">
+            	<img src="<?php echo $this->general_model->convert_image_base64(ASSETS.'images/b_flight.jpg'); ?>" alt="">
+                <span class="modulename">Flight</span>              
+            </div>
             </a>
         </div>
         <div class="col-xs-6 nopad">

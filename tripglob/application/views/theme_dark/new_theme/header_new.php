@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <meta name="description" content="">
       <meta name="author" content="">
-      <title> Test <?php echo PROJECT_TITLE; ?></title>
+      <title><?php echo PROJECT_TITLE; ?></title>
       <?php echo $this->load->view(PROJECT_THEME.'/new_theme/common/load_common_css'); ?>
       <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"> 
       <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -244,8 +244,8 @@ a.spectal_trip_1 {
       
     </div>
 
-   <nav class="navbar navme col-md-9 col-xs-12" id="main_menu">
-      <div class="sidall hiddenBlock" id="navMenu">
+   <nav class="navbar navme col-sm-9 collapse col-md-9 col-xs-10" id="main_menu">
+      <div class="sidall">
         <div class="topmenu">
           <div class="navbdclose">
           <div class="top_items explore_div main_con desk-view-only ">
