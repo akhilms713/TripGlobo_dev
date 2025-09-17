@@ -476,7 +476,7 @@ public function booking_travellers_conn($secdata,$pcode,$pcode_d,$pcode_f,$searc
 					'specific_rec_details' => $cart_flight_data->specific_rec_details,
 					'request_scenario'	=> $cart_flight_data->request_scenario,
 					'outward_duration' => $cart_flight_data->outward_duration,
-					'inward_duration' => $cart_flight_data->inward_duration, 
+					'inward_duration' => isset($cart_flight_data->inward_duration) ? $cart_flight_data->inward_duration : 0,
 					'card_type' => $checkout_form['card_type'], 
 					'card_holder_name' => $checkout_form['card_holder_name'], 
 					'card_number' => $checkout_form['card_number'], 
