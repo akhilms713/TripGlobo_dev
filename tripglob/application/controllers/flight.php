@@ -1200,7 +1200,7 @@ class FLight extends CI_Controller {
                     'inward_depature' => $in_DepartDate,
                     'inward_arrival' => $in_ArriveDate,
                     'outward_duration' => $result->onwards_duration,
-                    'inward_duration' => isset($result->returns_duration) ? $result->returns_duration : 0,
+                    'inward_duration' => !empty($result->returns_duration) ? (int)$result->returns_duration : 0,
                     'airline' => $result->airline,
                     'outward_stops' => $result->onwards_stops,
                     'inward_stops' => $result->returns_stops,
