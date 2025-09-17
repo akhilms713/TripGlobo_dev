@@ -1239,7 +1239,7 @@ class FLight extends CI_Controller {
                     'parent_cart_id' => 0,
                     'referal_id' => $booking_cart_id,
                     'product_id' => '1',
-                    'user_type' => $user_type,
+                    'user_type' => !empty($user_type) ? (int)$user_type : 0,
                     'user_id' => !empty($user_id) ? (int)$user_id : 0,
                     'session_id' => $session_id,
                     'site_currency' => BASE_CURRENCY,
