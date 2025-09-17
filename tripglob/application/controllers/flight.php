@@ -1240,7 +1240,7 @@ class FLight extends CI_Controller {
                     'referal_id' => $booking_cart_id,
                     'product_id' => '1',
                     'user_type' => $user_type,
-                    'user_id' => $user_id,
+                    'user_id' => !empty($user_id) ? (int)$user_id : 0,
                     'session_id' => $session_id,
                     'site_currency' => BASE_CURRENCY,
                     'total_cost' => $result->amount,
