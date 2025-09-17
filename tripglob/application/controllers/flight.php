@@ -1246,7 +1246,8 @@ class FLight extends CI_Controller {
                     'total_cost' => $result->amount,
                     'bundle_search_id' => @$result->bundle_search_id,
                     'ip_address' => $this->input->ip_address(),
-                    'timestamp' => date('Y-m-d H:i:s')
+                    'timestamp' => date('Y-m-d H:i:s'),
+                    'admin_markup' => 0
                 );
                 if ($result->bundle_search_id != '' || $result->bundle_search_id == 0) {
                     $booking_cart_id = $this->Flight_Model->delete_cart_global($result->bundle_search_id);
