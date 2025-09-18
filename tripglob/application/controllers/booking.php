@@ -535,7 +535,7 @@ public function booking_travellers_conn($secdata,$pcode,$pcode_d,$pcode_f,$searc
 			);
 				$booking_xml_data_id = $this->booking_model->insert_booking_xml_data($booking_xml);
 				$booking_supplier = array(
-				'api_id' =>$cart_hotel_data->api_id,
+				'api_id' =>$cart_flight_data->api_id,
 					'booking_supplier_number' => 'XXXXXXXXXX',
 					'supplier_status' => '',
 					'supplier_reference_number' => '',
@@ -906,7 +906,7 @@ public function booking_travellers_conn($secdata,$pcode,$pcode_d,$pcode_f,$searc
 				);
 				$booking_xml_data_id = $this->booking_model->insert_booking_xml_data($booking_xml);
 				$booking_supplier = array(
-					'api_id' =>$cart_hotel_data->api_id,
+					'api_id' =>$cart_flight_data->api_id,
 					'booking_supplier_number' => 'XXXXXXXXXX',
 					'supplier_status' => '',
 					'supplier_reference_number' => '',
@@ -1183,7 +1183,7 @@ public function booking_travellers_conn($secdata,$pcode,$pcode_d,$pcode_f,$searc
 					$booking_xml_data_id = $this->booking_model->insert_booking_xml_data($booking_xml);
 					*/
 					$booking_supplier = array(
-						'api_id' =>$cart_hotel_data->api_id,
+						'api_id' =>$cart_flight_data->api_id,
 						'booking_supplier_number' => 'XXXXXXXXXX',
 						'supplier_status' => '',
 						'supplier_reference_number' => '',
