@@ -1008,7 +1008,7 @@ class Flight_Model extends CI_Model {
                     $this->db->insert('connecting_airports_filter', ['session_id' => $session_id, 'airport_code' => $seg1[0][1]->Origin->Airport->AirportCode]);
             }
 // debug($data);exit();
-            /*/*/$this->db->insert_batch('tf_routing_res', $data);
+            $this->db->insert_batch('tf_routing_res', $data);
         }
     }
 
