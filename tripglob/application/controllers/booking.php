@@ -403,7 +403,7 @@ public function booking_travellers_conn($secdata,$pcode,$pcode_d,$pcode_f,$searc
         foreach ($cids as $key => $cid) {
             list($module, $cid) = explode(',', $cid);
     	
-         if($module == 'FLIGHT'){
+         if($module == 'FLIGHT'){ print_r('dddd'); die;
 				$cart_flight_data = $this->cart_model->getBookingTemp_flight($cid);
 				// debug($cart_flight_data);
 				if(isset($cart_flight_data) && $cart_flight_data!='')
