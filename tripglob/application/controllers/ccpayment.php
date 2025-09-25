@@ -12,24 +12,39 @@ class Ccpayment extends CI_Controller {
     public function index() {
         $key = $this->input->get('key');
         if ($key == "tripglobopay") {
-            $merchantId = getenv('CC_MerchantID');
-            $parent     = $this->input->get('parent');
-            $amount     = $this->input->get('numb');
+            $working_key  = getenv('CC_WorkingKey');
+            $access_code  = getenv('CC_AccessCode');
+            $redirect_url = site_url('ccpayment/ccresponse');
 
+            $merchant_id  = getenv('CC_MerchantID');
+            $order_id     = $this->input->get('parent');   // booking/payment id
+            $amount       = $this->input->get('numb');     // booking amount
+
+            // Build merchant data
+            $merchant_data  = "merchant_id=".$merchant_id
+                ."&order_id=".$order_id
+                ."&currency=INR"
+                ."&amount=".$amount
+                ."&redirect_url=".$redirect_url
+                ."&cancel_url=".$redirect_url
+                ."&language=EN";
+
+            // Encrypt data
+            $encrypted_data = encrypt_ccavenue($merchant_data, $working_key);
+
+            // Auto-submit form
             echo '
-        <form method="post" action="'.site_url('ccpayment/ccrequest').'">
-            <input type="hidden" name="merchant_id" value="'.$merchantId.'" />
-            <input type="hidden" name="order_id" value="'.$parent.'" />
-            <input type="hidden" name="currency" value="INR" />
-            <input type="hidden" name="amount" value="'.$amount.'" />
-            <input type="hidden" name="language" value="EN" />
-            <button type="submit">Proceed to Pay</button>
-        </form>';
+        <form id="ccavenue_payment" method="post" action="'.getenv('CC_RedirectUrl').'">
+            <input type="hidden" name="encRequest" value="'.$encrypted_data.'">
+            <input type="hidden" name="access_code" value="'.$access_code.'">
+        </form>
+        <script type="text/javascript">
+            document.getElementById("ccavenue_payment").submit();
+        </script>';
         } else {
             $this->load->view(PROJECT_THEME."/errors/404");
         }
     }
-
     // Step 2: Build request and redirect to CCAvenue
     public function ccrequest() {
         $working_key  = getenv('CC_WorkingKey');
