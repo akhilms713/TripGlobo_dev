@@ -81,18 +81,43 @@ class Ccpayment extends CI_Controller {
         }
 
         $order_status = isset($responseData['order_status']) ? $responseData['order_status'] : '';
+        $order_id     = isset($responseData['order_id']) ? $responseData['order_id'] : '';
 
-        // Update booking table
+        // Fetch row from payment_gateway_details
+        $datas = $this->db->get_where('payment_gateway_details', ['parent_pnr' => $order_id])->row_array();
+
+        // Prepare update for payment_gateway_details (same as PayU)
         if ($order_status === "Success") {
-            $this->db->where('pnr', $responseData['order_id'])
-                ->update('bookings', ['payment_status' => 'Paid']);
+            $response = [
+                'response' => json_encode($responseData),
+                'status'   => 'accepted'
+            ];
         } else {
-            $this->db->where('pnr', $responseData['order_id'])
-                ->update('bookings', ['payment_status' => 'Failed']);
+            $response = [
+                'response' => json_encode($responseData),
+                'status'   => 'declined'
+            ];
         }
 
-        $data['order_status']   = $order_status;
-        $data['decrypt_values'] = $responseData;
-        $this->load->view(PROJECT_THEME."/payment/payment_response", $data);
+        if (!empty($datas)) {
+            $this->db->where('id', $datas['id']);
+            $this->db->update('payment_gateway_details', $response);
+        }
+
+        // Redirect logic like PayU
+        if (!empty($datas)) {
+            if ($datas['productinfo']=='flight' && $order_status === "Success") {
+                redirect(WEB_URL.'booking/flight_availability/'.$datas['parent_pnr'].'/'.$order_status);
+            } elseif ($datas['productinfo']=='hotel' && $order_status === "Success") {
+                redirect(WEB_URL.'booking/book/'.$datas['parent_pnr'].'/'.$order_status);
+            } elseif ($datas['productinfo']=='bus' && $order_status === "Success") {
+                redirect(WEB_URL.'booking/book/'.$datas['parent_pnr'].'/'.$order_status);
+            } else {
+                redirect(WEB_URL.'error/payment/'.$order_status,'refresh');
+            }
+        } else {
+            // fallback if order_id not found in payment_gateway_details
+            redirect(WEB_URL.'error/payment/'.$order_status,'refresh');
+        }
     }
 }
