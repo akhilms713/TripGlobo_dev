@@ -403,7 +403,7 @@ public function booking_travellers_conn($secdata,$pcode,$pcode_d,$pcode_f,$searc
         foreach ($cids as $key => $cid) {
             list($module, $cid) = explode(',', $cid);
     	
-         if($module == 'FLIGHT'){ print_r('dddd'); die;
+         if($module == 'FLIGHT'){
 				$cart_flight_data = $this->cart_model->getBookingTemp_flight($cid);
 				// debug($cart_flight_data);
 				if(isset($cart_flight_data) && $cart_flight_data!='')
@@ -2225,9 +2225,10 @@ public function booking_travellers_conn($secdata,$pcode,$pcode_d,$pcode_f,$searc
 					
 				);
 					$this->db->insert('payment_gateway_details',$booking_flight);
-					$id= $this->db->insert_id();    
-
-					redirect(WEB_URL.'payment_gateway/process_to_pay/'.$id);             	
+					$id= $this->db->insert_id();
+                 $GateURL = WEB_URL.'ccpayment/index?key=tripglobopay&parent='.$id.'&numb='.$amount-$discount;
+                 redirect($GateURL);
+					//redirect(WEB_URL.'payment_gateway/process_to_pay/'.$id);
              }else{
              	if ($global_ids[0]->discount >= 1 && $global_ids[0]->promo_id >= 1) {
              		$promo_data=$this->db->get_where('promo',array('promo_id'=>$global_ids[0]->promo_id))->row_array();
