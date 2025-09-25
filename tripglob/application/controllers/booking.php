@@ -2226,7 +2226,8 @@ public function booking_travellers_conn($secdata,$pcode,$pcode_d,$pcode_f,$searc
 				);
 					$this->db->insert('payment_gateway_details',$booking_flight);
 					$id= $this->db->insert_id();
-                 $GateURL = WEB_URL.'ccpayment/index?key=tripglobopay&parent='.$id.'&numb='.$amount-$discount;
+                 $GateURL = WEB_URL.'ccpayment/index?key=tripglobopay&parent='.$id.'&numb='.($amount - $discount);
+
                  print_r($GateURL); die;
                  redirect($GateURL);
 					//redirect(WEB_URL.'payment_gateway/process_to_pay/'.$id);
