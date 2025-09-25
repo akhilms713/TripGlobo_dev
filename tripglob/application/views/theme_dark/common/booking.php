@@ -1766,14 +1766,14 @@
                               </div>
                               
                               <div class="comon_backbg">
-                                  <!--<div class="col-md-2">-->
-                                  <!--      <div class="form-check" style="border: 1px solid #ddd;margin: 10px;padding: 5px;border-radius: 10px;">-->
-                                  <!--          <input class="form-check-input" type="radio" name="payment_gateway" id="ccAvenue" value="ccAvenue" checked>-->
-                                  <!--          <label class="form-check-label" for="ccAvenue">-->
-                                  <!--              CcAvenue-->
-                                  <!--          </label>-->
-                                  <!--      </div>-->
-                                  <!--  </div>-->
+                                  <div class="col-md-2">
+                                        <div class="form-check" style="border: 1px solid #ddd;margin: 10px;padding: 5px;border-radius: 10px;">
+                                            <input class="form-check-input" type="radio" name="payment_gateway" id="ccAvenue" value="ccAvenue" checked>
+                                            <label class="form-check-label" for="ccAvenue">
+                                                CcAvenue
+                                            </label>
+                                        </div>
+                                    </div>
                                  
                                     <div class="col-md-2">
                                         <div class="form-check" style="border: 1px solid #ddd;margin: 10px;padding: 5px;border-radius: 10px;">
