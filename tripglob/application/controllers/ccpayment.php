@@ -82,9 +82,9 @@ class Ccpayment extends CI_Controller {
 
         $order_status = isset($responseData['order_status']) ? $responseData['order_status'] : '';
         $order_id     = isset($responseData['order_id']) ? $responseData['order_id'] : '';
-
+        print_r($order_id); die;
         // Fetch row from payment_gateway_details using order_id
-        $datas = $this->db->get_where('payment_gateway_details', ['order_id' => $order_id])->row_array();
+        $datas = $this->db->get_where('payment_gateway_details', ['id' => $order_id])->row_array();
 
         // Prepare update for payment_gateway_details (same as PayU)
         if ($order_status === "Success") {
