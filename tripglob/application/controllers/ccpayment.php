@@ -83,10 +83,10 @@ class Ccpayment extends CI_Controller {
         $order_status = isset($responseData['order_status']) ? $responseData['order_status'] : '';
         $order_id     = isset($responseData['order_id']) ? $responseData['order_id'] : '';
 
-        // Fetch row from payment_gateway_details using parent_pnr (since no order_id column exists)
-        $datas = $this->db->get_where('payment_gateway_details', ['parent_pnr' => $order_id])->row_array();
+        // Fetch row from payment_gateway_details using order_id
+        $datas = $this->db->get_where('payment_gateway_details', ['order_id' => $order_id])->row_array();
 
-        // Prepare update for payment_gateway_details
+        // Prepare update for payment_gateway_details (same as PayU)
         if ($order_status === "Success") {
             $response = [
                 'response' => json_encode($responseData),
@@ -114,7 +114,7 @@ class Ccpayment extends CI_Controller {
                 redirect(WEB_URL.'error/payment/'.$order_status,'refresh');
             }
         } else {
-            // fallback if order_id not found
+            // fallback if order_id not found in payment_gateway_details
             redirect(WEB_URL.'error/payment/'.$order_status,'refresh');
         }
     }
