@@ -103,13 +103,13 @@ class Ccpayment extends CI_Controller {
             $this->db->update('payment_gateway_details', $response);
 
             // Redirect logic like PayU
-            if ($datas['productinfo']=='flight' && $order_status === "success") {
-                redirect(WEB_URL.'booking/book/'.$datas['parent_pnr'].'/'.$order_status);
+            if ($datas['productinfo']=='flight' && $order_status === "Success") {
+                redirect(WEB_URL.'booking/book/'.$datas['parent_pnr'].'/'.strtolower($order_status));
                 //redirect(WEB_URL.'booking/flight_availability/'.$datas['parent_pnr'].'/'.$order_status);
-            } elseif ($datas['productinfo']=='hotel' && $order_status === "success") {
-                redirect(WEB_URL.'booking/book/'.$datas['parent_pnr'].'/'.$order_status);
-            } elseif ($datas['productinfo']=='bus' && $order_status === "success") {
-                redirect(WEB_URL.'booking/book/'.$datas['parent_pnr'].'/'.$order_status);
+            } elseif ($datas['productinfo']=='hotel' && $order_status === "Success") {
+                redirect(WEB_URL.'booking/book/'.$datas['parent_pnr'].'/'.strtolower($order_status));
+            } elseif ($datas['productinfo']=='bus' && $order_status === "Success") {
+                redirect(WEB_URL.'booking/book/'.$datas['parent_pnr'].'/'.strtolower($order_status));
             } else {
                 redirect(WEB_URL.'error/payment/'.$order_status,'refresh');
             }
