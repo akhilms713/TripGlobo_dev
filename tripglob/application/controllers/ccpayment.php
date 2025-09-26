@@ -73,7 +73,7 @@ class Ccpayment extends CI_Controller {
         $encResponse  = $this->input->post("encResp");
         $rcvdString   = decrypt_ccavenue($encResponse, $workingKey);
         $decryptValues= explode('&', $rcvdString);
-
+        print_r($decryptValues); die;
         $responseData = [];
         foreach ($decryptValues as $val) {
             $info = explode('=', $val);
