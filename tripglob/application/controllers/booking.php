@@ -3567,7 +3567,7 @@ elseif($status_flag=="true"){
 								  $this->booking_model->Update_Booking_Global($global_id->booking_global_id, $update_booking_status);	
 								  $this->booking_model->Update_Bus_Booking($global_id->booking_global_id, $update_booking_status_bus_booking);
 								  $GateURL = WEB_URL.'booking/confirm/'.base64_encode($parent_pnr);
-								  redirect($GateURL);
+								  redirect($GateURL, 'refresh');
 								  // redirect(WEB_URL.'booking/confirm/'.base64_encode($parent_pnr), 'refresh');
 
 								}else{
