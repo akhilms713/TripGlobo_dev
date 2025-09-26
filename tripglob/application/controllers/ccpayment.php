@@ -73,7 +73,7 @@ class Ccpayment extends CI_Controller {
         $encResponse  = $this->input->post("encResp");
         $rcvdString   = decrypt_ccavenue($encResponse, $workingKey);
         $decryptValues= explode('&', $rcvdString);
-        print_r($decryptValues); die;
+
         $responseData = [];
         foreach ($decryptValues as $val) {
             $info = explode('=', $val);
@@ -83,8 +83,8 @@ class Ccpayment extends CI_Controller {
         $order_status = isset($responseData['order_status']) ? $responseData['order_status'] : '';
         $order_id     = isset($responseData['order_id']) ? $responseData['order_id'] : '';
 
-        // Fetch row from payment_gateway_details
-        $datas = $this->db->get_where('payment_gateway_details', ['parent_pnr' => $order_id])->row_array();
+        // Fetch row from payment_gateway_details using order_id
+        $datas = $this->db->get_where('payment_gateway_details', ['order_id' => $order_id])->row_array();
 
         // Prepare update for payment_gateway_details (same as PayU)
         if ($order_status === "Success") {
@@ -102,10 +102,8 @@ class Ccpayment extends CI_Controller {
         if (!empty($datas)) {
             $this->db->where('id', $datas['id']);
             $this->db->update('payment_gateway_details', $response);
-        }
 
-        // Redirect logic like PayU
-        if (!empty($datas)) {
+            // Redirect logic like PayU
             if ($datas['productinfo']=='flight' && $order_status === "Success") {
                 redirect(WEB_URL.'booking/flight_availability/'.$datas['parent_pnr'].'/'.$order_status);
             } elseif ($datas['productinfo']=='hotel' && $order_status === "Success") {
