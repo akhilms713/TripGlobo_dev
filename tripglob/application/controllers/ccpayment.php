@@ -104,8 +104,7 @@ class Ccpayment extends CI_Controller {
 
             // Redirect logic like PayU
             if ($datas['productinfo']=='flight' && $order_status === "Success") {
-                redirect(WEB_URL.'booking/book/'.$datas['parent_pnr'].'/'.strtolower($order_status));
-                //redirect(WEB_URL.'booking/flight_availability/'.$datas['parent_pnr'].'/'.$order_status);
+                redirect(WEB_URL.'booking/flight_availability/'.$datas['parent_pnr'].'/'.strtolower($order_status));
             } elseif ($datas['productinfo']=='hotel' && $order_status === "Success") {
                 redirect(WEB_URL.'booking/book/'.$datas['parent_pnr'].'/'.strtolower($order_status));
             } elseif ($datas['productinfo']=='bus' && $order_status === "Success") {
