@@ -103,7 +103,7 @@ class Ccpayment extends CI_Controller {
             $this->db->update('payment_gateway_details', $response);
 
             // Redirect logic like PayU
-            if ($datas['productinfo']=='flight' && $order_status === "Success") {
+            if ($datas['productinfo']=='flight' && $order_status === "Success") { print_r($datas); die;
                 redirect(WEB_URL.'booking/flight_availability/'.$datas['parent_pnr'].'/'.strtolower($order_status));
             } elseif ($datas['productinfo']=='hotel' && $order_status === "Success") {
                 redirect(WEB_URL.'booking/book/'.$datas['parent_pnr'].'/'.strtolower($order_status));
