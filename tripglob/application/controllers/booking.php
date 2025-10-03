@@ -3683,13 +3683,14 @@ elseif($status_flag=="true"){
     }
 
 	public function confirm($parent_pnr=''){
-        print_r($parent_pnr); die;
        if(!empty($parent_pnr)){
             $parent_pnr = base64_decode($parent_pnr);
             $count = $this->booking_model->getBookingByParentPnr($parent_pnr)->num_rows();
             /*debug($parent_pnr);
             debug($count);*/
-            if($count > 0){
+           print_r($count); die;
+
+           if($count > 0){
                 $data['pnr_nos'] = $this->booking_model->getBookingByParentPnr($parent_pnr)->result();
                 //echo '<pre>';print_r($data['pnr_nos']);exit();
                 if(!empty($data['pnr_nos'][0]->cart_car_id))
