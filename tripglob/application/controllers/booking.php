@@ -3688,10 +3688,9 @@ elseif($status_flag=="true"){
             $count = $this->booking_model->getBookingByParentPnr($parent_pnr)->num_rows();
             /*debug($parent_pnr);
             debug($count);*/
-           print_r($count); die;
-
            if($count > 0){
                 $data['pnr_nos'] = $this->booking_model->getBookingByParentPnr($parent_pnr)->result();
+                print_r($data['pnr_nos']);exit;
                 //echo '<pre>';print_r($data['pnr_nos']);exit();
                 if(!empty($data['pnr_nos'][0]->cart_car_id))
                 {
