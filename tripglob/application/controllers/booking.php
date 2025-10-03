@@ -2190,11 +2190,12 @@ public function booking_travellers_conn($secdata,$pcode,$pcode_d,$pcode_f,$searc
 
 
 
-	public function flight_availability($parent_pnr,$payment_gateway=''){ print_r($payment_gateway); exit();
+	public function flight_availability($parent_pnr,$payment_gateway=''){
 		error_reporting(0);
 		$count = $this->payment_model->validate_order_id_org($parent_pnr)->num_rows();
 		if($count >= 1){
 			$global_ids = $this->payment_model->validate_order_id_org($parent_pnr)->result();
+            print_r($global_ids); die;
 		// echo "<pre>"; print_r($global_ids); exit('bp');
 			// debug($global_ids);exit;
 			if ($payment_gateway!='success') {				
