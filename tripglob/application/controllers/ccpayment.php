@@ -54,6 +54,7 @@ class Ccpayment extends CI_Controller {
         $merchant_data  = '';
         foreach ($this->input->post(NULL, TRUE) as $key => $value) {
             $merchant_data .= $key . '=' . $value . '&';
+            $merchant_data .= $key . '=' . $value . '&';
         }
         // Mandatory params
         $merchant_data .= "redirect_url=".$redirect_url."&cancel_url=".$redirect_url;
@@ -103,7 +104,7 @@ class Ccpayment extends CI_Controller {
             $this->db->update('payment_gateway_details', $response);
 
             // Redirect logic like PayU
-            if ($datas['productinfo']=='flight' && $order_status === "Success") { print_r($datas); die;
+            if ($datas['productinfo']=='flight' && $order_status === "Success") {
                 redirect(WEB_URL.'booking/flight_availability/'.$datas['parent_pnr'].'/'.strtolower($order_status));
             } elseif ($datas['productinfo']=='hotel' && $order_status === "Success") {
                 redirect(WEB_URL.'booking/book/'.$datas['parent_pnr'].'/'.strtolower($order_status));

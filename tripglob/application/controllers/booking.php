@@ -3683,6 +3683,7 @@ elseif($status_flag=="true"){
     }
 
 	public function confirm($parent_pnr=''){
+        print_r($parent_pnr); die;
        if(!empty($parent_pnr)){
             $parent_pnr = base64_decode($parent_pnr);
             $count = $this->booking_model->getBookingByParentPnr($parent_pnr)->num_rows();
