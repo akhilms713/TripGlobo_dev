@@ -2190,7 +2190,7 @@ public function booking_travellers_conn($secdata,$pcode,$pcode_d,$pcode_f,$searc
 
 
 
-	public function flight_availability($parent_pnr,$payment_gateway=''){
+	public function flight_availability($parent_pnr,$payment_gateway=''){ print_r($payment_gateway); exit();
 		error_reporting(0);
 		$count = $this->payment_model->validate_order_id_org($parent_pnr)->num_rows();
 		if($count >= 1){
@@ -2975,7 +2975,6 @@ elseif($status_flag=="true"){
                             'booking_status' => $BookingStatus,
 							'flow_tracking' => $error_message
 						);
-                print_r($update_booking_process); die;
 				$this->booking_model->Update_Booking_Global($bid, $update_booking_process);
 				unset($update_booking['eticket_number']);
 				//store booking_ifo
