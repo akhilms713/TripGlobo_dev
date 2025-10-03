@@ -2968,7 +2968,8 @@ elseif($status_flag=="true"){
 							// exit("1537");
 					}else{
 							$error_message.='|'.$booking_id.'-Booking data not there';
-						}		
+						}
+                            print_r('here'); die;
 				$update_booking_process = array(
 							'booking_id' =>$book_data1['Response']['Response']['BookingId'] ,
 							'pnr_no' => $LocatorCode,
@@ -3690,7 +3691,6 @@ elseif($status_flag=="true"){
             debug($count);*/
            if($count > 0){
                 $data['pnr_nos'] = $this->booking_model->getBookingByParentPnr($parent_pnr)->result();
-                print_r($data['pnr_nos']);exit;
                 //echo '<pre>';print_r($data['pnr_nos']);exit();
                 if(!empty($data['pnr_nos'][0]->cart_car_id))
                 {
